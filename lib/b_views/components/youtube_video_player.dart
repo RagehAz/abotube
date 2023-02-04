@@ -205,6 +205,16 @@ class _YoutubePlayerScreenState extends State<YoutubePlayerScreen> {
             },
           ),
 
+          SuperBox(
+            height: 50,
+            verse: 'getVideoInfoFromUrl',
+            margins: 10,
+            onTap: () async {
+              final Map<String, dynamic> _map = await getVideoInfoFromUrl();
+              Mapper.blogMap(_map);
+            },
+          ),
+
         ],
       ),
     );
