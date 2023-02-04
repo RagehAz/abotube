@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:youtube_translator/b_views/layout/layout.dart';
-import 'package:youtube_translator/services/helpers/helper_methods.dart';
+import 'package:video_translator/b_views/layout/layout.dart';
+import 'package:video_translator/services/helpers/helper_methods.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class YoutubePlayerScreen extends StatefulWidget {
@@ -32,12 +32,14 @@ class _YoutubePlayerScreenState extends State<YoutubePlayerScreen> {
   @override
   void initState() {
     super.initState();
+
     _controller = YoutubePlayerController(
         initialVideoId: 'iLnmTe5Q2Qw',
-        flags: YoutubePlayerFlags(
-          autoPlay: true,
-        ),
+        // flags: const YoutubePlayerFlags(
+        //   autoPlay: true,
+        // ),
     );
+
   }
   // --------------------
   bool _isInit = true;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:youtube_translator/services/navigation/navigators.dart';
-import 'package:youtube_translator/b_views/screens/a_home_screen.dart';
+import 'package:video_translator/services/navigation/navigators.dart';
+import 'package:video_translator/b_views/screens/a_home_screen.dart';
 
 class Routing {
   // -----------------------------------------------------------------------------

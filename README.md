@@ -1,4 +1,4 @@
-# youtube_translator
+# video_translator
 
 This app should facilitate translating a youtube video as follows
 

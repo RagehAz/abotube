@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:youtube_translator/main.dart';
-import 'package:youtube_translator/services/helpers/helper_methods.dart';
-import 'package:youtube_translator/services/navigation/routing.dart';
+import 'package:video_translator/main.dart';
+import 'package:video_translator/services/helpers/helper_methods.dart';
+import 'package:video_translator/services/navigation/routing.dart';
 
 class Nav {
   // -----------------------------------------------------------------------------

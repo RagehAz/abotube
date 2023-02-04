@@ -1,10 +1,10 @@
 import 'package:bldrs_theme/bldrs_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:super_box/super_box.dart';
-import 'package:youtube_translator/b_views/components/video_player.dart';
-import 'package:youtube_translator/b_views/components/youtube_video_player.dart';
-import 'package:youtube_translator/b_views/layout/layout.dart';
-import 'package:youtube_translator/services/navigation/navigators.dart';
+import 'package:video_translator/b_views/components/video_player.dart';
+import 'package:video_translator/b_views/components/youtube_video_player.dart';
+import 'package:video_translator/b_views/layout/layout.dart';
+import 'package:video_translator/services/navigation/navigators.dart';
 
 class HomeScreen extends StatelessWidget {
   /// --------------------------------------------------------------------------
