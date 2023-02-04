@@ -464,10 +464,10 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "9ab4bb660e0ab4c3437893ce6a6f2235848b464b"
+      resolved-ref: c1b344c133d670dbe4e694423675823091cd48b7
       url: "https://github.com/RagehAz/rest.git"
     source: git
-    version: "0.0.4"
+    version: "0.0.5"
   scale:
     dependency: "direct main"
     description:
