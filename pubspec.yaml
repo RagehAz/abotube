@@ -40,6 +40,10 @@ dependencies:
   widget_fader:
     git:
       url: https://github.com/RagehAz/widget_fader.git
+  firebase_core: ^2.4.1
+  google_sign_in: ^5.4.4
+  googleapis: ^10.0.0
+  extension_google_sign_in_as_googleapis_auth: ^2.0.7
 
 dev_dependencies:
   flutter_test:
