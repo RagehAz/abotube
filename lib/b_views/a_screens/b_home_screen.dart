@@ -1,9 +1,9 @@
 import 'package:bldrs_theme/bldrs_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:super_box/super_box.dart';
-import 'package:video_translator/b_views/components/video_player.dart';
-import 'package:video_translator/b_views/components/youtube_video_player.dart';
-import 'package:video_translator/b_views/layout/layout.dart';
+import 'package:video_translator/b_views/x_components/players/mp4_video_player.dart';
+import 'package:video_translator/b_views/x_components/players/youtube_video_player.dart';
+import 'package:video_translator/b_views/x_components/layout/layout.dart';
 import 'package:video_translator/services/navigation/navigators.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -27,7 +27,7 @@ class HomeScreen extends StatelessWidget {
             color: Colorz.bloodTest,
             onTap: () => Nav.goToNewScreen(
                 context: context,
-                screen: const VideoPlayerScreen(),
+                screen: const MP4VideoPlayerScreen(),
             ),
           ),
 

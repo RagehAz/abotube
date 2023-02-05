@@ -1,6 +1,6 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
+import 'package:video_translator/b_views/a_screens/a_youtube_translator_app.dart';
 // -----------------------------------------------------------------------------
 
 /// BLOGGING
@@ -70,5 +70,13 @@ void setNotifier({
 
   }
 
+}
+// -----------------------------------------------------------------------------
+
+/// CONTEXT
+
+// --------------------
+BuildContext getContext(){
+  return YouTubeTranslatorApp.navigatorKey.currentContext;
 }
 // --------------------------------------------------------------------------

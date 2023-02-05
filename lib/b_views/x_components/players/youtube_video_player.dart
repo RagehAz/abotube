@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:mapper/mapper.dart';
 import 'package:rest/rest.dart';
 import 'package:super_box/super_box.dart';
-import 'package:video_translator/b_views/layout/layout.dart';
+import 'package:video_translator/b_views/x_components/layout/layout.dart';
 import 'package:video_translator/services/helpers/helper_methods.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -150,36 +150,36 @@ class _YoutubePlayerScreenState extends State<YoutubePlayerScreen> {
   ///
   Future<Map<String, dynamic>> getVideoInfoFromUrl() async {
 
-        final String videoUrl = 'https://www.youtube.com/watch?v=$_videoID';
-  final RegExp regExp = RegExp(
-    r'#(?<=v=)[a-zA-Z0-9-]+(?=&)|(?<=v\/)'
-    '[^&\n]+(?=\\?)|(?<=v=)[^&\n]+|(?<=youtu.be\\/)'
-    '[^&\n]+#',
-  );
-  final match = regExp.firstMatch(videoUrl);
-  final videoId = match.group(0);
-  final String _url = 'http://www.youtube.com/get_video_info?&video_id=$videoId';
+    final String videoUrl = 'https://www.youtube.com/watch?v=$_videoID';
+    final RegExp regExp = RegExp(
+      r'#(?<=v=)[a-zA-Z0-9-]+(?=&)|(?<=v\/)'
+      '[^&\n]+(?=\\?)|(?<=v=)[^&\n]+|(?<=youtu.be\\/)'
+      '[^&\n]+#',
+    );
+    final match = regExp.firstMatch(videoUrl);
+    final videoId = match.group(0);
+    final String _url = 'http://www.youtube.com/get_video_info?&video_id=$videoId';
 
-  final http.Response response = await Rest.get(
+    final http.Response response = await Rest.get(
       context: context,
       rawLink: _url,
       invoker: 'getVideoInfoFromUrl',
-  );
+    );
 
-  final responseBody = response.body;
-  final videoInfoArray = Uri.splitQueryString(responseBody).cast<String, dynamic>();
+    final responseBody = response.body;
+    final videoInfoArray = Uri.splitQueryString(responseBody).cast<String, dynamic>();
 
-  if (videoInfoArray.containsKey('caption_tracks')) {
-    final List<String> tracks = videoInfoArray['caption_tracks'].split(',');
-    final List<Map<String, dynamic>> trackInfo = [];
+    if (videoInfoArray.containsKey('caption_tracks')) {
+      final List<String> tracks = videoInfoArray['caption_tracks'].split(',');
+      final List<Map<String, dynamic>> trackInfo = [];
 
-    for (final track in tracks) {
-      trackInfo.add(Uri.splitQueryString(track).cast<String, dynamic>());
+      for (final track in tracks) {
+        trackInfo.add(Uri.splitQueryString(track).cast<String, dynamic>());
+      }
+      return {'track_info': trackInfo};
     }
-    return {'track_info': trackInfo};
+    return {};
   }
-  return {};
-}
   // --------------------------------------------------------------------------
   @override
   Widget build(BuildContext context) {
@@ -212,6 +212,30 @@ class _YoutubePlayerScreenState extends State<YoutubePlayerScreen> {
             onTap: () async {
               final Map<String, dynamic> _map = await getVideoInfoFromUrl();
               Mapper.blogMap(_map);
+            },
+          ),
+
+          // thing
+          SuperBox(
+            height: 50,
+            verse: 'thing',
+            margins: 10,
+            onTap: () async {
+
+              String _link = 'https://checksub-downloader-doybj.ondigitalocean'
+                  '.app//manual_srt_download?url=https:%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DzQodZYvfTAA&lang=en';
+
+              _link = 'https://checksub-downloader-doybj.ondigitalocean'
+                  '.app//automatic_srt_download?url=https:%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DzQodZYvfTAA&lang=ar';
+
+              final http.Response _thing = await Rest.get(
+                  context: context,
+                  rawLink: _link,
+                  invoker: 'thing',
+              );
+
+              blog(utf8.encode(_thing.body));
+
             },
           ),
 

@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
-class VideoPlayerScreen extends StatefulWidget {
+class MP4VideoPlayerScreen extends StatefulWidget {
   /// --------------------------------------------------------------------------
-  const VideoPlayerScreen({
+  const MP4VideoPlayerScreen({
     Key key
   }) : super(key: key);
   /// --------------------------------------------------------------------------
   @override
-  _VideoPlayerScreenState createState() => _VideoPlayerScreenState();
+  _MP4VideoPlayerScreenState createState() => _MP4VideoPlayerScreenState();
 /// --------------------------------------------------------------------------
 }
 
-class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
+class _MP4VideoPlayerScreenState extends State<MP4VideoPlayerScreen> {
 
   VideoPlayerController _videoPlayerController;
   VideoPlayerValue _value;
