@@ -3,7 +3,10 @@ import 'package:bubbles/bubbles.dart';
 import 'package:flutter/material.dart';
 import 'package:numeric/numeric.dart';
 import 'package:super_box/super_box.dart';
+import 'package:video_translator/b_views/x_components/cards/video_card.dart';
 import 'package:video_translator/b_views/x_components/layout/layout.dart';
+import 'package:video_translator/services/navigation/navigators.dart';
+import 'package:video_translator/services/navigation/routing.dart';
 
 class HomeScreen extends StatelessWidget {
   /// --------------------------------------------------------------------------
@@ -49,6 +52,7 @@ class HomeScreen extends StatelessWidget {
               height: 60,
               icon: Iconz.plus,
               iconSizeFactor: 0.7,
+              onTap: () => Nav.goToRoute(context, Routing.translator),
             );
           }
 
@@ -63,33 +67,12 @@ class HomeScreen extends StatelessWidget {
             );
             final String _videoHeadline = _videos[_videoIndex];
 
-            return Bubble(
-              width: _bubbleWidth,
-              bubbleHeaderVM: BubbleHeaderVM(
-                headlineText: '$_n : $_videoHeadline',
-                headlineHeight: 40,
-                font: BldrsThemeFonts.fontBldrsHeadlineFont,
-
-              ),
-              margin: 10,
-              columnChildren: <Widget>[
-
-                SuperBox(
-                  width: _bubbleWidth - 20,
-                  height: (_bubbleWidth - 20) * 0.5,
-                  icon: Iconz.play,
-                  iconSizeFactor: 0.5,
-                  iconColor: Colorz.blue20,
-                  color: Colorz.white10,
-                  bubble: false,
-                ),
-
-              ],
+            return VideoCard(
+              loading:  false,
+              headline: '$_n : $_videoHeadline',
             );
 
-
           }
-
 
           },
       ),

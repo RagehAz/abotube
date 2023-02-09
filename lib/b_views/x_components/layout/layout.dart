@@ -1,10 +1,8 @@
-import 'package:bldrs_theme/bldrs_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:scale/scale.dart';
-import 'package:video_translator/b_views/x_components/buttons/nav_bar_button.dart';
+import 'package:video_translator/b_views/x_components/nav_bar/nav_bar.dart';
 import 'package:video_translator/services/helpers/helper_methods.dart';
 import 'package:video_translator/services/navigation/navigators.dart';
-import 'package:video_translator/services/navigation/routing.dart';
 
 class Layout extends StatelessWidget {
   /// --------------------------------------------------------------------------
@@ -81,7 +79,7 @@ class Layout extends StatelessWidget {
           /// INSETS
           resizeToAvoidBottomInset: false, /// if false : prevents keyboard from pushing pyramids up / bottom sheet
           // resizeToAvoidBottomPadding: false,
-          backgroundColor: Colorz.skyDarkBlue,
+          backgroundColor: const Color.fromRGBO(22, 28, 45, 1),
 
           body: Column(
             children: <Widget>[
@@ -93,31 +91,7 @@ class Layout extends StatelessWidget {
               ),
 
               /// NAVBAR
-              Container(
-                width: _screenWidth,
-                height: navBarHeight,
-                color: Colorz.white20,
-                child: ListView(
-                  physics: const BouncingScrollPhysics(),
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  children: const <Widget>[
-
-                    /// LAB SCREEN
-                    NavBarButton(
-                      icon: Iconz.bxPropertiesOff,
-                      route: Routing.homeRoute,
-                    ),
-
-                    /// LAB SCREEN
-                    NavBarButton(
-                      route: Routing.labRoute,
-                      icon: Iconz.lab,
-                    ),
-
-                  ],
-                ),
-              ),
+              const NavBar(),
 
             ],
           ),

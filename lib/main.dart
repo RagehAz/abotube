@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:video_translator/b_views/a_screens/a_app_starter.dart';
 import 'package:video_translator/firebase_options.dart';
 
-const String videoTranslatorAppVersion = '1.0.3';
+const String videoTranslatorAppVersion = '1.0.4';
 
 Future<void> main() async {
   // --------------------------------------------------------------------------
