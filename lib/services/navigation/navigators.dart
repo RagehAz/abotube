@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:video_translator/b_views/a_screens/a_youtube_translator_app.dart';
+import 'package:video_translator/b_views/a_screens/a_app_starter.dart';
 import 'package:video_translator/services/helpers/helper_methods.dart';
 import 'package:video_translator/services/navigation/routing.dart';
 
@@ -135,7 +135,7 @@ class Nav {
 
       if (addPostFrameCallback == true){
         SchedulerBinding.instance.addPostFrameCallback((_) {
-          final BuildContext _context = YouTubeTranslatorApp.navigatorKey.currentContext;
+          final BuildContext _context = AppStarter.navigatorKey.currentContext;
           Navigator.pop(_context, passedData);
         });
       }

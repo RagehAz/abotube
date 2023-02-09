@@ -64,7 +64,7 @@ class _TheStatefulScreenState extends State<TheStatefulScreen> {
   Widget build(BuildContext context) {
     // --------------------
     return Layout(
-      child: DummyView(
+      viewWidget: DummyView(
         title: 'Stateful',
         onTap: (){},
       ),
@@ -88,7 +88,7 @@ class TheStatelessScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     // --------------------
     return Layout(
-        child: DummyView(
+        viewWidget: DummyView(
           title: 'Stateless',
           onTap: (){},
         ),
@@ -119,14 +119,14 @@ class DummyView extends StatelessWidget {
     final double _referenceLength = Scale.screenShortestSide(context);
     // --------------------
     return Layout(
-      child: Center(
+      viewWidget: Center(
         child: SuperText(
           text: title,
           font: BldrsThemeFonts.fontBldrsHeadlineFont,
           weight: FontWeight.w400,
           italic: true,
           boxWidth: _referenceLength * 0.5,
-          lineHeight: _referenceLength * 0.1,
+          textHeight: _referenceLength * 0.1,
           maxLines: 2,
         ),
 

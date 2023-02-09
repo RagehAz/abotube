@@ -1,7 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:video_translator/b_views/a_screens/a_youtube_translator_app.dart';
+import 'package:video_translator/b_views/a_screens/a_app_starter.dart';
 import 'package:video_translator/firebase_options.dart';
+
+const String videoTranslatorAppVersion = '1.0.3';
 
 Future<void> main() async {
   // --------------------------------------------------------------------------
@@ -11,6 +13,6 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   // --------------------
-  return runApp(const YouTubeTranslatorApp());
+  return runApp(const AppStarter());
   // --------------------------------------------------------------------------
 }

@@ -1,28 +1,24 @@
 import 'package:bldrs_theme/bldrs_theme.dart';
-import 'package:extension_google_sign_in_as_googleapis_auth/extension_google_sign_in_as_googleapis_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:googleapis/youtube/v3.dart' as yt;
-import 'package:super_box/super_box.dart';
-import 'package:super_image/helpers/helpers.dart';
 import 'package:video_translator/b_views/a_screens/b_home_screen.dart';
 import 'package:video_translator/services/navigation/routing.dart';
 
-class YouTubeTranslatorApp extends StatefulWidget {
+class AppStarter extends StatefulWidget {
   /// --------------------------------------------------------------------------
-  const YouTubeTranslatorApp({Key key}) : super(key: key);
-
+  const AppStarter({
+    Key key
+  }) : super(key: key);
   /// --------------------------------------------------------------------------
   @override
-  State<YouTubeTranslatorApp> createState() => _YouTubeTranslatorAppState();
-
+  State<AppStarter> createState() => _AppStarterState();
   /// --------------------------------------------------------------------------
   static final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   /// --------------------------------------------------------------------------
 }
 
-class _YouTubeTranslatorAppState extends State<YouTubeTranslatorApp> {
+class _AppStarterState extends State<AppStarter> {
   // -----------------------------------------------------------------------------
+  /*
   /// --- LOADING
   final ValueNotifier<bool> _loading = ValueNotifier(false);
   // --------------------
@@ -33,12 +29,14 @@ class _YouTubeTranslatorAppState extends State<YouTubeTranslatorApp> {
       value: setTo,
     );
   }
+   */
   // -----------------------------------------------------------------------------
   @override
   void initState() {
     super.initState();
   }
   // --------------------
+  /*
   bool _isInit = true;
   @override
   void didChangeDependencies() {
@@ -48,14 +46,14 @@ class _YouTubeTranslatorAppState extends State<YouTubeTranslatorApp> {
         await _triggerLoading(setTo: false);
       });
     }
-
     _isInit = false;
     super.didChangeDependencies();
   }
+   */
   // --------------------
   @override
   void dispose() {
-    _loading.dispose();
+    // _loading.dispose();
     super.dispose();
   }
   // -----------------------------------------------------------------------------
@@ -63,7 +61,7 @@ class _YouTubeTranslatorAppState extends State<YouTubeTranslatorApp> {
   Widget build(BuildContext context) {
 
     return MaterialApp(
-      title: 'Youtube Translator',
+      title: 'Video Translator',
 
       /// DEBUG
       debugShowCheckedModeBanner: false,
@@ -99,73 +97,12 @@ class _YouTubeTranslatorAppState extends State<YouTubeTranslatorApp> {
       // navigatorObservers: [],
       // onGenerateInitialRoutes: ,
       // onUnknownRoute: ,
-      navigatorKey: YouTubeTranslatorApp.navigatorKey,
+      navigatorKey: AppStarter.navigatorKey,
       onGenerateRoute: Routing.allRoutes,
       initialRoute: Routing.homeRoute,
       routes: Routing.routesMap,
-
-      builder: (context, child) {
-
-        return Stack(
-
-          children: [
-            child,
-            Align(
-              alignment: Alignment.bottomRight,
-              child: FloatingActionButton(
-                backgroundColor: Colors.red,
-                onPressed: () async {
-                  final _googleSignIn = GoogleSignIn(
-                    scopes: [
-                      'email',
-                      'https://www.googleapis.com/auth/youtube.force-ssl',
-                      'https://www.googleapis.com/auth/youtubepartner'
-                    ],
-                  );
-                  try {
-                    await _googleSignIn.signIn();
-                  } catch (error) {
-                    print(error);
-                  }
-                },
-              ),
-            ),
-            Align(
-              alignment: Alignment.bottomLeft,
-              child: SuperBox(
-                height: 100,
-                width: 100,
-                color: Colors.green,
-                onTap: () async {
-                  final _googleSignIn = GoogleSignIn(
-                    scopes: [
-                      'email',
-                      yt.YouTubeApi.youtubeForceSslScope,
-                      yt.YouTubeApi.youtubepartnerScope
-                    ],
-                  );
-                  await _googleSignIn.signIn();
-                  final client = await _googleSignIn.authenticatedClient();
-                  // get captions using youtube api
-                  final yt.YouTubeApi ytApi = yt.YouTubeApi(client);
-                  final captionListResponse =
-                      await ytApi.captions.list(['id','snippet'], 'QRS8MkLhQmM');
-                  print(captionListResponse.items.first.snippet);
-
-                  // {etag: Nw8zsyeakXPebhD7p_lco001UFY, id: AUieDaZJvCxYN_YF11eqr6XSB3OMpoQa7E9sTBliDb_p6472IBA, kind: youtube#caption}
-
-                  final caption = await ytApi.captions.download(
-                    captionListResponse.items.first.id,
-                  );
-                  print(caption);
-                },
-              ),
-            )
-          ],
-
-        );
-      },
     );
+
   }
   // -----------------------------------------------------------------------------
 }

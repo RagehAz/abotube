@@ -21,8 +21,8 @@ class SmallText extends StatelessWidget {
       weight: FontWeight.w100,
       italic: true,
       maxLines: 10,
-      margin: const EdgeInsets.symmetric(horizontal: 25),
-      lineHeight: 30,
+      margins: const EdgeInsets.symmetric(horizontal: 25),
+      textHeight: 30,
     );
 
   }
@@ -47,10 +47,10 @@ class MediumText extends StatelessWidget {
       text: text,
       weight: FontWeight.w200,
       centered: false,
-      margin: const EdgeInsets.only(left: 25, right: 25, bottom: 10),
+      margins: const EdgeInsets.only(left: 25, right: 25, bottom: 10),
       maxLines: 100,
       font: BldrsThemeFonts.fontEnglishBody,
-      lineHeight: 30,
+      textHeight: 30,
     );
 
   }
@@ -73,12 +73,12 @@ class BigText extends StatelessWidget {
       boxWidth: Scale.screenWidth(context),
       text: text,
       weight: FontWeight.w600,
-      lineHeight: 45,
+      textHeight: 45,
       centered: false,
       maxLines: 2,
       italic: true,
       textColor: Colorz.yellow125,
-      margin: const EdgeInsets.only(left: 25, right: 25, bottom: 10, top: 20),
+      margins: const EdgeInsets.only(left: 25, right: 25, bottom: 10, top: 20),
       font: BldrsThemeFonts.fontEnglishHeadline,
     );
   }

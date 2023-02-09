@@ -13,10 +13,10 @@ packages:
     dependency: transitive
     description:
       name: _flutterfire_internals
-      sha256: "3ff770dfff04a67b0863dff205a0936784de1b87a5e99b11c693fc10e66a9ce3"
+      sha256: "6215ac7d00ed98300b72f45ed2b38c2ca841f9f4e6965fab33cbd591e45e4473"
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.0.12"
+    version: "1.0.13"
   archive:
     dependency: transitive
     description:
@@ -50,6 +50,15 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.1.1"
+  bubbles:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "2bcd4b11689fc3c0562d31a8ee4f063b03dc3ab5"
+      url: "https://github.com/RagehAz/bubbles.git"
+    source: git
+    version: "0.0.5"
   characters:
     dependency: transitive
     description:
@@ -58,6 +67,14 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.2.1"
+  clipboard:
+    dependency: transitive
+    description:
+      name: clipboard
+      sha256: "2ec38f0e59878008ceca0ab122e4bfde98847f88ef0f83331362ba4521f565a9"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.1.3"
   clock:
     dependency: transitive
     description:
@@ -70,26 +87,26 @@ packages:
     dependency: transitive
     description:
       name: cloud_firestore
-      sha256: a851106a2169c15614047b75ea10d0346650352c6669ab482306572aa4ed9a7d
+      sha256: "9e775f9df26a165444bd5240f70bfee6f11b35c5e913e93ed4b06bf50b231325"
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "4.3.1"
+    version: "4.3.2"
   cloud_firestore_platform_interface:
     dependency: transitive
     description:
       name: cloud_firestore_platform_interface
-      sha256: "1fac512fef2bfe84ca7f372defbd9dd8efb108be96854db9023739a5b2aa9977"
+      sha256: ab35c068896ff769ce7e8de8198228d512e7f056fc8f26b2ff53ea3f97c8545f
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "5.10.1"
+    version: "5.10.2"
   cloud_firestore_web:
     dependency: transitive
     description:
       name: cloud_firestore_web
-      sha256: "3fd9581c1447b6e8db6d0f19d0140b196a70ecf582bd1f71e7141fe9abf10ddb"
+      sha256: b7b52c2ad50d1105f2e0585a34288da415cf9d1037470985c7c57cce7b06d95f
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "3.2.1"
+    version: "3.2.2"
   collection:
     dependency: transitive
     description:
@@ -158,50 +175,50 @@ packages:
     dependency: "direct main"
     description:
       name: firebase_core
-      sha256: c129209ba55f3d4272c89fb4a4994c15bea77fb6de63a82d45fb6bc5c94e4355
+      sha256: be13e431c0c950f0fc66bdb67b41b8059121d7e7d8bbbc21fb59164892d561f8
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "2.4.1"
+    version: "2.5.0"
   firebase_core_platform_interface:
     dependency: transitive
     description:
       name: firebase_core_platform_interface
-      sha256: "5fab93f5b354648efa62e7cc829c90efb68c8796eecf87e0888cae2d5f3accd4"
+      sha256: "5615b30c36f55b2777d0533771deda7e5730e769e5d3cb7fda79e9bed86cfa55"
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "4.5.2"
+    version: "4.5.3"
   firebase_core_web:
     dependency: transitive
     description:
       name: firebase_core_web
-      sha256: "18b35ce111b0a4266abf723c825bcf9d4e2519d13638cc7f06f2a8dd960c75bc"
+      sha256: "4b3a41410f3313bb95fd560aa5eb761b6ad65c185de772c72231e8b4aeed6d18"
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "2.1.0"
+    version: "2.1.1"
   firebase_database:
     dependency: transitive
     description:
       name: firebase_database
-      sha256: d2ee0e52955cfd55ab716a48a71b85b727cde8542c4deb3a9013b2812dd1891e
+      sha256: "5fa2c5128d0057b9af2fdc9124282ce8073f73adb8b0456d78120d1e578f5cda"
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "10.0.9"
+    version: "10.0.10"
   firebase_database_platform_interface:
     dependency: transitive
     description:
       name: firebase_database_platform_interface
-      sha256: "1329ade83b77b7b3158f1e9b3d332541ec398481b5d4ad213d94de7a575c07b6"
+      sha256: d7e03c4422a82b18624f13dc3c022d2dd98f8e28e71dd265d1ac341269d8a92a
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.2.2+17"
+    version: "0.2.2+18"
   firebase_database_web:
     dependency: transitive
     description:
       name: firebase_database_web
-      sha256: "8414131490173e20b165ccbc03f2ff141d7b0f2999edb9ea48d8d77249f93e9f"
+      sha256: "383bf00aa419d283818b343845daef1b3e897fab48575ff8d93d89556ceda1cf"
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.2.1+19"
+    version: "0.2.1+20"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -253,10 +270,10 @@ packages:
     dependency: transitive
     description:
       name: google_sign_in_android
-      sha256: "197228076289e506d281328c6846b5986d929d316fc1d2c92a88bb13784faccc"
+      sha256: "612bf44d5de01f32bf127ea1c8114281075c7a39f621d1e34cf70aa069840c5c"
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "6.1.5"
+    version: "6.1.6"
   google_sign_in_ios:
     dependency: transitive
     description:
@@ -285,10 +302,10 @@ packages:
     dependency: "direct main"
     description:
       name: googleapis
-      sha256: "89c3599e9fba0c9723a7370cc67a7fccec512f136103916ffcb421e4f9ac12c9"
+      sha256: "0af31e6aba9c6a72ee9c6fd02cb10813ed16d34bbd392b500fb147d64558f95d"
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "10.0.0"
+    version: "10.1.0"
   googleapis_auth:
     dependency: transitive
     description:
@@ -329,6 +346,14 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "3.3.0"
+  intl:
+    dependency: transitive
+    description:
+      name: intl
+      sha256: "910f85bce16fb5c6f614e117efa303e85a1731bb0081edf3604a2ae6e9a3cc91"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.17.0"
   js:
     dependency: transitive
     description:
@@ -395,14 +420,23 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.8.0"
+  numeric:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "6ecfcec52c458939b5785a2b2e8574071515b3e0"
+      url: "https://github.com/RagehAz/numeric.git"
+    source: git
+    version: "1.0.5"
   package_info_plus:
     dependency: transitive
     description:
       name: package_info_plus
-      sha256: f619162573096d428ccde2e33f92e05b5a179cd6f0e3120c1005f181bee8ed16
+      sha256: "8df5ab0a481d7dc20c0e63809e90a588e496d276ba53358afc4c4443d0a00697"
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "3.0.2"
+    version: "3.0.3"
   package_info_plus_platform_interface:
     dependency: transitive
     description:
@@ -553,10 +587,10 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "7f9c66634aea180d64f57e382b461014f4219ce9"
+      resolved-ref: "3c956a386799f28539fef7f45056ccbf12acb66b"
       url: "https://github.com/RagehAz/scale.git"
     source: git
-    version: "0.0.3"
+    version: "0.0.6"
   sembast:
     dependency: transitive
     description:
@@ -602,15 +636,24 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.2.0"
+  stringer:
+    dependency: transitive
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "6132c17232f0e507931a38c54c81d690aa9c0506"
+      url: "https://github.com/RagehAz/stringer.git"
+    source: git
+    version: "1.0.1"
   super_box:
     dependency: "direct main"
     description:
       path: "."
       ref: HEAD
-      resolved-ref: d3d64890d356156e5f55fed76bce54771a053515
+      resolved-ref: e759292febc90d35f311ca5ffa7ca1cc80f23b71
       url: "https://github.com/RagehAz/super_box.git"
     source: git
-    version: "0.0.3"
+    version: "1.0.6"
   super_image:
     dependency: "direct main"
     description:
@@ -625,10 +668,19 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: d41c20296fb904c17e53bc6fe33ba4f337abb1e4
+      resolved-ref: "2e0eb04911edf3a51992cf6d6625291f8fcb57bd"
       url: "https://github.com/RagehAz/super_text.git"
     source: git
-    version: "0.0.3"
+    version: "0.0.11"
+  super_text_field:
+    dependency: transitive
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "72bd4b2b4b46d02fe1851cead12ca77af0a920d7"
+      url: "https://github.com/RagehAz/super_text_field.git"
+    source: git
+    version: "0.0.7"
   synchronized:
     dependency: transitive
     description:

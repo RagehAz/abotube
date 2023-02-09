@@ -185,7 +185,7 @@ class _YoutubePlayerScreenState extends State<YoutubePlayerScreen> {
   Widget build(BuildContext context) {
     // --------------------
     return Layout(
-      child: ListView(
+      viewWidget: ListView(
         children: <Widget>[
 
           YoutubePlayer(
@@ -197,7 +197,7 @@ class _YoutubePlayerScreenState extends State<YoutubePlayerScreen> {
 
           SuperBox(
             height: 50,
-            verse: 'Get Transcription',
+            text: 'Get Transcription',
             margins: 10,
             onTap: () async {
               final Map<String, dynamic> _map = await getTranscriptAndTimestamps();
@@ -207,7 +207,7 @@ class _YoutubePlayerScreenState extends State<YoutubePlayerScreen> {
 
           SuperBox(
             height: 50,
-            verse: 'getVideoInfoFromUrl',
+            text: 'getVideoInfoFromUrl',
             margins: 10,
             onTap: () async {
               final Map<String, dynamic> _map = await getVideoInfoFromUrl();
@@ -218,7 +218,7 @@ class _YoutubePlayerScreenState extends State<YoutubePlayerScreen> {
           // thing
           SuperBox(
             height: 50,
-            verse: 'thing',
+            text: 'thing',
             margins: 10,
             onTap: () async {
 

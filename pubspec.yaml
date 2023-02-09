@@ -1,14 +1,19 @@
 name: video_translator
 description: A platform that translate youtube videos to arabic
 publish_to: 'none'
-version: 1.0.2
+# --------------------------------------------------------------------------------
+version: 1.0.3
+# INSTRUCTIONS WHEN CHANGING APP VERSION
+# -> change in ios/runner/info.pList : ( CFBundleVersion )
+# -> change in main.dart : ( videoTranslatorAppVersion )
+# --------------------------------------------------------------------------------
 environment:
   sdk: ">=2.10.5 <3.0.0"
-
+# --------------------------------------------------------------------------------
 dependencies:
   flutter:
     sdk: flutter
-
+# ---------------------------
   video_player: ^2.2.10
   youtube_player_flutter: ^8.1.2
   page_transition: ^2.0.4
@@ -17,7 +22,7 @@ dependencies:
   google_sign_in: ^5.4.4
   googleapis: ^10.0.0
   extension_google_sign_in_as_googleapis_auth: ^2.0.7
-
+# ---------------------------
   super_image:
     git:
       url: https://github.com/RagehAz/super_image.git
@@ -45,12 +50,17 @@ dependencies:
   widget_fader:
     git:
       url: https://github.com/RagehAz/widget_fader.git
-
+  bubbles:
+    git:
+      url: https://github.com/RagehAz/bubbles.git
+  numeric:
+    git:
+      url: https://github.com/RagehAz/numeric.git
+# --------------------------------------------------------------------------------
 dev_dependencies:
   flutter_test:
     sdk: flutter
   lint: ^1.0.0
-
 # --------------------------------------------------------------------------------
 flutter:
   uses-material-design: true

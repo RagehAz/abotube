@@ -3,36 +3,37 @@ import 'package:flutter/material.dart';
 import 'package:scale/scale.dart';
 import 'package:super_box/super_box.dart';
 
-class Button extends StatelessWidget {
+class LabButton extends StatelessWidget {
   // --------------------------------------------------------------------------
-  const Button({
+  const LabButton({
     @required this.text,
     @required this.icon,
     @required this.onTap,
     Key key
   }) : super(key: key);
   // --------------------------------------------------------------------------
-  final String text;
   final String icon;
+  final String text;
   final Function onTap;
   // --------------------------------------------------------------------------
   @override
   Widget build(BuildContext context) {
-
+    // --------------------
+    const double _buttonHeight = 50;
     final double _referenceLength = Scale.screenShortestSide(context);
-    final double _buttonHeight = _referenceLength * 0.08;
-    final double _buttonWidth = _referenceLength * 0.4;
-
+    final double _buttonWidth = _referenceLength * 0.7;
+    // --------------------
     return SuperBox(
       height: _buttonHeight,
       width: _buttonWidth,
       text: text,
+      color: Colorz.black200,
       icon: icon,
-      iconSizeFactor: 0.5,
-      color: Colorz.black255,
+      iconSizeFactor: 0.6,
+      margins: 5,
+      textCentered: false,
       onTap: onTap,
     );
-
   }
-// --------------------------------------------------------------------------
+  // --------------------------------------------------------------------------
 }
