@@ -37,7 +37,8 @@ class ProgressButton extends StatelessWidget {
       bubble: false,
       textCentered: false,
       textItalic: true,
-
+      loading: status == ProgressStatus.processing,
+      onTap: onTap,
     );
 
   }

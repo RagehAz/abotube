@@ -211,7 +211,7 @@ class _TranslatorScreenState extends State<TranslatorScreen> {
     /// SET LOADING AND PROGRESS
     _setProgress(
         newModel: _progress.copyWith(
-        voiceGenerated: ProgressStatus.done,
+        voiceGenerated: ProgressStatus.error,
       )
     );
 
@@ -267,35 +267,35 @@ class _TranslatorScreenState extends State<TranslatorScreen> {
           ProgressButton(
             text: 'Separated Video from Original Audio',
             status: _progress.separating,
-            onTap: () => blog('fuck you'),
+            onTap: () => blog('separation : fuck you'),
           ),
 
           /// 2- GOT TRANSCRIPT
           ProgressButton(
             text: 'Got transcript',
             status: _progress.getTranscript,
-            onTap: () => blog('fuck you'),
+            onTap: () => blog('transcript : fuck you'),
           ),
 
           /// 3- Translation Done
           ProgressButton(
             text: 'Translation Done',
             status: _progress.translation,
-            onTap: () => blog('fuck you'),
+            onTap: () => blog('translation : fuck you'),
           ),
 
           /// 4 - Speech Generated
           ProgressButton(
             text: 'Ai Speech Audio generated',
             status: _progress.voiceGenerated,
-            onTap: () => blog('fuck you'),
+            onTap: () => blog('speech : fuck you'),
           ),
 
           /// 5 - Combined new Video
           ProgressButton(
             text: 'Combined new Audio with Original Video',
             status: _progress.combined,
-            onTap: () => blog('fuck you'),
+            onTap: () => blog('combine : fuck you'),
           ),
 
           /// SPACER
