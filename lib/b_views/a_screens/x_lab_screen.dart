@@ -1,8 +1,14 @@
+import 'dart:convert';
+
 import 'package:bldrs_theme/bldrs_theme.dart';
+import 'package:bubbles/bubbles.dart';
 import 'package:extension_google_sign_in_as_googleapis_auth/extension_google_sign_in_as_googleapis_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/youtube/v3.dart' as yt;
+import 'package:http/http.dart' as http;
+import 'package:mapper/mapper.dart';
+import 'package:rest/rest.dart';
 import 'package:video_translator/b_views/x_components/buttons/lab_button.dart';
 import 'package:video_translator/b_views/x_components/layout/floating_list.dart';
 import 'package:video_translator/b_views/x_components/layout/layout.dart';
@@ -24,6 +30,8 @@ class LabScreen extends StatelessWidget {
       viewWidget: FloatingList(
         columnChildren: <Widget>[
 
+          const DotSeparator(),
+
           /// GO TO MP4 PLAYER
           LabButton(
             text: 'Go to MP4 Player',
@@ -41,13 +49,16 @@ class LabScreen extends StatelessWidget {
             ),
           ),
 
-          /// DOWNLOAD CAPTION
+          const DotSeparator(),
+
+          /// DOWNLOAD CAPTION BY YOUTUBE API
           LabButton(
             text: 'Download Caption by YouTube API',
             icon: Iconz.arrowDown,
             onTap: () async {
 
-              final _googleSignIn = GoogleSignIn(
+              /// INITIALIZE GOOGLE SIGN IN
+              final GoogleSignIn _googleSignIn = GoogleSignIn(
                 scopes: [
                   'email',
                   yt.YouTubeApi.youtubeForceSslScope,
@@ -55,20 +66,28 @@ class LabScreen extends StatelessWidget {
                 ],
               );
 
+              /// SIGN IN
               await _googleSignIn.signIn();
+
+              /// GET AUTH CLIENT
+              /*
+                  import 'package:googleapis_auth/googleapis_auth.dart' as gapis;
+                  gapis.AuthClient
+               */
               final client = await _googleSignIn.authenticatedClient();
 
-              /// get captions using youtube api
+              /// GET YOUTUBE API BY CLIENT
               final yt.YouTubeApi ytApi = yt.YouTubeApi(client);
-              final captionListResponse = await ytApi.captions.list(['id', 'snippet'], 'QRS8MkLhQmM');
-              blog(captionListResponse.items.first.snippet);
 
+              /// GET CAPTIONS
+              final yt.CaptionListResponse captionListResponse = await ytApi.captions.list(['id', 'snippet'], 'QRS8MkLhQmM');
+              blog(captionListResponse.items.first.snippet);
               // {etag: Nw8zsyeakXPebhD7p_lco001UFY, id: AUieDaZJvCxYN_YF11eqr6XSB3OMpoQa7E9sTBliDb_p6472IBA, kind: youtube#caption}
 
-              final caption = await ytApi.captions.download(
+              /// DOWNLOAD CAPTION
+              final yt.Media caption = await ytApi.captions.download(
                 captionListResponse.items.first.id,
               );
-
               blog(caption);
 
             },
@@ -80,24 +99,171 @@ class LabScreen extends StatelessWidget {
             icon: Iconz.comGooglePlay,
             onTap: () async {
 
-                  final _googleSignIn = GoogleSignIn(
-                    scopes: [
-                      'email',
-                      'https://www.googleapis.com/auth/youtube.force-ssl',
-                      'https://www.googleapis.com/auth/youtubepartner'
-                    ],
-                  );
+              /// INITIALIZE GOOGLE SIGN IN
+              final GoogleSignIn _googleSignIn = GoogleSignIn(
+                scopes: [
+                  'email',
+                  'https://www.googleapis.com/auth/youtube.force-ssl',
+                  'https://www.googleapis.com/auth/youtubepartner'
+                ],
+              );
 
-                  try {
-                    await _googleSignIn.signIn();
-                  }
+              try {
+                await _googleSignIn.signIn();
+              }
 
-                  on Exception catch (error) {
-                    blog(error);
-                  }
+              on Exception catch (error) {
+                blog(error);
+              }
 
                 },
           ),
+
+          const DotSeparator(),
+
+          /// GET TRANSCRIPTION BY GET REQUEST
+          LabButton(
+            text: 'Get Transcription by GET request',
+            icon: Iconz.comWebsite,
+            onTap: () async {
+
+              const String _videoID = 'mqaODYJ702s';
+
+              const String apiKey = 'AIzaSyA32TxS3tQeMZGPEf8y9pvgrLo5rGpz0fs';
+
+              String _url = 'https://www.googleapis.com/youtube/v3/captions?part=snippet&videoId=$_videoID&key=$apiKey';
+              _url = 'https://www.googleapis.com/youtube/v3/captions?videoId=$_videoID&part=snippet&key=$apiKey';
+
+              final http.Response _response = await Rest.get(
+                context: context,
+                rawLink: _url,
+                invoker: 'getTranscriptAndTimestamps',
+              );
+
+              if (_response.statusCode == 200) {
+
+                final Map<String, dynamic> data = json.decode(_response.body);
+
+                Mapper.blogMap(data);
+
+                final List<dynamic> _items = data['items'];
+                for (int i = 0; i < _items.length; i++) {
+                  blog('item: ${i + 1} : BLOG');
+                  final Map<String, dynamic> _map = _items[i];
+                  Mapper.blogMap(_map);
+                }
+
+                final String _theID = _items[1]['id'];
+                // String _url2 = 'https://www.googleapis.com/youtube/v3/captions/id?id=$_theID';
+                // final String _url2 = 'https://www.googleapis.com/youtube/v3/captions?part=snippet&id=$_theID&key=$apiKey';
+                // final String _url2 = 'https://www.googleapis.com/youtube/v3/captions?part=snippet&videoId=$_videoID&key=$apiKey';
+
+                final String _url2 = 'http://gdata.youtube.com/feeds/api/videos/$_videoID/captiondata/$_theID';
+
+                final http.Response _response2 = await Rest.get(
+                  context: context,
+                  rawLink: _url2,
+                  invoker: 'getTranscriptAndTimestamps 2 ',
+                );
+
+                blog('the response : ${_response2.body}');
+
+                // final transcriptWithTimestamps = <String, dynamic>{};
+                // for (final item in data['items']) {
+                //   final textTrack = item['snippet'];
+                //   final text = textTrack['textDisplay'];
+                //   final start = textTrack['startTime'];
+                //   final duration = textTrack['duration'];
+                //
+                //   transcriptWithTimestamps[text] = {
+                //     'start': start,
+                //     'duration': duration,
+                //   };
+                // }
+                //
+                // return transcriptWithTimestamps;
+
+                return null;
+              }
+
+              else {
+                blog('could not get transcription');
+                return null;
+              }
+
+            },
+          ),
+
+          /// GET VIDEO INFO API
+          LabButton(
+            text: 'Get Video Info API',
+            icon: Iconz.comWebsite,
+            onTap: () async {
+
+              const String _videoID = 'mqaODYJ702s';
+
+              const String videoUrl = 'https://www.youtube.com/watch?v=$_videoID';
+
+              final RegExp regExp = RegExp(
+                r'#(?<=v=)[a-zA-Z0-9-]+(?=&)|(?<=v\/)'
+                '[^&\n]+(?=\\?)|(?<=v=)[^&\n]+|(?<=youtu.be\\/)'
+                '[^&\n]+#',
+              );
+              final match = regExp.firstMatch(videoUrl);
+              final videoId = match.group(0);
+              final String _url = 'http://www.youtube.com/get_video_info?&video_id=$videoId';
+
+              final http.Response response = await Rest.get(
+                context: context,
+                rawLink: _url,
+                invoker: 'getVideoInfoFromUrl',
+              );
+
+              final responseBody = response.body;
+              final videoInfoArray = Uri.splitQueryString(responseBody).cast<String, dynamic>();
+
+              if (videoInfoArray.containsKey('caption_tracks')) {
+                final List<String> tracks = videoInfoArray['caption_tracks'].split(',');
+                final List<Map<String, dynamic>> trackInfo = [];
+
+                for (final track in tracks) {
+                  trackInfo.add(Uri.splitQueryString(track).cast<String, dynamic>());
+                }
+                return {'track_info': trackInfo};
+              }
+
+              return {};
+            },
+
+          ),
+
+          /// CHECK SUB DOWNLOADER
+          LabButton(
+            text: 'checksub downloader API',
+            icon: Iconz.comWebsite,
+            onTap: () async {
+
+              // const String _videoID = 'mqaODYJ702s';
+
+              String _link = 'https://checksub-downloader-doybj.ondigitalocean'
+                  '.app//manual_srt_download?url=https:%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DzQodZYvfTAA&lang=en';
+
+              _link = 'https://checksub-downloader-doybj.ondigitalocean'
+                  '.app//automatic_srt_download?url=https:%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DzQodZYvfTAA&lang=ar';
+
+              final http.Response _thing = await Rest.get(
+                  context: context,
+                  rawLink: _link,
+                  invoker: 'thing',
+              );
+
+              blog(utf8.encode(_thing.body));
+
+            },
+
+          ),
+
+          const DotSeparator(),
 
         ],
       ),

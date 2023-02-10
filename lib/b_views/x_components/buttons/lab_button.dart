@@ -31,6 +31,7 @@ class LabButton extends StatelessWidget {
       icon: icon,
       iconSizeFactor: 0.6,
       margins: 5,
+      textMaxLines: 2,
       textCentered: false,
       onTap: onTap,
     );
