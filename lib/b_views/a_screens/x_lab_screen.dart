@@ -21,12 +21,12 @@ import 'package:video_translator/b_views/x_components/layout/layout.dart';
 import 'package:video_translator/services/helpers/helper_methods.dart';
 import 'package:video_translator/services/navigation/navigators.dart';
 import 'package:video_translator/services/protocols/youtube_protocols.dart';
+import 'package:flutter_ffmpeg/flutter_ffmpeg.dart';
 
 class LabScreen extends StatelessWidget {
   // --------------------------------------------------------------------------
-  const LabScreen({
-    Key key
-  }) : super(key: key);
+  const LabScreen({Key key}) : super(key: key);
+
   // --------------------------------------------------------------------------
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,6 @@ class LabScreen extends StatelessWidget {
     return Layout(
       viewWidget: FloatingList(
         columnChildren: <Widget>[
-
           const DotSeparator(),
 
           /// GO TO MP4 PLAYER
@@ -64,7 +63,6 @@ class LabScreen extends StatelessWidget {
             text: 'Download Caption by YouTube API',
             icon: Iconz.arrowDown,
             onTap: () async {
-
               /// INITIALIZE GOOGLE SIGN IN
               final GoogleSignIn _googleSignIn = GoogleSignIn(
                 scopes: [
@@ -88,7 +86,8 @@ class LabScreen extends StatelessWidget {
               final yt.YouTubeApi ytApi = yt.YouTubeApi(client);
 
               /// GET CAPTIONS
-              final yt.CaptionListResponse captionListResponse = await ytApi.captions.list(['id', 'snippet'], 'QRS8MkLhQmM');
+              final yt.CaptionListResponse captionListResponse =
+                  await ytApi.captions.list(['id', 'snippet'], 'QRS8MkLhQmM');
               blog(captionListResponse.items.first.snippet);
               // {etag: Nw8zsyeakXPebhD7p_lco001UFY, id: AUieDaZJvCxYN_YF11eqr6XSB3OMpoQa7E9sTBliDb_p6472IBA, kind: youtube#caption}
 
@@ -97,7 +96,6 @@ class LabScreen extends StatelessWidget {
                 captionListResponse.items.first.id,
               );
               blog(caption);
-
             },
           ),
 
@@ -107,7 +105,6 @@ class LabScreen extends StatelessWidget {
             text: 'Sign in by google',
             icon: Iconz.comGooglePlay,
             onTap: () async {
-
               /// INITIALIZE GOOGLE SIGN IN
               final GoogleSignIn _googleSignIn = GoogleSignIn(
                 scopes: [
@@ -119,13 +116,10 @@ class LabScreen extends StatelessWidget {
 
               try {
                 await _googleSignIn.signIn();
-              }
-
-              on Exception catch (error) {
+              } on Exception catch (error) {
                 blog(error);
               }
-
-                },
+            },
           ),
 
           const DotSeparator(),
@@ -136,13 +130,14 @@ class LabScreen extends StatelessWidget {
             text: 'Get Transcription by GET request',
             icon: Iconz.comWebsite,
             onTap: () async {
-
               const String _videoID = 'mqaODYJ702s';
 
               const String apiKey = 'AIzaSyA32TxS3tQeMZGPEf8y9pvgrLo5rGpz0fs';
 
-              String _url = 'https://www.googleapis.com/youtube/v3/captions?part=snippet&videoId=$_videoID&key=$apiKey';
-              _url = 'https://www.googleapis.com/youtube/v3/captions?videoId=$_videoID&part=snippet&key=$apiKey';
+              String _url =
+                  'https://www.googleapis.com/youtube/v3/captions?part=snippet&videoId=$_videoID&key=$apiKey';
+              _url =
+                  'https://www.googleapis.com/youtube/v3/captions?videoId=$_videoID&part=snippet&key=$apiKey';
 
               final http.Response _response = await Rest.get(
                 context: context,
@@ -151,7 +146,6 @@ class LabScreen extends StatelessWidget {
               );
 
               if (_response.statusCode == 200) {
-
                 final Map<String, dynamic> data = json.decode(_response.body);
 
                 Mapper.blogMap(data);
@@ -168,7 +162,8 @@ class LabScreen extends StatelessWidget {
                 // final String _url2 = 'https://www.googleapis.com/youtube/v3/captions?part=snippet&id=$_theID&key=$apiKey';
                 // final String _url2 = 'https://www.googleapis.com/youtube/v3/captions?part=snippet&videoId=$_videoID&key=$apiKey';
 
-                final String _url2 = 'http://gdata.youtube.com/feeds/api/videos/$_videoID/captiondata/$_theID';
+                final String _url2 =
+                    'http://gdata.youtube.com/feeds/api/videos/$_videoID/captiondata/$_theID';
 
                 final http.Response _response2 = await Rest.get(
                   context: context,
@@ -194,13 +189,10 @@ class LabScreen extends StatelessWidget {
                 // return transcriptWithTimestamps;
 
                 return null;
-              }
-
-              else {
+              } else {
                 blog('could not get transcription');
                 return null;
               }
-
             },
           ),
 
@@ -210,7 +202,6 @@ class LabScreen extends StatelessWidget {
             text: 'Get Video Info API',
             icon: Iconz.comWebsite,
             onTap: () async {
-
               const String _videoID = 'mqaODYJ702s';
 
               const String videoUrl = 'https://www.youtube.com/watch?v=$_videoID';
@@ -245,7 +236,6 @@ class LabScreen extends StatelessWidget {
 
               return {};
             },
-
           ),
 
           /// CHECK SUB DOWNLOADER
@@ -254,7 +244,6 @@ class LabScreen extends StatelessWidget {
             text: 'checksub downloader API',
             icon: Iconz.comWebsite,
             onTap: () async {
-
               // const String _videoID = 'mqaODYJ702s';
 
               String _link = 'https://checksub-downloader-doybj.ondigitalocean'
@@ -264,15 +253,13 @@ class LabScreen extends StatelessWidget {
                   '.app//automatic_srt_download?url=https:%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DzQodZYvfTAA&lang=ar';
 
               final http.Response _thing = await Rest.get(
-                  context: context,
-                  rawLink: _link,
-                  invoker: 'thing',
+                context: context,
+                rawLink: _link,
+                invoker: 'thing',
               );
 
               blog(utf8.encode(_thing.body));
-
             },
-
           ),
 
           const DotSeparator(),
@@ -283,34 +270,27 @@ class LabScreen extends StatelessWidget {
             text: 'EXTRACT youtube Video and open viewer',
             icon: Iconz.comYoutube,
             onTap: () async {
-
               // ignore: constant_identifier_names
               const String youTube_link = 'https://www.youtube.com/watch?v=WrK_Vnl3S-0';
               String link;
 
               try {
-
                 link = await FlutterYoutubeDownloader.extractYoutubeLink(youTube_link, 18);
 
-                if (link != null){
+                if (link != null) {
                   await Nav.goToNewScreen(
                     context: context,
                     screen: VideoPlayerScreen(
                       url: link,
                     ),
-                );
+                  );
                 }
-
-              }
-
-              on PlatformException {
+              } on PlatformException {
                 link = 'Failed to Extract YouTube Video Link.';
               }
 
               blog('link : $link');
-
             },
-
           ),
 
           /// DOWNLOAD YOUTUBE VIDEO
@@ -319,26 +299,24 @@ class LabScreen extends StatelessWidget {
             text: 'Download youtube Video to device',
             icon: Iconz.arrowDown,
             onTap: () async {
-
               await YoutubeProtocols.downloadYoutubeVideo(
                 url: 'https://m.youtube.com/watch?v=dAHqcEnPIXw',
                 videoTitle: 'test video',
               );
-
             },
-
           ),
 
           const DotSeparator(),
 
-          /// OPEN YOUTUBE.COM
+          /// PICK VIDEO FROM GALLERY
           LabButton(
-            worksPerfect: false,
+            worksPerfect: true,
             text: 'Pick video from Gallery',
             icon: Iconz.fingerTap,
             onTap: () async {
+              final ImagePicker _picker = ImagePicker();
 
-              final ImagePicker _picker = ImagePicker(); /// TASK : NEED TO BE SINGLETON
+              /// TASK : NEED TO BE SINGLETON
               final XFile image = await _picker.pickVideo(
                 source: ImageSource.gallery,
                 // maxDuration:,
@@ -346,7 +324,7 @@ class LabScreen extends StatelessWidget {
               );
               final File _file = File(image.path);
 
-              if (_file != null){
+              if (_file != null) {
                 await Nav.goToNewScreen(
                   context: context,
                   screen: VideoPlayerScreen(
@@ -354,13 +332,39 @@ class LabScreen extends StatelessWidget {
                   ),
                 );
               }
+            },
+          ),
+
+          /// PICK VIDEO FROM GALLERY
+          LabButton(
+            worksPerfect: true,
+            text: 'Separate Video from audio',
+            icon: Iconz.filter,
+            onTap: () async {
+              final ImagePicker _picker = ImagePicker();
+
+              /// TASK : NEED TO BE SINGLETON
+              final XFile image = await _picker.pickVideo(
+                source: ImageSource.gallery,
+                // maxDuration:,
+                // preferredCameraDevice: ,
+              );
+              final File _file = File(image.path);
+
+              /// TASK : SHOULD GET PROPER PATHS
+              const String videoFilePath = '/path/to/video.mp4';
+              const String audioFilePath = '/path/to/audio.aac';
+
+              await extractAudioAndSaveVideo(
+                  audioPath: audioFilePath,
+                  videoFile: _file,
+                  videoPath: videoFilePath,
+              );
 
             },
-
           ),
 
           const DotSeparator(),
-
         ],
       ),
     );
@@ -368,3 +372,36 @@ class LabScreen extends StatelessWidget {
   }
 // --------------------------------------------------------------------------
 }
+
+Future<void> extractAudioAndSaveVideo({
+  @required File videoFile,
+  @required String audioPath,
+  @required String videoPath,
+}) async {
+  final FlutterFFmpeg _flutterFFmpeg = FlutterFFmpeg();
+
+  String cmd = '-i ${videoFile.path} -vn -acodec copy $audioPath';
+
+  int rc = await _flutterFFmpeg.execute(cmd);
+
+  if (rc == 0) {
+    blog('Audio extracted successfully');
+    cmd = '-i ${videoFile.path} -an -vcodec copy $videoPath';
+    rc = await _flutterFFmpeg.execute(cmd);
+    if (rc == 0) {
+      blog('Video without audio saved successfully');
+    } else {
+      blog('Failed to save video without audio');
+    }
+  } else {
+    blog('Failed to extract audio');
+  }
+}
+
+// Future<void> thing() async {
+//   final FlutterFFmpeg _flutterFFmpeg = FlutterFFmpeg();
+//
+//   const String videoFilePath = '/path/to/video.mp4';
+//   const String audioFilePath = '/path/to/audio.aac';
+//   const String cmd = '-i $videoFilePath -vn -acodec copy $audioFilePath';
+// }

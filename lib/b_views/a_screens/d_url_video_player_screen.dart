@@ -43,6 +43,23 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   void initState() {
     super.initState();
 
+    _initializeVideo();
+
+  }
+  // --------------------
+  @override
+  void dispose() {
+    _videoPlayerController.dispose();
+    super.dispose();
+  }
+  // --------------------------------------------------------------------------
+
+  /// INITIALIZATION
+
+  // --------------------
+  /// TESTED : WORKS PERFECT
+  void _initializeVideo(){
+
     _link = widget.url ?? 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
 
     if (widget.url != null){
@@ -65,12 +82,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       ..addListener(() => setState(() => _videoValue = _videoPlayerController.value));
     }
 
-  }
-  // --------------------
-  @override
-  void dispose() {
-    _videoPlayerController.dispose();
-    super.dispose();
   }
   // --------------------------------------------------------------------------
 
