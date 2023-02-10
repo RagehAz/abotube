@@ -36,7 +36,6 @@ class HomeScreen extends StatelessWidget {
     ];
 
     return Layout(
-      canGoBack: false,
       viewWidget: ListView.builder(
         physics: const BouncingScrollPhysics(),
         itemCount: _videos.length + 1,

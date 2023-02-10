@@ -95,28 +95,33 @@ class FloatingList extends StatelessWidget {
     @required this.columnChildren,
     this.crossAxisAlignment,
     this.mainAxisAlignment,
+    this.scrollDirection = Axis.vertical,
     Key key
   }) : super(key: key);
   /// --------------------------------------------------------------------------
   final List<Widget> columnChildren;
   final MainAxisAlignment mainAxisAlignment;
   final CrossAxisAlignment crossAxisAlignment;
+  final Axis scrollDirection;
   /// --------------------------------------------------------------------------
   static const EdgeInsets stratosphereSandwich = EdgeInsets.only(top: Ratioz.stratosphere, bottom: Ratioz.horizon);
-
+  /// --------------------------------------------------------------------------
   @override
   Widget build(BuildContext context) {
     // --------------------
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
+      scrollDirection: scrollDirection,
       child: Container(
         width: Scale.screenWidth(context),
         constraints: BoxConstraints(
           minHeight: Scale.screenHeight(context),
         ),
         alignment: Alignment.center,
-        padding: stratosphereSandwich,
-        child: Column(
+        padding: scrollDirection == Axis.vertical ? stratosphereSandwich : EdgeInsets.zero,
+        child:
+        scrollDirection == Axis.vertical ?
+        Column(
           mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.center,
           crossAxisAlignment: crossAxisAlignment ?? CrossAxisAlignment.center,
           children: <Widget>[
@@ -124,7 +129,19 @@ class FloatingList extends StatelessWidget {
             ...columnChildren,
 
           ],
-        ),
+        )
+
+            :
+
+        Row(
+          mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.center,
+          crossAxisAlignment: crossAxisAlignment ?? CrossAxisAlignment.center,
+          children: <Widget>[
+
+            ...columnChildren,
+
+          ],
+        )
       ),
     );
     // --------------------

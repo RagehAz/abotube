@@ -98,8 +98,9 @@ class _TranslatorScreenState extends State<TranslatorScreen> {
     super.dispose();
   }
   // --------------------
-  /// TASK : WRITE ME
+  /// TESTED : WORKS PERFECT
   Future<void> _onPaste() async {
+
 
     /// PASTE TEXT
     final String value = await TextClipBoard.paste();

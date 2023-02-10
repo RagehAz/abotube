@@ -8,7 +8,7 @@ class Layout extends StatelessWidget {
   /// --------------------------------------------------------------------------
   const Layout({
     @required this.viewWidget,
-    this.canGoBack = true,
+    this.canGoBack = false,
     Key key
   }) : super(key: key);
   /// --------------------------------------------------------------------------

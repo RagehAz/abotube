@@ -10,10 +10,10 @@ import 'package:googleapis/youtube/v3.dart' as yt;
 import 'package:http/http.dart' as http;
 import 'package:mapper/mapper.dart';
 import 'package:rest/rest.dart';
+import 'package:video_translator/b_views/a_screens/url_video_player_screen.dart';
 import 'package:video_translator/b_views/x_components/buttons/lab_button.dart';
 import 'package:video_translator/b_views/x_components/layout/floating_list.dart';
 import 'package:video_translator/b_views/x_components/layout/layout.dart';
-import 'package:video_translator/b_views/x_components/players/mp4_video_player.dart';
 import 'package:video_translator/b_views/x_components/players/youtube_video_player.dart';
 import 'package:video_translator/services/helpers/helper_methods.dart';
 import 'package:video_translator/services/navigation/navigators.dart';
@@ -38,7 +38,7 @@ class LabScreen extends StatelessWidget {
           LabButton(
             text: 'Go to MP4 Player',
             icon: Iconz.play,
-            onTap: () => Nav.goToNewScreen(context: context, screen: const MP4VideoPlayerScreen()),
+            onTap: () => Nav.goToNewScreen(context: context, screen: const URLVideoPlayerScreen()),
           ),
 
           /// GO TO YOUTUBE PLAYER
@@ -274,7 +274,7 @@ class LabScreen extends StatelessWidget {
             onTap: () async {
 
               // ignore: constant_identifier_names
-              const String youTube_link = 'https://www.youtube.com/watch?v=1GXacjZyGyQ';
+              const String youTube_link = 'https://www.youtube.com/watch?v=WrK_Vnl3S-0';
               String link;
 
               try {
@@ -284,8 +284,8 @@ class LabScreen extends StatelessWidget {
                 if (link != null){
                   await Nav.goToNewScreen(
                     context: context,
-                    screen: MP4VideoPlayerScreen(
-                      link: link,
+                    screen: URLVideoPlayerScreen(
+                      url: link,
                     ),
                 );
                 }
