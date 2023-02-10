@@ -6,6 +6,7 @@ import 'package:video_translator/a_models/translation_progress_model.dart';
 import 'package:video_translator/b_views/x_components/buttons/progress_button.dart';
 import 'package:video_translator/b_views/x_components/cards/video_card.dart';
 import 'package:video_translator/b_views/x_components/layout/layout.dart';
+import 'package:video_translator/services/helpers/former.dart';
 import 'package:video_translator/services/helpers/helper_methods.dart';
 
 class TranslatorScreen extends StatefulWidget {
@@ -20,6 +21,8 @@ class TranslatorScreen extends StatefulWidget {
 }
 
 class _TranslatorScreenState extends State<TranslatorScreen> {
+  // -----------------------------------------------------------------------------
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   // -----------------------------------------------------------------------------
   bool _loading = false;
   // --------------------
@@ -94,7 +97,7 @@ class _TranslatorScreenState extends State<TranslatorScreen> {
     _textController.dispose();
     super.dispose();
   }
-  // --------------------------------------------------------------------------
+  // --------------------
   /// TASK : WRITE ME
   Future<void> _onPaste() async {
 
@@ -102,7 +105,20 @@ class _TranslatorScreenState extends State<TranslatorScreen> {
     final String value = await TextClipBoard.paste();
     _textController.text = value;
 
-    /// START LOADING
+    final bool _isValid = Formers.validateForm(_formKey);
+
+    if (_isValid == true){
+
+      await _processVideo();
+
+    }
+
+  }
+  // --------------------
+  /// TESTED : WORKS PERFECT
+  Future<void> _processVideo() async {
+
+        /// START LOADING
     _setLoading(setTo: true);
 
     /// 1 - SEPARATE
@@ -252,15 +268,25 @@ class _TranslatorScreenState extends State<TranslatorScreen> {
         children: <Widget>[
 
           /// TEXT FIELD
-          TextFieldBubble(
-            bubbleHeaderVM: const BubbleHeaderVM(
-              font: BldrsThemeFonts.fontBldrsHeadlineFont,
-              headlineText: 'Youtube URL',
+          Form(
+            key: _formKey,
+            child: TextFieldBubble(
+              formKey: _formKey,
+              isFormField: true,
+              bubbleHeaderVM: const BubbleHeaderVM(
+                font: BldrsThemeFonts.fontBldrsHeadlineFont,
+                headlineText: 'Youtube URL',
+              ),
+              bubbleWidth: _bubbleWidth,
+              pasteFunction: _onPaste,
+              hintText: 'https://www.youtube.com/watch?v=5UTmN8jPJS0',
+              textController: _textController,
+              validator: (String text) => Formers.webSiteValidator(
+                context: context,
+                website: _textController.text,
+              ),
+              fieldTextFont: BldrsThemeFonts.fontBldrsBodyFont,
             ),
-            bubbleWidth: _bubbleWidth,
-            pasteFunction: _onPaste,
-            hintText: 'https://www.youtube.com/watch?v=5UTmN8jPJS0',
-            textController: _textController,
           ),
 
           /// 1- SEPARATED
