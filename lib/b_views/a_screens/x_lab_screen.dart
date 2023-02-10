@@ -10,7 +10,7 @@ import 'package:googleapis/youtube/v3.dart' as yt;
 import 'package:http/http.dart' as http;
 import 'package:mapper/mapper.dart';
 import 'package:rest/rest.dart';
-import 'package:video_translator/b_views/a_screens/url_video_player_screen.dart';
+import 'package:video_translator/b_views/a_screens/d_url_video_player_screen.dart';
 import 'package:video_translator/b_views/x_components/buttons/lab_button.dart';
 import 'package:video_translator/b_views/x_components/layout/floating_list.dart';
 import 'package:video_translator/b_views/x_components/layout/layout.dart';
@@ -38,11 +38,13 @@ class LabScreen extends StatelessWidget {
           LabButton(
             text: 'Go to MP4 Player',
             icon: Iconz.play,
+            worksPerfect: true,
             onTap: () => Nav.goToNewScreen(context: context, screen: const URLVideoPlayerScreen()),
           ),
 
           /// GO TO YOUTUBE PLAYER
           LabButton(
+            worksPerfect: true,
             text: 'Go to Youtube player',
             icon: Iconz.comYoutube,
             onTap: () => Nav.goToNewScreen(
@@ -55,6 +57,7 @@ class LabScreen extends StatelessWidget {
 
           /// DOWNLOAD CAPTION BY YOUTUBE API
           LabButton(
+            worksPerfect: false,
             text: 'Download Caption by YouTube API',
             icon: Iconz.arrowDown,
             onTap: () async {
@@ -97,6 +100,7 @@ class LabScreen extends StatelessWidget {
 
           /// SIGN IN BY GOOGLE
           LabButton(
+            worksPerfect: true,
             text: 'Sign in by google',
             icon: Iconz.comGooglePlay,
             onTap: () async {
@@ -125,6 +129,7 @@ class LabScreen extends StatelessWidget {
 
           /// GET TRANSCRIPTION BY GET REQUEST
           LabButton(
+            worksPerfect: false,
             text: 'Get Transcription by GET request',
             icon: Iconz.comWebsite,
             onTap: () async {
@@ -198,6 +203,7 @@ class LabScreen extends StatelessWidget {
 
           /// GET VIDEO INFO API
           LabButton(
+            worksPerfect: false,
             text: 'Get Video Info API',
             icon: Iconz.comWebsite,
             onTap: () async {
@@ -241,6 +247,7 @@ class LabScreen extends StatelessWidget {
 
           /// CHECK SUB DOWNLOADER
           LabButton(
+            worksPerfect: false,
             text: 'checksub downloader API',
             icon: Iconz.comWebsite,
             onTap: () async {
@@ -269,6 +276,7 @@ class LabScreen extends StatelessWidget {
 
           /// EXTRACT YOUTUBE VIDEO
           LabButton(
+            worksPerfect: true,
             text: 'EXTRACT youtube Video and open viewer',
             icon: Iconz.comYoutube,
             onTap: () async {
@@ -304,6 +312,7 @@ class LabScreen extends StatelessWidget {
 
           /// EXTRACT YOUTUBE VIDEO
           LabButton(
+            worksPerfect: false,
             text: 'Download youtube Video to device',
             icon: Iconz.comYoutube,
             onTap: () async {

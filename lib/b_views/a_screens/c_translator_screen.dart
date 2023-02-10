@@ -101,7 +101,6 @@ class _TranslatorScreenState extends State<TranslatorScreen> {
   /// TESTED : WORKS PERFECT
   Future<void> _onPaste() async {
 
-
     /// PASTE TEXT
     final String value = await TextClipBoard.paste();
     _textController.text = value;
