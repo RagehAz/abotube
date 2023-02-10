@@ -2,7 +2,7 @@ name: video_translator
 description: A platform that translate youtube videos to arabic
 publish_to: 'none'
 # --------------------------------------------------------------------------------
-version: 1.0.6
+version: 1.0.7
 # INSTRUCTIONS WHEN CHANGING APP VERSION
 # -> change in ios/runner/info.pList : ( CFBundleVersion )
 # -> change in main.dart : ( videoTranslatorAppVersion )
@@ -18,6 +18,7 @@ dependencies:
   youtube_player_flutter: ^8.1.2
   flutter_youtube_downloader: ^0.0.5
   page_transition: ^2.0.4
+  webview_flutter: ^4.0.2
   http: ^0.13.4
   firebase_core: ^2.4.1
   google_sign_in: ^5.4.4

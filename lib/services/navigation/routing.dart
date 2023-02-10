@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:video_translator/b_views/a_screens/c_translator_screen.dart';
 import 'package:video_translator/b_views/a_screens/x_lab_screen.dart';
+import 'package:video_translator/b_views/a_screens/youtube_page_screen.dart';
 import 'package:video_translator/services/navigation/navigators.dart';
 import 'package:video_translator/b_views/a_screens/b_home_screen.dart';
 
@@ -17,6 +18,7 @@ class Routing {
   static const String homeRoute = '/home';
   static const String labRoute = '/lab';
   static const String translator = '/translator';
+  static const String youtubeWebpage = '/youtubeWebpage';
   // -----------------------------------------------------------------------------
 
   /// ROUTER
@@ -38,6 +40,10 @@ class Routing {
     /// TRANSLATOR
       case translator:
         return Nav.fadeToScreen(const TranslatorScreen(), settings);
+        break;
+    /// TRANSLATOR
+      case youtubeWebpage:
+        return Nav.fadeToScreen(const YoutubeWebpageScreen(), settings);
         break;
 
     // /// TERMS
@@ -61,6 +67,7 @@ class Routing {
     homeRoute: (context) => const HomeScreen(),
     labRoute: (context) => const LabScreen(),
     translator: (context) => const TranslatorScreen(),
+    youtubeWebpage: (context) => const YoutubeWebpageScreen(),
     // terms: (context) => const TermsScreen(),
     // privacy: (context) => const PrivacyScreen(),
   };

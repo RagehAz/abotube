@@ -13,11 +13,13 @@ import 'package:mapper/mapper.dart';
 import 'package:rest/rest.dart';
 import 'package:video_translator/b_views/a_screens/d_url_video_player_screen.dart';
 import 'package:video_translator/b_views/a_screens/e_youtube_player_screen.dart';
+import 'package:video_translator/b_views/a_screens/youtube_page_screen.dart';
 import 'package:video_translator/b_views/x_components/buttons/lab_button.dart';
 import 'package:video_translator/b_views/x_components/layout/floating_list.dart';
 import 'package:video_translator/b_views/x_components/layout/layout.dart';
 import 'package:video_translator/services/helpers/helper_methods.dart';
 import 'package:video_translator/services/navigation/navigators.dart';
+import 'package:video_translator/services/protocols/youtube_protocols.dart';
 
 class LabScreen extends StatelessWidget {
   // --------------------------------------------------------------------------
@@ -310,24 +312,34 @@ class LabScreen extends StatelessWidget {
 
           ),
 
-          /// EXTRACT YOUTUBE VIDEO
+          /// DOWNLOAD YOUTUBE VIDEO
           LabButton(
             worksPerfect: true,
             text: 'Download youtube Video to device',
+            icon: Iconz.arrowDown,
+            onTap: () async {
+
+              await YoutubeProtocols.downloadYoutubeVideo(
+                url: 'https://m.youtube.com/watch?v=dAHqcEnPIXw',
+              );
+
+            },
+
+          ),
+
+          const DotSeparator(),
+
+          /// OPEN YOUTUBE.COM
+          LabButton(
+            worksPerfect: false,
+            text: 'Open Youtube.com',
             icon: Iconz.comYoutube,
             onTap: () async {
 
-              // ignore: constant_identifier_names
-              const String youTube_link = 'https://www.youtube.com/watch?v=1GXacjZyGyQ';
-
-              final dynamic result = await FlutterYoutubeDownloader.downloadVideo(
-                  youTube_link,
-                  'videoTitle',
-                  18
+              await Nav.goToNewScreen(
+                  context: context,
+                  screen: const YoutubeWebpageScreen()
               );
-
-              blog('result runType : ${result.runtimeType}');
-              blog(result);
 
             },
 
