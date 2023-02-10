@@ -70,6 +70,12 @@ class Nav {
   static Future<void> goToRoute(BuildContext context, String routezName, {dynamic arguments}) async {
     await Navigator.of(context).pushNamed(routezName, arguments: arguments);
   }
+
+  // --------------------
+  /// TESTED : WORKS PERFECT
+  static Future<void> replaceRoute(BuildContext context, String routezName, {dynamic arguments}) async {
+    await Navigator.of(context).pushReplacementNamed(routezName, arguments: arguments);
+  }
   // --------------------
   /// TESTED : WORKS PERFECT
   static Future<dynamic> replaceScreen({

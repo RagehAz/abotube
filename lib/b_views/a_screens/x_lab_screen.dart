@@ -4,6 +4,7 @@ import 'package:bldrs_theme/bldrs_theme.dart';
 import 'package:bubbles/bubbles.dart';
 import 'package:extension_google_sign_in_as_googleapis_auth/extension_google_sign_in_as_googleapis_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/youtube/v3.dart' as yt;
 import 'package:http/http.dart' as http;
@@ -16,6 +17,7 @@ import 'package:video_translator/b_views/x_components/players/mp4_video_player.d
 import 'package:video_translator/b_views/x_components/players/youtube_video_player.dart';
 import 'package:video_translator/services/helpers/helper_methods.dart';
 import 'package:video_translator/services/navigation/navigators.dart';
+import 'package:flutter_youtube_downloader/flutter_youtube_downloader.dart';
 
 class LabScreen extends StatelessWidget {
   // --------------------------------------------------------------------------
@@ -258,6 +260,65 @@ class LabScreen extends StatelessWidget {
               );
 
               blog(utf8.encode(_thing.body));
+
+            },
+
+          ),
+
+          const DotSeparator(),
+
+          /// EXTRACT YOUTUBE VIDEO
+          LabButton(
+            text: 'EXTRACT youtube Video and open viewer',
+            icon: Iconz.comYoutube,
+            onTap: () async {
+
+              // ignore: constant_identifier_names
+              const String youTube_link = 'https://www.youtube.com/watch?v=1GXacjZyGyQ';
+              String link;
+
+              try {
+
+                link = await FlutterYoutubeDownloader.extractYoutubeLink(youTube_link, 18);
+
+                if (link != null){
+                  await Nav.goToNewScreen(
+                    context: context,
+                    screen: MP4VideoPlayerScreen(
+                      link: link,
+                    ),
+                );
+                }
+
+              }
+
+              on PlatformException {
+                link = 'Failed to Extract YouTube Video Link.';
+              }
+
+              blog('link : $link');
+
+            },
+
+          ),
+
+          /// EXTRACT YOUTUBE VIDEO
+          LabButton(
+            text: 'Download youtube Video to device',
+            icon: Iconz.comYoutube,
+            onTap: () async {
+
+              // ignore: constant_identifier_names
+              const String youTube_link = 'https://www.youtube.com/watch?v=1GXacjZyGyQ';
+
+              final dynamic result = await FlutterYoutubeDownloader.downloadVideo(
+                  youTube_link,
+                  'videoTitle',
+                  18
+              );
+
+              blog('result runType : ${result.runtimeType}');
+              blog(result);
 
             },
 

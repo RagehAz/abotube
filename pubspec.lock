@@ -258,6 +258,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_youtube_downloader:
+    dependency: "direct main"
+    description:
+      name: flutter_youtube_downloader
+      sha256: "05bf83e36c7ebeef2929dba2cfc2f7b98c4d86a184e585bc72c543893dbd86cb"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.0.5"
   google_sign_in:
     dependency: "direct main"
     description:

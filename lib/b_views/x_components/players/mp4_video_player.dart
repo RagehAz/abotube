@@ -4,37 +4,45 @@ import 'package:video_player/video_player.dart';
 class MP4VideoPlayerScreen extends StatefulWidget {
   /// --------------------------------------------------------------------------
   const MP4VideoPlayerScreen({
+    this.link,
     Key key
   }) : super(key: key);
+
+  final String link;
   /// --------------------------------------------------------------------------
   @override
   _MP4VideoPlayerScreenState createState() => _MP4VideoPlayerScreenState();
-/// --------------------------------------------------------------------------
+  /// --------------------------------------------------------------------------
 }
 
 class _MP4VideoPlayerScreenState extends State<MP4VideoPlayerScreen> {
-
+  // --------------------------------------------------------------------------
   VideoPlayerController _videoPlayerController;
   VideoPlayerValue _value;
-
+  // --------------------
+  String _link;
+  // --------------------------------------------------------------------------
   @override
   void initState() {
     super.initState();
+
+    _link = widget.link ?? 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
+
     _videoPlayerController = VideoPlayerController.network(
-        'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+        _link,
         videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true))
       ..initialize()
       ..setVolume(10)
       ..play()
       ..addListener(() => setState(() => _value = _videoPlayerController.value));
   }
-
+  // --------------------
   @override
   void dispose() {
     _videoPlayerController.dispose();
     super.dispose();
   }
-
+  // --------------------------------------------------------------------------
   @override
   Widget build(BuildContext context) {
 

@@ -30,7 +30,7 @@ class NavBarButton extends StatelessWidget {
       margins: 5,
       color: _isSelected == true ? Colorz.yellow255 : Colorz.nothing,
       iconColor: _isSelected == true ? Colorz.black255 : Colorz.white200,
-      onTap: () => Nav.goToRoute(context, route),
+      onTap: () => Nav.pushNamedAndRemoveAllBelow(context: context, goToRoute: route),
     );
 
   }
