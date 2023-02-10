@@ -337,7 +337,7 @@ class LabScreen extends StatelessWidget {
 
           /// PICK VIDEO FROM GALLERY
           LabButton(
-            worksPerfect: true,
+            worksPerfect: false,
             text: 'Separate Video from audio',
             icon: Iconz.filter,
             onTap: () async {
@@ -365,6 +365,7 @@ class LabScreen extends StatelessWidget {
           ),
 
           const DotSeparator(),
+
         ],
       ),
     );
