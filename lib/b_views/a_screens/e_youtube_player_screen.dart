@@ -80,7 +80,7 @@ class _YoutubePlayerScreenState extends State<YoutubePlayerScreen> {
       viewWidget: FloatingList(
         columnChildren: <Widget>[
 
-          YouTubePlayerWidget(
+          YoutubeVideoPlayer(
             controller: _controller,
           ),
 

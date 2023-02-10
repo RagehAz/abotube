@@ -3,9 +3,9 @@ import 'package:scale/scale.dart';
 import 'package:video_translator/services/helpers/helper_methods.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-class YouTubePlayerWidget extends StatelessWidget {
+class YoutubeVideoPlayer extends StatelessWidget {
   /// --------------------------------------------------------------------------
-  const YouTubePlayerWidget({
+  const YoutubeVideoPlayer({
     @required this.controller,
     Key key
   }) : super(key: key);
@@ -17,7 +17,7 @@ class YouTubePlayerWidget extends StatelessWidget {
 
     return YoutubePlayer(
       /// MAIN
-      key: const ValueKey<String>('YouTubePlayer'),
+      key: const ValueKey<String>('YoutubeVideoPlayer'),
       controller: controller,
 
       /// SIZING

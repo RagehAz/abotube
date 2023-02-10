@@ -52,6 +52,7 @@ class URLVideoPlayer extends StatelessWidget {
     );
 
     return GestureDetector(
+      key: const ValueKey<String>('URLVideoPlayer'),
       onTap: onTap,
       onDoubleTap: onDoubleTap,
       child: Container(

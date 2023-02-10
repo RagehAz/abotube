@@ -100,7 +100,7 @@ class LabScreen extends StatelessWidget {
 
           /// SIGN IN BY GOOGLE
           LabButton(
-            worksPerfect: true,
+            worksPerfect: false,
             text: 'Sign in by google',
             icon: Iconz.comGooglePlay,
             onTap: () async {
@@ -312,7 +312,7 @@ class LabScreen extends StatelessWidget {
 
           /// EXTRACT YOUTUBE VIDEO
           LabButton(
-            worksPerfect: false,
+            worksPerfect: true,
             text: 'Download youtube Video to device',
             icon: Iconz.comYoutube,
             onTap: () async {
