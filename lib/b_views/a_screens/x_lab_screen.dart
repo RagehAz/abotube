@@ -5,19 +5,19 @@ import 'package:bubbles/bubbles.dart';
 import 'package:extension_google_sign_in_as_googleapis_auth/extension_google_sign_in_as_googleapis_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_youtube_downloader/flutter_youtube_downloader.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/youtube/v3.dart' as yt;
 import 'package:http/http.dart' as http;
 import 'package:mapper/mapper.dart';
 import 'package:rest/rest.dart';
 import 'package:video_translator/b_views/a_screens/d_url_video_player_screen.dart';
+import 'package:video_translator/b_views/a_screens/e_youtube_player_screen.dart';
 import 'package:video_translator/b_views/x_components/buttons/lab_button.dart';
 import 'package:video_translator/b_views/x_components/layout/floating_list.dart';
 import 'package:video_translator/b_views/x_components/layout/layout.dart';
-import 'package:video_translator/b_views/x_components/players/youtube_video_player.dart';
 import 'package:video_translator/services/helpers/helper_methods.dart';
 import 'package:video_translator/services/navigation/navigators.dart';
-import 'package:flutter_youtube_downloader/flutter_youtube_downloader.dart';
 
 class LabScreen extends StatelessWidget {
   // --------------------------------------------------------------------------
