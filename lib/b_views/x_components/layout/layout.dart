@@ -74,6 +74,7 @@ class Layout extends StatelessWidget {
         return false;
       },
       child: SafeArea(
+
         child: Scaffold(
 
           /// INSETS

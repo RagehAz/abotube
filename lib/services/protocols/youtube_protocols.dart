@@ -15,17 +15,20 @@ class YoutubeProtocols {
   // --------------------
   /// TESTED : WORKS PERFECT
   static Future<void> downloadYoutubeVideo({
-    @required String url
+    @required String url,
+    @required String videoTitle,
+    int iTag = 18, // for clearer use 22 : u may use these : (22, 137, 18);
   }) async {
 
     final bool _isURLFormat = Formers.isURLFormat(url);
 
     if (_isURLFormat == true){
 
+      blog('downloading video...');
       final dynamic result = await FlutterYoutubeDownloader.downloadVideo(
         url,
-        'videoTitle',
-        18,
+        videoTitle,
+        iTag,
     );
 
     blog('result runType : ${result.runtimeType}');

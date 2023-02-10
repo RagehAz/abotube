@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:video_translator/b_views/a_screens/c_translator_screen.dart';
 import 'package:video_translator/b_views/a_screens/x_lab_screen.dart';
-import 'package:video_translator/b_views/a_screens/youtube_page_screen.dart';
+import 'package:video_translator/b_views/a_screens/f_youtube_page_screen.dart';
 import 'package:video_translator/services/navigation/navigators.dart';
 import 'package:video_translator/b_views/a_screens/b_home_screen.dart';
 

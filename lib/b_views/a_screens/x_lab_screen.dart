@@ -13,7 +13,7 @@ import 'package:mapper/mapper.dart';
 import 'package:rest/rest.dart';
 import 'package:video_translator/b_views/a_screens/d_url_video_player_screen.dart';
 import 'package:video_translator/b_views/a_screens/e_youtube_player_screen.dart';
-import 'package:video_translator/b_views/a_screens/youtube_page_screen.dart';
+import 'package:video_translator/b_views/a_screens/f_youtube_page_screen.dart';
 import 'package:video_translator/b_views/x_components/buttons/lab_button.dart';
 import 'package:video_translator/b_views/x_components/layout/floating_list.dart';
 import 'package:video_translator/b_views/x_components/layout/layout.dart';
@@ -321,6 +321,7 @@ class LabScreen extends StatelessWidget {
 
               await YoutubeProtocols.downloadYoutubeVideo(
                 url: 'https://m.youtube.com/watch?v=dAHqcEnPIXw',
+                videoTitle: 'test video',
               );
 
             },

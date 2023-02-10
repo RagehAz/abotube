@@ -111,9 +111,19 @@ class _YoutubeWebpageScreenState extends State<YoutubeWebpageScreen> {
       return '';
     }
     else {
-      final String _without = TextMod.removeTextAfterLastSpecialCharacter(url, '=');
-      final String _videoID = TextMod.removeTextBeforeLastSpecialCharacter(url, '=');
-      return '$_without\n=$_videoID';
+      const int _number = 22;
+
+      final String _end = TextMod.removeNumberOfCharactersFromBeginningOfAString(
+        numberOfCharacters: _number,
+        string: url,
+      );
+
+      final String _start = TextMod.removeAllCharactersAfterNumberOfCharacters(
+          input: url,
+          numberOfChars: _number
+      );
+
+      return '$_start\n$_end';
     }
   }
   // --------------------------------------------------------------------------
@@ -123,7 +133,9 @@ class _YoutubeWebpageScreenState extends State<YoutubeWebpageScreen> {
     final double _screenWidth = Scale.screenWidth(context);
     final double _webviewHeight = Layout.getViewHeight() - Layout.navBarHeight;
     const double _topButtonHeight = Layout.navBarHeight - 10;
-
+    // --------------------
+    _getCurrentURl();
+    // --------------------
     return Layout(
       viewWidget: SizedBox(
         width: Scale.screenWidth(context),
@@ -141,10 +153,21 @@ class _YoutubeWebpageScreenState extends State<YoutubeWebpageScreen> {
                   iconSizeFactor: 0.5,
                   text: _formatURL(_currentURL),
                   onTap: () async {
-
                     await _getCurrentURl();
-                    await TextClipBoard.copy(copy: _currentURL);
+                  },
+                  textMaxLines: 2,
+                  textCentered: false,
+                ),
 
+                /// COPY
+                SuperBox(
+                  height: _topButtonHeight,
+                  icon: Iconz.bxProductsOff,
+                  iconSizeFactor: 0.5,
+                  text: 'Copy\nURL',
+                  isDisabled: _currentURL == 'https://m.youtube.com/',
+                  onTap: () async {
+                    await TextClipBoard.copy(copy: _currentURL);
                   },
                   textMaxLines: 2,
                   textCentered: false,
@@ -157,11 +180,22 @@ class _YoutubeWebpageScreenState extends State<YoutubeWebpageScreen> {
                   iconSizeFactor: 0.3,
                   textScaleFactor: 1.5,
                   text: 'Download\nVideo',
+                  isDisabled: _currentURL == 'https://m.youtube.com/',
                   onTap: () async {
 
-                    await YoutubeProtocols.downloadYoutubeVideo(
-                      url: 'https://m.youtube.com/watch?v=dAHqcEnPIXw',
-                    );
+                    await _getCurrentURl();
+
+                    final bool _isAtHomePage = _currentURL == 'https://m.youtube.com/';
+
+                    if (_isAtHomePage == false){
+
+                      final String _title = await controller.getTitle();
+
+                      await YoutubeProtocols.downloadYoutubeVideo(
+                        url: _currentURL,
+                        videoTitle: _title,
+                      );
+                    }
 
                   },
                   textMaxLines: 2,
@@ -185,7 +219,6 @@ class _YoutubeWebpageScreenState extends State<YoutubeWebpageScreen> {
 
           ],
         ),
-
 
       ),
     );
