@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:bldrs_theme/bldrs_theme.dart';
 import 'package:bubbles/bubbles.dart';
@@ -9,11 +10,11 @@ import 'package:flutter_youtube_downloader/flutter_youtube_downloader.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/youtube/v3.dart' as yt;
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 import 'package:mapper/mapper.dart';
 import 'package:rest/rest.dart';
 import 'package:video_translator/b_views/a_screens/d_url_video_player_screen.dart';
 import 'package:video_translator/b_views/a_screens/e_youtube_player_screen.dart';
-import 'package:video_translator/b_views/a_screens/f_youtube_page_screen.dart';
 import 'package:video_translator/b_views/x_components/buttons/lab_button.dart';
 import 'package:video_translator/b_views/x_components/layout/floating_list.dart';
 import 'package:video_translator/b_views/x_components/layout/layout.dart';
@@ -41,7 +42,7 @@ class LabScreen extends StatelessWidget {
             text: 'Go to MP4 Player',
             icon: Iconz.play,
             worksPerfect: true,
-            onTap: () => Nav.goToNewScreen(context: context, screen: const URLVideoPlayerScreen()),
+            onTap: () => Nav.goToNewScreen(context: context, screen: const VideoPlayerScreen()),
           ),
 
           /// GO TO YOUTUBE PLAYER
@@ -294,7 +295,7 @@ class LabScreen extends StatelessWidget {
                 if (link != null){
                   await Nav.goToNewScreen(
                     context: context,
-                    screen: URLVideoPlayerScreen(
+                    screen: VideoPlayerScreen(
                       url: link,
                     ),
                 );
@@ -333,14 +334,26 @@ class LabScreen extends StatelessWidget {
           /// OPEN YOUTUBE.COM
           LabButton(
             worksPerfect: false,
-            text: 'Open Youtube.com',
-            icon: Iconz.comYoutube,
+            text: 'Pick video from Gallery',
+            icon: Iconz.fingerTap,
             onTap: () async {
 
-              await Nav.goToNewScreen(
-                  context: context,
-                  screen: const YoutubeWebpageScreen()
+              final ImagePicker _picker = ImagePicker(); /// TASK : NEED TO BE SINGLETON
+              final XFile image = await _picker.pickVideo(
+                source: ImageSource.gallery,
+                // maxDuration:,
+                // preferredCameraDevice: ,
               );
+              final File _file = File(image.path);
+
+              if (_file != null){
+                await Nav.goToNewScreen(
+                  context: context,
+                  screen: VideoPlayerScreen(
+                    file: _file,
+                  ),
+                );
+              }
 
             },
 

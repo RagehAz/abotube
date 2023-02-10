@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bldrs_theme/bldrs_theme.dart';
 import 'package:bubbles/bubbles.dart';
 import 'package:flutter/material.dart';
@@ -11,21 +13,23 @@ import 'package:video_translator/b_views/x_components/layout/layout.dart';
 import 'package:video_translator/b_views/x_components/players/url_video_player.dart';
 import 'package:video_translator/services/helpers/helper_methods.dart';
 
-class URLVideoPlayerScreen extends StatefulWidget {
+class VideoPlayerScreen extends StatefulWidget {
   /// --------------------------------------------------------------------------
-  const URLVideoPlayerScreen({
+  const VideoPlayerScreen({
+    this.file,
     this.url,
     Key key
   }) : super(key: key);
 
   final String url;
+  final File file;
   /// --------------------------------------------------------------------------
   @override
-  _URLVideoPlayerScreenState createState() => _URLVideoPlayerScreenState();
+  _VideoPlayerScreenState createState() => _VideoPlayerScreenState();
   /// --------------------------------------------------------------------------
 }
 
-class _URLVideoPlayerScreenState extends State<URLVideoPlayerScreen> {
+class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   // --------------------------------------------------------------------------
   VideoPlayerController _videoPlayerController;
   VideoPlayerValue _videoValue;
@@ -41,13 +45,25 @@ class _URLVideoPlayerScreenState extends State<URLVideoPlayerScreen> {
 
     _link = widget.url ?? 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
 
-    _videoPlayerController = VideoPlayerController.network(
+    if (widget.url != null){
+      _videoPlayerController = VideoPlayerController.network(
         _link,
         videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true))
       ..initialize()
       ..setVolume(_volume)
       ..play()
       ..addListener(() => setState(() => _videoValue = _videoPlayerController.value));
+    }
+
+    if (widget.file != null){
+      _videoPlayerController = VideoPlayerController.file(
+        widget.file,
+        videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true))
+      ..initialize()
+      ..setVolume(_volume)
+      ..play()
+      ..addListener(() => setState(() => _videoValue = _videoPlayerController.value));
+    }
 
   }
   // --------------------
