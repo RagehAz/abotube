@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stringer/stringer.dart';
 import 'package:text_to_speech/text_to_speech.dart';
 import 'package:video_translator/b_views/x_components/dialogs/bottom_dialog.dart';
 import 'package:video_translator/services/helpers/helper_methods.dart';
@@ -10,15 +11,17 @@ Future<String> showLanguageDialog() async {
 
   final BuildContext context = getContext();
   final TextToSpeech tts = TextToSpeech();
-  final List<String> _langs = await tts.getLanguages();
+  List<String> _langs = await tts.getLanguages();
+
+  _langs = Stringer.sortAlphabetically(_langs);
 
   // final List<String> _langs = Flag.getALlLangCodes();
 
   await BottomDialog.showButtonsBottomDialog(
-      context: context,
-      draggable: true,
-      numberOfWidgets: _langs.length,
-    buttonHeight: 35,
+    context: context,
+    draggable: true,
+    numberOfWidgets: _langs.length,
+    buttonHeight: 50,
     title: 'Languages',
     builder: (BuildContext xxx){
 
@@ -28,16 +31,13 @@ Future<String> showLanguageDialog() async {
 
           return BottomDialog.wideButton(
               context: context,
-            height: 35,
-            text: _lang,
-            onTap: () async {
-
+              height: 50,
+              text: _lang,
+              onTap: () async {
                 _output = _lang;
                 await Nav.goBack(context: context);
-
-            }
-          );
-
+              }
+              );
         });
 
     },

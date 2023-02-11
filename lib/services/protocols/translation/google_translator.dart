@@ -33,7 +33,7 @@ class GoogleTranslate {
     @required String to,
   }) async {
 
-    if (input == null || input.isEmpty) {
+    if (input == null || input.isEmpty || from == null || to == null) {
       return null;
     }
 

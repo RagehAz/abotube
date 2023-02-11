@@ -13,6 +13,7 @@ import 'package:googleapis/youtube/v3.dart' as yt;
 import 'package:googleapis/texttospeech/v1.dart' as tts;
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:layouts/layouts.dart';
 import 'package:mapper/mapper.dart';
 import 'package:rest/rest.dart';
@@ -282,47 +283,97 @@ class LabScreen extends StatelessWidget {
             onTap: () async {
               final String _to = await showLanguageDialog();
 
-              final TextToSpeech tts = TextToSpeech();
+              if (_to != null) {
 
-              const text = 'What is up mother fuckers';
-              const String _from = 'en';
+                final TextToSpeech tts = TextToSpeech();
+                const text = 'What is up mother fuckers';
+                const String _from = 'en';
+                final String _translation = await GoogleTranslate.translate(
+                    input: text,
+                    from: _from,
+                    to: _to,
+                );
 
-              final String _translation =
-                  // text;
-              await GoogleTranslate.translate(
-                  input: text, from: _from, to: _to);
+                // final String _lang = tts.getDisplayLanguageByCode(langCode)
+                await tts.setLanguage(_to);
 
-              // final String _lang = tts.getDisplayLanguageByCode(langCode)
-              await tts.setLanguage(_to);
+                // final languages = await tts.getLanguages();
+                // blog('languages : $languages');
 
-              // final languages = await tts.getLanguages();
-              // blog('languages : $languages');
-
-              await tts.speak(_translation);
+                if (_translation != null) {
+                  await tts.speak(_translation);
+                } else {
+                  blog('is null,,, can not play');
+                }
+              }
             },
           ),
 
+          /// TTS GOOGLE APIS
           LabButton(
-            worksPerfect: true,
-            text: 'TTS googleapis',
+            worksPerfect: false,
+            text: 'Get Audio by google API',
             icon: Iconz.comGooglePlay,
             onTap: () async {
 
               final  _googleSignIn = GoogleSignIn(
-                clientId: '1003450512869-0he8njpnhm9lklo2ba7jp4dl109dmms8.apps.googleusercontent.com',
+                // clientId: '1003450512869-0he8njpnhm9lklo2ba7jp4dl109dmms8.apps.googleusercontent.com',
                 scopes: [
                   'email',
                   tts.TexttospeechApi.cloudPlatformScope
                 ],
               );
 
-              await _googleSignIn.signIn(
-
-              );
+              await _googleSignIn.signIn();
 
               final client = await _googleSignIn.authenticatedClient();
 
-              },
+              blog('client is : ${client.credentials}');
+
+              final input = tts.SynthesisInput(
+                text: 'Hello World',
+                // ssml:
+              );
+
+              final parameters = tts.VoiceSelectionParams(
+                languageCode: 'en-US',
+                name: 'en-US-Wavenet-A',
+                // customVoice: ,
+                // ssmlGender: ,
+              );
+
+              final config = tts.AudioConfig(
+                audioEncoding: 'MP3',
+                // effectsProfileId: ,
+                // pitch: ,
+                // sampleRateHertz: ,
+                // speakingRate: ,
+                // volumeGainDb: ,
+              );
+
+              final request = tts.SynthesizeSpeechRequest(
+                input: input,
+                audioConfig: config,
+                voice: parameters,
+              );
+
+              Mapper.blogMap(
+                request.toJson(),
+                invoker: 'the request',
+              );
+
+              final response = await tts.TexttospeechApi(client).text.synthesize(request);
+
+              final List<int> output = response.audioContentAsBytes;
+
+              blog('the output is : $output');
+
+              final AudioPlayer player = AudioPlayer();
+
+              await player.setAudioSource(ByteSourceThing(output));
+              await player.play();
+
+            },
           ),
 
           const DotSeparator(),
@@ -491,3 +542,21 @@ Future<void> extractAudioAndSaveVideo({
 //   const String audioFilePath = '/path/to/audio.aac';
 //   const String cmd = '-i $videoFilePath -vn -acodec copy $audioFilePath';
 // }
+
+class ByteSourceThing extends StreamAudioSource {
+  final List<int> bytes;
+  ByteSourceThing(this.bytes);
+
+  @override
+  Future<StreamAudioResponse> request([int start, int end]) async {
+    start ??= 0;
+    end ??= bytes.length;
+    return StreamAudioResponse(
+      sourceLength: bytes.length,
+      contentLength: end - start,
+      offset: start,
+      stream: Stream.value(bytes.sublist(start, end)),
+      contentType: 'audio/mpeg',
+    );
+  }
+}

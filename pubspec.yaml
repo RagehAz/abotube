@@ -15,19 +15,20 @@ dependencies:
     sdk: flutter
   # ---------------------------
   # flutter packages
-  video_player: ^2.2.10
-  youtube_player_flutter: ^8.1.2
-  flutter_youtube_downloader: ^0.0.5
-  page_transition: ^2.0.4
-  webview_flutter: ^4.0.2
-  http: ^0.13.4
+  extension_google_sign_in_as_googleapis_auth: ^2.0.7
   firebase_core: ^2.4.1
+  flutter_youtube_downloader: ^0.0.5
   google_sign_in: ^5.4.4
   googleapis: ^10.0.0
-  extension_google_sign_in_as_googleapis_auth: ^2.0.7
+  http: ^0.13.4
   image_picker: ^0.8.6+1
+  just_audio: ^0.9.31
+  page_transition: ^2.0.4
   text_to_speech: ^0.2.3
   translator: ^0.1.7
+  video_player: ^2.2.10
+  webview_flutter: ^4.0.2
+  youtube_player_flutter: ^8.1.2
   # ---------------------------
   # MY WIDGETS
   super_image:

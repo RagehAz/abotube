@@ -258,13 +258,13 @@ class BottomDialog extends StatelessWidget {
             + BottomDialog.draggerMarginValue(draggable: draggable)
             + BottomDialog.titleZoneHeight(titleIsOn: title != null)
             + (buttonHeight * _widgetsLength)
-            + (_spacing * _widgetsLength);
+            + (_spacing * _widgetsLength) * 0.5;
 
 
     await showStatefulBottomDialog(
       context: context,
       draggable: draggable,
-      height: _height,
+      height: Scale.screenHeight(context) * 0.5,
       title: title,
       builder: (BuildContext ctx, title){
 
