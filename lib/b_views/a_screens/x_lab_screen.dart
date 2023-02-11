@@ -15,11 +15,11 @@ import 'package:image_picker/image_picker.dart';
 import 'package:layouts/layouts.dart';
 import 'package:mapper/mapper.dart';
 import 'package:rest/rest.dart';
-import 'package:stringer/stringer.dart';
 import 'package:text_to_speech/text_to_speech.dart';
 import 'package:video_translator/b_views/a_screens/d_url_video_player_screen.dart';
 import 'package:video_translator/b_views/a_screens/e_youtube_player_screen.dart';
 import 'package:video_translator/b_views/x_components/buttons/lab_button.dart';
+import 'package:video_translator/b_views/x_components/dialogs/language_selector_dialog.dart';
 import 'package:video_translator/b_views/x_components/layout/layout.dart';
 import 'package:video_translator/services/navigation/navigators.dart';
 import 'package:video_translator/services/protocols/translation/google_translator.dart';
@@ -273,16 +273,19 @@ class LabScreen extends StatelessWidget {
           ),
 
           const DotSeparator(),
+
           LabButton(
             worksPerfect: true,
             text: 'TTS check',
             icon: Iconz.advertise,
             onTap: () async {
+
+              final String _to = await showLanguageDialog();
+
               final TextToSpeech tts = TextToSpeech();
 
               const text = 'What is up mother fuckers';
               const String _from = 'en';
-              const String _to = 'ar';
 
               final String _translation = await GoogleTranslate.translate(
                   input: text,
