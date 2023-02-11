@@ -141,7 +141,7 @@ class _TranslatorScreenState extends State<TranslatorScreen> {
 
   }
   // --------------------
-  /// TASK : WRITE ME
+  /// TASK: WRITE ME
   Future<void> _separateVideoFromAudio() async {
 
     /// SET LOADING AND PROGRESS

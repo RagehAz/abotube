@@ -134,7 +134,7 @@ class _YoutubeWebpageScreenState extends State<YoutubeWebpageScreen> {
     final double _webviewHeight = Layout.getViewHeight() - Layout.navBarHeight;
     const double _topButtonHeight = Layout.navBarHeight - 10;
     // --------------------
-    _getCurrentURl();
+    // _getCurrentURl();
     // --------------------
     return Layout(
       viewWidget: SizedBox(

@@ -7,7 +7,6 @@ import 'package:extension_google_sign_in_as_googleapis_auth/extension_google_sig
 import 'package:filers/filers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_ffmpeg/flutter_ffmpeg.dart';
 import 'package:flutter_youtube_downloader/flutter_youtube_downloader.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/youtube/v3.dart' as yt;
@@ -17,6 +16,7 @@ import 'package:layouts/layouts.dart';
 import 'package:mapper/mapper.dart';
 import 'package:rest/rest.dart';
 import 'package:stringer/stringer.dart';
+import 'package:text_to_speech/text_to_speech.dart';
 import 'package:video_translator/b_views/a_screens/d_url_video_player_screen.dart';
 import 'package:video_translator/b_views/a_screens/e_youtube_player_screen.dart';
 import 'package:video_translator/b_views/x_components/buttons/lab_button.dart';
@@ -43,7 +43,8 @@ class LabScreen extends StatelessWidget {
             text: 'Go to MP4 Player',
             icon: Iconz.play,
             worksPerfect: true,
-            onTap: () => Nav.goToNewScreen(context: context, screen: const VideoPlayerScreen()),
+            onTap: () => Nav.goToNewScreen(
+                context: context, screen: const VideoPlayerScreen()),
           ),
 
           /// GO TO YOUTUBE PLAYER
@@ -111,8 +112,8 @@ class LabScreen extends StatelessWidget {
               final GoogleSignIn _googleSignIn = GoogleSignIn(
                 scopes: [
                   'email',
-                  'https://www.googleapis.com/auth/youtube.force-ssl',
-                  'https://www.googleapis.com/auth/youtubepartner'
+                  yt.YouTubeApi.youtubeForceSslScope,
+                  yt.YouTubeApi.youtubepartnerScope
                 ],
               );
 
@@ -206,7 +207,8 @@ class LabScreen extends StatelessWidget {
             onTap: () async {
               const String _videoID = 'mqaODYJ702s';
 
-              const String videoUrl = 'https://www.youtube.com/watch?v=$_videoID';
+              const String videoUrl =
+                  'https://www.youtube.com/watch?v=$_videoID';
 
               final RegExp regExp = RegExp(
                 r'#(?<=v=)[a-zA-Z0-9-]+(?=&)|(?<=v\/)'
@@ -215,7 +217,8 @@ class LabScreen extends StatelessWidget {
               );
               final match = regExp.firstMatch(videoUrl);
               final videoId = match.group(0);
-              final String _url = 'http://www.youtube.com/get_video_info?&video_id=$videoId';
+              final String _url =
+                  'http://www.youtube.com/get_video_info?&video_id=$videoId';
 
               final http.Response response = await Rest.get(
                 context: context,
@@ -224,14 +227,17 @@ class LabScreen extends StatelessWidget {
               );
 
               final responseBody = response.body;
-              final videoInfoArray = Uri.splitQueryString(responseBody).cast<String, dynamic>();
+              final videoInfoArray =
+                  Uri.splitQueryString(responseBody).cast<String, dynamic>();
 
               if (videoInfoArray.containsKey('caption_tracks')) {
-                final List<String> tracks = videoInfoArray['caption_tracks'].split(',');
+                final List<String> tracks =
+                    videoInfoArray['caption_tracks'].split(',');
                 final List<Map<String, dynamic>> trackInfo = [];
 
                 for (final track in tracks) {
-                  trackInfo.add(Uri.splitQueryString(track).cast<String, dynamic>());
+                  trackInfo
+                      .add(Uri.splitQueryString(track).cast<String, dynamic>());
                 }
                 return {'track_info': trackInfo};
               }
@@ -242,7 +248,7 @@ class LabScreen extends StatelessWidget {
 
           /// CHECK SUB DOWNLOADER
           LabButton(
-            worksPerfect: false,
+            worksPerfect: true,
             text: 'checksub downloader API',
             icon: Iconz.comWebsite,
             onTap: () async {
@@ -259,8 +265,23 @@ class LabScreen extends StatelessWidget {
                 rawLink: _link,
                 invoker: 'thing',
               );
+              // fix the encoding
 
-              blog(utf8.encode(_thing.body));
+              blog(utf8.decode(_thing.bodyBytes));
+            },
+          ),
+
+          const DotSeparator(),
+          LabButton(
+            worksPerfect: true,
+            text: 'TTS check',
+            icon: Iconz.advertise,
+            onTap: () async {
+              final tts = TextToSpeech();
+              const text = "مرحبا بكم في تطبيق العربي";
+              final languages = await tts.getLanguages();
+              blog('languages : $languages');
+              await tts.speak(text);
             },
           ),
 
@@ -273,11 +294,13 @@ class LabScreen extends StatelessWidget {
             icon: Iconz.comYoutube,
             onTap: () async {
               // ignore: constant_identifier_names
-              const String youTube_link = 'https://www.youtube.com/watch?v=WrK_Vnl3S-0';
+              const String youTube_link =
+                  'https://www.youtube.com/watch?v=WrK_Vnl3S-0';
               String link;
 
               try {
-                link = await FlutterYoutubeDownloader.extractYoutubeLink(youTube_link, 18);
+                link = await FlutterYoutubeDownloader.extractYoutubeLink(
+                    youTube_link, 18);
 
                 if (link != null) {
                   await Nav.goToNewScreen(
@@ -343,7 +366,6 @@ class LabScreen extends StatelessWidget {
             text: 'Separate Video from audio',
             icon: Iconz.filter,
             onTap: () async {
-
               final ImagePicker _picker = ImagePicker();
 
               /// TASK : NEED TO BE SINGLETON
@@ -353,8 +375,7 @@ class LabScreen extends StatelessWidget {
                 // preferredCameraDevice: ,
               );
 
-              if (image != null){
-
+              if (image != null) {
                 final File _file = File(image.path);
 
                 final String videoFilePath = await Filers.createNewFilePath(
@@ -363,7 +384,7 @@ class LabScreen extends StatelessWidget {
                 );
 
                 final String audioFilePath = await Filers.createNewFilePath(
-                  fileName: 'test_video_audio.mp3',//.aac',
+                  fileName: 'test_video_audio.mp3', //.aac',
                   // useTemporaryDirectory: true,
                 );
 
@@ -372,14 +393,11 @@ class LabScreen extends StatelessWidget {
                   videoFile: _file,
                   videoPath: videoFilePath,
                 );
-
               }
-
             },
           ),
 
           const DotSeparator(),
-
         ],
       ),
     );
@@ -393,38 +411,37 @@ Future<void> extractAudioAndSaveVideo({
   @required String audioPath,
   @required String videoPath,
 }) async {
-  final FlutterFFmpeg _flutterFFmpeg = FlutterFFmpeg();
+  // final FlutterFFmpeg _flutterFFmpeg = FlutterFFmpeg();
 
   Stringer.blogStrings(
-      strings: [
-        videoFile?.path,
-        audioPath,
-        videoPath,
-      ],
-      invoker: 'extractAudioAndSaveVideo',
+    strings: [
+      videoFile?.path,
+      audioPath,
+      videoPath,
+    ],
+    invoker: 'extractAudioAndSaveVideo',
   );
 
   String cmd = '-i ${videoFile.path} -vn -acodec copy $audioPath';
 
   cmd = '-i ${videoFile.path} -map 0:a -acodec libmp3lame $audioPath';
 
-  int rc = await _flutterFFmpeg.execute(cmd);
+  // int rc = await _flutterFFmpeg.execute(cmd);
 
-  if (rc == 0) {
-    blog('Audio extracted successfully');
-    cmd = '-i ${videoFile.path} -an -vcodec copy $videoPath';
-    rc = await _flutterFFmpeg.execute(cmd);
-    if (rc == 0) {
-      blog('Video without audio saved successfully');
-    } else {
-      blog('Failed to save video without audio');
-    }
-  }
+  // if (rc == 0) {
+  //   blog('Audio extracted successfully');
+  //   cmd = '-i ${videoFile.path} -an -vcodec copy $videoPath';
+  //   rc = await _flutterFFmpeg.execute(cmd);
+  //   if (rc == 0) {
+  //     blog('Video without audio saved successfully');
+  //   } else {
+  //     blog('Failed to save video without audio');
+  //   }
+  // }
 
-  else {
-    blog('Failed to extract audio');
-  }
-
+  // else {
+  //   blog('Failed to extract audio');
+  // }
 }
 
 // Future<void> thing() async {
