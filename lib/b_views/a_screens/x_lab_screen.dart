@@ -10,6 +10,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_youtube_downloader/flutter_youtube_downloader.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/youtube/v3.dart' as yt;
+import 'package:googleapis/texttospeech/v1.dart' as tts;
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:layouts/layouts.dart';
@@ -260,13 +261,11 @@ class LabScreen extends StatelessWidget {
 
               _link = 'https://checksub-downloader-doybj.ondigitalocean'
                   '.app//automatic_srt_download?url=https:%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DzQodZYvfTAA&lang=ar';
-
               final http.Response _thing = await Rest.get(
                 context: context,
                 rawLink: _link,
                 invoker: 'thing',
               );
-              // fix the encoding
 
               blog(utf8.decode(_thing.bodyBytes));
             },
@@ -279,7 +278,6 @@ class LabScreen extends StatelessWidget {
             text: 'TTS check',
             icon: Iconz.advertise,
             onTap: () async {
-
               final String _to = await showLanguageDialog();
 
               final TextToSpeech tts = TextToSpeech();
@@ -288,10 +286,7 @@ class LabScreen extends StatelessWidget {
               const String _from = 'en';
 
               final String _translation = await GoogleTranslate.translate(
-                  input: text,
-                  from: _from,
-                  to: _to
-              );
+                  input: text, from: _from, to: _to);
 
               // final String _lang = tts.getDisplayLanguageByCode(langCode)
               await tts.setLanguage(_to);
@@ -299,7 +294,27 @@ class LabScreen extends StatelessWidget {
               final languages = await tts.getLanguages();
               blog('languages : $languages');
               await tts.speak(_translation);
+            },
+          ),
 
+               LabButton(
+            worksPerfect: true,
+            text: 'TTS googleapis',
+            icon: Iconz.comGooglePlay,
+            onTap: () async {
+              final  _googleSignIn = GoogleSignIn(
+                clientId: '1003450512869-0he8njpnhm9lklo2ba7jp4dl109dmms8.apps.googleusercontent.com',
+                scopes: [
+                  'email',
+                 tts.TexttospeechApi.cloudPlatformScope
+                ],
+              );
+
+              await _googleSignIn.signIn(
+
+              );
+
+              final client = await _googleSignIn.authenticatedClient();
             },
           ),
 
