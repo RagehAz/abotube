@@ -278,7 +278,7 @@ class LabScreen extends StatelessWidget {
             icon: Iconz.advertise,
             onTap: () async {
               final tts = TextToSpeech();
-              const text = "مرحبا بكم في تطبيق العربي";
+              const text = 'مرحبا بكم في تطبيق العربي';
               final languages = await tts.getLanguages();
               blog('languages : $languages');
               await tts.speak(text);
@@ -413,18 +413,18 @@ Future<void> extractAudioAndSaveVideo({
 }) async {
   // final FlutterFFmpeg _flutterFFmpeg = FlutterFFmpeg();
 
-  Stringer.blogStrings(
-    strings: [
-      videoFile?.path,
-      audioPath,
-      videoPath,
-    ],
-    invoker: 'extractAudioAndSaveVideo',
-  );
-
-  String cmd = '-i ${videoFile.path} -vn -acodec copy $audioPath';
-
-  cmd = '-i ${videoFile.path} -map 0:a -acodec libmp3lame $audioPath';
+  // Stringer.blogStrings(
+  //   strings: [
+  //     videoFile?.path,
+  //     audioPath,
+  //     videoPath,
+  //   ],
+  //   invoker: 'extractAudioAndSaveVideo',
+  // );
+  //
+  // String cmd = '-i ${videoFile.path} -vn -acodec copy $audioPath';
+  //
+  // cmd = '-i ${videoFile.path} -map 0:a -acodec libmp3lame $audioPath';
 
   // int rc = await _flutterFFmpeg.execute(cmd);
 
