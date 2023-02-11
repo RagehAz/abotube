@@ -22,6 +22,7 @@ import 'package:video_translator/b_views/a_screens/e_youtube_player_screen.dart'
 import 'package:video_translator/b_views/x_components/buttons/lab_button.dart';
 import 'package:video_translator/b_views/x_components/layout/layout.dart';
 import 'package:video_translator/services/navigation/navigators.dart';
+import 'package:video_translator/services/protocols/translation/google_translator.dart';
 import 'package:video_translator/services/protocols/youtube_protocols.dart';
 
 class LabScreen extends StatelessWidget {
@@ -277,11 +278,25 @@ class LabScreen extends StatelessWidget {
             text: 'TTS check',
             icon: Iconz.advertise,
             onTap: () async {
-              final tts = TextToSpeech();
-              const text = 'مرحبا بكم في تطبيق العربي';
+              final TextToSpeech tts = TextToSpeech();
+
+              const text = 'What is up mother fuckers';
+              const String _from = 'en';
+              const String _to = 'ar';
+
+              final String _translation = await GoogleTranslate.translate(
+                  input: text,
+                  from: _from,
+                  to: _to
+              );
+
+              // final String _lang = tts.getDisplayLanguageByCode(langCode)
+              await tts.setLanguage(_to);
+
               final languages = await tts.getLanguages();
               blog('languages : $languages');
-              await tts.speak(text);
+              await tts.speak(_translation);
+
             },
           ),
 
