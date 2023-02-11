@@ -1,5 +1,6 @@
 import 'package:bldrs_theme/bldrs_theme.dart';
 import 'package:bubbles/bubbles.dart';
+import 'package:filers/filers.dart';
 import 'package:flutter/material.dart';
 import 'package:stringer/stringer.dart';
 import 'package:video_translator/a_models/translation_progress_model.dart';
@@ -7,7 +8,6 @@ import 'package:video_translator/b_views/x_components/buttons/progress_button.da
 import 'package:video_translator/b_views/x_components/cards/video_card.dart';
 import 'package:video_translator/b_views/x_components/layout/layout.dart';
 import 'package:video_translator/services/helpers/former.dart';
-import 'package:video_translator/services/helpers/helper_methods.dart';
 
 class TranslatorScreen extends StatefulWidget {
   /// --------------------------------------------------------------------------

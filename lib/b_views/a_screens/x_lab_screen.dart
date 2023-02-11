@@ -4,24 +4,24 @@ import 'dart:io';
 import 'package:bldrs_theme/bldrs_theme.dart';
 import 'package:bubbles/bubbles.dart';
 import 'package:extension_google_sign_in_as_googleapis_auth/extension_google_sign_in_as_googleapis_auth.dart';
+import 'package:filers/filers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_ffmpeg/flutter_ffmpeg.dart';
 import 'package:flutter_youtube_downloader/flutter_youtube_downloader.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/youtube/v3.dart' as yt;
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+import 'package:layouts/layouts.dart';
 import 'package:mapper/mapper.dart';
 import 'package:rest/rest.dart';
 import 'package:video_translator/b_views/a_screens/d_url_video_player_screen.dart';
 import 'package:video_translator/b_views/a_screens/e_youtube_player_screen.dart';
 import 'package:video_translator/b_views/x_components/buttons/lab_button.dart';
-import 'package:video_translator/b_views/x_components/layout/floating_list.dart';
 import 'package:video_translator/b_views/x_components/layout/layout.dart';
-import 'package:video_translator/services/helpers/helper_methods.dart';
 import 'package:video_translator/services/navigation/navigators.dart';
 import 'package:video_translator/services/protocols/youtube_protocols.dart';
-import 'package:flutter_ffmpeg/flutter_ffmpeg.dart';
 
 class LabScreen extends StatelessWidget {
   // --------------------------------------------------------------------------
@@ -33,6 +33,7 @@ class LabScreen extends StatelessWidget {
     // --------------------
     return Layout(
       viewWidget: FloatingList(
+        // padding: const EdgeInsets.only(top: Ratioz.stratosphere, bottom: Ratioz.horizon),
         columnChildren: <Widget>[
           const DotSeparator(),
 
@@ -351,9 +352,15 @@ class LabScreen extends StatelessWidget {
               );
               final File _file = File(image.path);
 
-              /// TASK : SHOULD GET PROPER PATHS
-              const String videoFilePath = '/path/to/video.mp4';
-              const String audioFilePath = '/path/to/audio.aac';
+              final String videoFilePath = await Filers.createNewFilePath(
+                fileName: 'test_video_video.mp4',
+                // useTemporaryDirectory: true,
+              );
+
+              final String audioFilePath = await Filers.createNewFilePath(
+                fileName: 'test_video_audio.mp4',
+                // useTemporaryDirectory: true,
+              );
 
               await extractAudioAndSaveVideo(
                   audioPath: audioFilePath,

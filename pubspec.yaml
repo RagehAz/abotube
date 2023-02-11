@@ -2,7 +2,7 @@ name: video_translator
 description: A platform that translate youtube videos to arabic
 publish_to: 'none'
 # --------------------------------------------------------------------------------
-version: 1.0.8
+version: 1.0.9
 # INSTRUCTIONS WHEN CHANGING APP VERSION
 # -> change in ios/runner/info.pList : ( CFBundleVersion )
 # -> change in main.dart : ( videoTranslatorAppVersion )
@@ -13,7 +13,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-# ---------------------------
+  # ---------------------------
+  # flutter packages
   video_player: ^2.2.10
   youtube_player_flutter: ^8.1.2
   flutter_youtube_downloader: ^0.0.5
@@ -26,7 +27,8 @@ dependencies:
   extension_google_sign_in_as_googleapis_auth: ^2.0.7
   image_picker: ^0.8.6+1
   flutter_ffmpeg: ^0.4.2
-# ---------------------------
+  # ---------------------------
+  # MY WIDGETS
   super_image:
     git:
       url: https://github.com/RagehAz/super_image.git
@@ -36,12 +38,25 @@ dependencies:
   super_box:
     git:
       url: https://github.com/RagehAz/super_box.git
+  widget_fader:
+    git:
+      url: https://github.com/RagehAz/widget_fader.git
+  bubbles:
+    git:
+      url: https://github.com/RagehAz/bubbles.git
+  layouts:
+    git:
+      url: https://github.com/RagehAz/layouts.git
+  # ---------------------------
+  # MY BACKEND PACKAGES
   rest:
     git:
       url: https://github.com/RagehAz/rest.git
   ldb:
     git:
       url: https://github.com/RagehAz/ldb.git
+  # ---------------------------
+  # HELPERS
   bldrs_theme:
     git:
       url: https://github.com/RagehAz/bldrs_theme.git
@@ -51,18 +66,15 @@ dependencies:
   mapper:
     git:
       url: https://github.com/RagehAz/mapper.git
-  widget_fader:
-    git:
-      url: https://github.com/RagehAz/widget_fader.git
-  bubbles:
-    git:
-      url: https://github.com/RagehAz/bubbles.git
   numeric:
     git:
       url: https://github.com/RagehAz/numeric.git
   stringer:
     git:
       url: https://github.com/RagehAz/stringer.git
+  filers:
+    git:
+      url: https://github.com/RagehAz/filers.git
 # --------------------------------------------------------------------------------
 dev_dependencies:
   flutter_test:

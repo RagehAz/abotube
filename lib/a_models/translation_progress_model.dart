@@ -167,5 +167,4 @@ class TranslationProgressModel {
       voiceGenerated.hashCode ^
       combined.hashCode;
   // -----------------------------------------------------------------------------
-  void f(){}
 }

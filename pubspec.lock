@@ -179,6 +179,15 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "6.1.4"
+  filers:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "7b2118bd561fa19a2d454a6ee559419d74dde793"
+      url: "https://github.com/RagehAz/filers.git"
+    source: git
+    version: "0.0.2"
   firebase_core:
     dependency: "direct main"
     description:
@@ -434,6 +443,15 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.6.5"
+  layouts:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "239bf3780d22091978382c6453152df5b8c1eeea"
+      url: "https://github.com/RagehAz/layouts.git"
+    source: git
+    version: "0.0.1"
   ldb:
     dependency: "direct main"
     description:
@@ -684,6 +702,15 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.9.1"
+  space_time:
+    dependency: transitive
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: bea0f2998b1158eeeb564a5dbe39f0208c9ce5b0
+      url: "https://github.com/RagehAz/space_time.git"
+    source: git
+    version: "0.0.1"
   stack_trace:
     dependency: transitive
     description:

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:video_translator/b_views/x_components/layout/floating_list.dart';
+import 'package:layouts/layouts.dart';
 import 'package:video_translator/b_views/x_components/layout/layout.dart';
 import 'package:video_translator/b_views/x_components/players/youtube_video_player.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -78,6 +78,7 @@ class _YoutubePlayerScreenState extends State<YoutubePlayerScreen> {
     // --------------------
     return Layout(
       viewWidget: FloatingList(
+        // padding: const EdgeInsets.only(top: Ratioz.stratosphere, bottom: Ratioz.horizon),
         columnChildren: <Widget>[
 
           YoutubeVideoPlayer(

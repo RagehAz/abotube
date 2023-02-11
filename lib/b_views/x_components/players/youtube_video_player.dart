@@ -1,6 +1,6 @@
+import 'package:filers/filers.dart';
 import 'package:flutter/material.dart';
 import 'package:scale/scale.dart';
-import 'package:video_translator/services/helpers/helper_methods.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class YoutubeVideoPlayer extends StatelessWidget {
