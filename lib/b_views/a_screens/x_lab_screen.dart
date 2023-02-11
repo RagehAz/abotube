@@ -16,6 +16,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:layouts/layouts.dart';
 import 'package:mapper/mapper.dart';
 import 'package:rest/rest.dart';
+import 'package:stringer/stringer.dart';
 import 'package:video_translator/b_views/a_screens/d_url_video_player_screen.dart';
 import 'package:video_translator/b_views/a_screens/e_youtube_player_screen.dart';
 import 'package:video_translator/b_views/x_components/buttons/lab_button.dart';
@@ -342,6 +343,7 @@ class LabScreen extends StatelessWidget {
             text: 'Separate Video from audio',
             icon: Iconz.filter,
             onTap: () async {
+
               final ImagePicker _picker = ImagePicker();
 
               /// TASK : NEED TO BE SINGLETON
@@ -350,23 +352,28 @@ class LabScreen extends StatelessWidget {
                 // maxDuration:,
                 // preferredCameraDevice: ,
               );
-              final File _file = File(image.path);
 
-              final String videoFilePath = await Filers.createNewFilePath(
-                fileName: 'test_video_video.mp4',
-                // useTemporaryDirectory: true,
-              );
+              if (image != null){
 
-              final String audioFilePath = await Filers.createNewFilePath(
-                fileName: 'test_video_audio.mp4',
-                // useTemporaryDirectory: true,
-              );
+                final File _file = File(image.path);
 
-              await extractAudioAndSaveVideo(
+                final String videoFilePath = await Filers.createNewFilePath(
+                  fileName: 'test_video_video.mp4',
+                  // useTemporaryDirectory: true,
+                );
+
+                final String audioFilePath = await Filers.createNewFilePath(
+                  fileName: 'test_video_audio.mp3',//.aac',
+                  // useTemporaryDirectory: true,
+                );
+
+                await extractAudioAndSaveVideo(
                   audioPath: audioFilePath,
                   videoFile: _file,
                   videoPath: videoFilePath,
-              );
+                );
+
+              }
 
             },
           ),
@@ -388,7 +395,18 @@ Future<void> extractAudioAndSaveVideo({
 }) async {
   final FlutterFFmpeg _flutterFFmpeg = FlutterFFmpeg();
 
+  Stringer.blogStrings(
+      strings: [
+        videoFile?.path,
+        audioPath,
+        videoPath,
+      ],
+      invoker: 'extractAudioAndSaveVideo',
+  );
+
   String cmd = '-i ${videoFile.path} -vn -acodec copy $audioPath';
+
+  cmd = '-i ${videoFile.path} -map 0:a -acodec libmp3lame $audioPath';
 
   int rc = await _flutterFFmpeg.execute(cmd);
 
@@ -401,9 +419,12 @@ Future<void> extractAudioAndSaveVideo({
     } else {
       blog('Failed to save video without audio');
     }
-  } else {
+  }
+
+  else {
     blog('Failed to extract audio');
   }
+
 }
 
 // Future<void> thing() async {
