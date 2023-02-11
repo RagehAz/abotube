@@ -12,10 +12,14 @@ Future<String> showLanguageDialog() async {
   final TextToSpeech tts = TextToSpeech();
   final List<String> _langs = await tts.getLanguages();
 
+  // final List<String> _langs = Flag.getALlLangCodes();
+
   await BottomDialog.showButtonsBottomDialog(
       context: context,
       draggable: true,
       numberOfWidgets: _langs.length,
+    buttonHeight: 35,
+    title: 'Languages',
     builder: (BuildContext xxx){
 
         return List.generate(_langs.length, (index){

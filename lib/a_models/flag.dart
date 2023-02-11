@@ -298,6 +298,22 @@ class Flag {
 
     return _output;
   }
+  // --------------------
+  /// Task
+  static List<String> getALlLangCodes(){
+    List<String> _output = [];
+
+    for (final Flag flag in allFlags){
+
+      _output = Stringer.addStringsToStringsIfDoNotContainThem(
+          listToTake: _output,
+          listToAdd: flag.langCodes.split(','),
+      );
+
+    }
+
+    return _output;
+  }
   // -----------------------------------------------------------------------------
 
   /// BLOG

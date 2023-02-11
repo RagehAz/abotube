@@ -28,8 +28,9 @@ import 'package:video_translator/services/protocols/youtube_protocols.dart';
 
 class LabScreen extends StatelessWidget {
   // --------------------------------------------------------------------------
-  const LabScreen({Key key}) : super(key: key);
-
+  const LabScreen({
+    Key key
+  }) : super(key: key);
   // --------------------------------------------------------------------------
   @override
   Widget build(BuildContext context) {
@@ -273,9 +274,10 @@ class LabScreen extends StatelessWidget {
 
           const DotSeparator(),
 
+          /// PLAY GENERATE VOICE
           LabButton(
             worksPerfect: true,
-            text: 'TTS check',
+            text: 'Play Generated Voice',
             icon: Iconz.advertise,
             onTap: () async {
               final String _to = await showLanguageDialog();
@@ -285,28 +287,32 @@ class LabScreen extends StatelessWidget {
               const text = 'What is up mother fuckers';
               const String _from = 'en';
 
-              final String _translation = await GoogleTranslate.translate(
+              final String _translation =
+                  // text;
+              await GoogleTranslate.translate(
                   input: text, from: _from, to: _to);
 
               // final String _lang = tts.getDisplayLanguageByCode(langCode)
               await tts.setLanguage(_to);
 
-              final languages = await tts.getLanguages();
-              blog('languages : $languages');
+              // final languages = await tts.getLanguages();
+              // blog('languages : $languages');
+
               await tts.speak(_translation);
             },
           ),
 
-               LabButton(
+          LabButton(
             worksPerfect: true,
             text: 'TTS googleapis',
             icon: Iconz.comGooglePlay,
             onTap: () async {
+
               final  _googleSignIn = GoogleSignIn(
                 clientId: '1003450512869-0he8njpnhm9lklo2ba7jp4dl109dmms8.apps.googleusercontent.com',
                 scopes: [
                   'email',
-                 tts.TexttospeechApi.cloudPlatformScope
+                  tts.TexttospeechApi.cloudPlatformScope
                 ],
               );
 
@@ -315,7 +321,8 @@ class LabScreen extends StatelessWidget {
               );
 
               final client = await _googleSignIn.authenticatedClient();
-            },
+
+              },
           ),
 
           const DotSeparator(),
@@ -436,7 +443,7 @@ class LabScreen extends StatelessWidget {
     );
     // --------------------
   }
-// --------------------------------------------------------------------------
+  // --------------------------------------------------------------------------
 }
 
 Future<void> extractAudioAndSaveVideo({
