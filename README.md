@@ -1,4 +1,4 @@
-# video_translator
+# AboTube
 
 This app should facilitate translating a youtube video as follows
 
