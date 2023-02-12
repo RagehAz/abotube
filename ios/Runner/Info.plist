@@ -25,7 +25,7 @@
 
 		<!--===============================================-->
 		<key>CFBundleDisplayName</key>
-		<string>AboTube</string>
+	    <string>AboTube</string>
 		<!--===============================================-->
 
 		<!-- APP VERSION -->
@@ -76,10 +76,10 @@
 		<!--     		<key>CFBundleTypeRole</key>                  -->
 		<!--     		<string>Editor</string>                      -->
 		<!--     		<key>CFBundleURLName</key>                   -->
-		<!--     		<string>com.The app</string>               -->
+		<!--     		<string>com.abotube</string>                 -->
 		<!--     		<key>CFBundleURLSchemes</key>                -->
 		<!--     		<array>                                      -->
-		<!--     			<string>com.The app</string>           -->
+		<!--     			<string>com.abotube</string>             -->
 		<!--     		</array>                                     -->
 		<!--     	</dict>                                          -->
 		<!--     	<dict/>                                          -->
@@ -105,7 +105,7 @@
 		<!--===============================================-->
 		<!--     <key>FirebaseDynamicLinksCustomDomains</key>         -->
 		<!--     <array>                                              -->
-		<!--     	<string>https://www.The app/flyer</string>      -->
+		<!--     	<string>https://www.abotube</string>      -->
 		<!--     </array>                                             -->
 		<!--===============================================-->
 
@@ -123,27 +123,27 @@
 
 		<!--===============================================-->
 		<key>NSCameraUsageDescription</key>
-		<string>The app requires access to device's Camera</string>
+		<string>AboTube requires access to device's Camera</string>
 		<!--===============================================-->
 
 		<!-- PHOTO LIBRARY PERMISSION -->
 
 		<!--===============================================-->
 		<key>NSPhotoLibraryAddUsageDescription</key>
-		<string>The app requires access to add Images to your photos</string>
+		<string>AboTube requires access to add Images to your photos</string>
 		<!--===============================================-->
 		<key>NSPhotoLibraryUsageDescription</key>
-		<string>The app requires access to device's photo library</string>
+		<string>AboTube requires access to device's photo library</string>
 		<!--===============================================-->
 
 		<!-- MEDIA LIBRARY PERMISSION -->
 
 		<!--===============================================-->
 		<key>NSAppleMusicUsageDescription</key>
-		<string>The app requires access to your music files</string>
+		<string>AboTube requires access to your music files</string>
 		<!--===============================================-->
 		<key>kTCCServiceMediaLibrary</key>
-		<string>The app requires access to Media Libraries</string>
+		<string>AboTube requires access to Media Libraries</string>
 		<!--===============================================-->
 
 
@@ -151,7 +151,7 @@
 
 		<!--===============================================-->
 		<key>NSMicrophoneUsageDescription</key>
-		<string>The app requires access to your microphone</string>
+		<string>AboTube requires access to your microphone</string>
 		<!--===============================================-->
 
 		<!-- UI -->

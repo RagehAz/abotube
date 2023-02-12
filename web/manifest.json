@@ -1,6 +1,6 @@
 {
-    "name": "video_translator",
-    "short_name": "video_translator",
+    "name": "abotube",
+    "short_name": "abotube",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#ff0000",

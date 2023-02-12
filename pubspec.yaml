@@ -82,8 +82,8 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   lint: ^1.0.0
-#  flutter_launcher_icons: "^0.11.0"
-  flutter_launcher_name: "^0.0.1"
+#  flutter_launcher_icons: ^0.11.0
+#  flutter_app_name: ^0.1.0
   # ---------------------------
 #flutter_icons:
 #  android: "launcher_icon"
@@ -93,14 +93,15 @@ dev_dependencies:
 #  adaptive_icon_background: "assets/icons/abotube_raster_logo_white.png"
 #  adaptive_icon_foreground: "assets/icons/abotube_raster_logo_white.png"
 #  min_sdk_android: 24
+#  name: "AboTube"
 #  web:
 #      generate: true
 #      image_path: "assets/icons/abotube_raster_logo.png"
 #      background_color: "#ff0000"
 #      theme_color: "#ff0000"
   # ---------------------------
-flutter_launcher_name:
-  name: "AboTube"
+#flutter_app_name:
+#  name: "AboTube"
 # --------------------------------------------------------------------------------
 flutter:
   uses-material-design: true

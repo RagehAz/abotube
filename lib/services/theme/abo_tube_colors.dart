@@ -55,4 +55,3 @@ class AboTubeTheme {
   static const String youtubeFont = '$_fontsPath/trade_gothic_lt_bold_condensed_no_20.ttf';
   // -----------------------------------------------------------------------------
 }
-
