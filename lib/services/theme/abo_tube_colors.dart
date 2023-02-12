@@ -18,6 +18,12 @@ class AboTubeTheme {
   static const Color youtubeColorLight = Color(0xFFff3333);
   static const Color youtubeColorLighter = Color(0xFFff6666);
   static const Color youtubeColorLightest = Color(0xFFff9999);
+  // --------------------
+  static const Color youTubeBlackBlack = Color(0xFF000000);
+  static const Color youtubeDarkBlack = Color(0xFF0f0f0f);
+  static const Color youTubeDarkGrey = Color(0xFF0f0f0f);
+  static const Color youTubeLightGrey = Color(0xFF434343);
+  static const Color youTubeWhite = Color(0xFFf1f1f1);
   // -----------------------------------------------------------------------------
 
   /// ICONS PATH

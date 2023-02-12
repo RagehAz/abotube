@@ -87,7 +87,7 @@ class _AppStarterState extends State<AppStarter> {
           900: Color(0xFF13244b),
         }),
         textSelectionTheme: const TextSelectionThemeData(
-          selectionHandleColor: Colorz.yellow255,
+          selectionHandleColor: Colorz.white255,
           selectionColor: Colorz.white50,
         ),
       ),

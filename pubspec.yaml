@@ -2,10 +2,10 @@ name: abotube
 description: A platform that translates & republishes youtube videos
 publish_to: 'none'
 # --------------------------------------------------------------------------------
-version: 1.0.9
+version: 1.0.12
 # INSTRUCTIONS WHEN CHANGING APP VERSION
 # -> change in ios/runner/info.pList : ( CFBundleVersion )
-# -> change in main.dart : ( videoTranslatorAppVersion )
+# -> change in main.dart : ( aboTubeAppVersion )
 # --------------------------------------------------------------------------------
 environment:
   sdk: ">=2.10.5 <3.0.0"

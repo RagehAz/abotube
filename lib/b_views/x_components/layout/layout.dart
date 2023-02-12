@@ -1,8 +1,14 @@
+import 'package:abotube/b_views/x_components/app_bar/abo_tube_app_bar.dart';
+import 'package:abotube/services/theme/abo_tube_colors.dart';
+import 'package:bldrs_theme/bldrs_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:scale/scale.dart';
 import 'package:abotube/b_views/x_components/nav_bar/nav_bar.dart';
 import 'package:abotube/services/helpers/helper_methods.dart';
 import 'package:abotube/services/navigation/navigators.dart';
+import 'package:super_box/super_box.dart';
+import 'package:super_image/super_image.dart';
+import 'package:super_text/super_text.dart';
 
 class Layout extends StatelessWidget {
   /// --------------------------------------------------------------------------
@@ -48,13 +54,13 @@ class Layout extends StatelessWidget {
   /// DELEGATE
 
   // --------------------
-  static const double navBarHeight = 60;
+  static const double navBarHeight = 50;
   // --------------------
   /// TESTED : WORKS PERFECT
   static double getViewHeight(){
     final BuildContext context = getContext();
     final double _screenHeight = Scale.screenHeight(context);
-    return _screenHeight - navBarHeight;
+    return _screenHeight - (navBarHeight * 2);
   }
   // -----------------------------------------------------------------------------
 
@@ -66,6 +72,7 @@ class Layout extends StatelessWidget {
 
     final double _screenWidth = Scale.screenWidth(context);
     final double _viewHeight = getViewHeight();
+    const double _lineThickness = 0.5;
 
     return WillPopScope(
         key: const ValueKey<String>('Main_layout'),
@@ -76,11 +83,12 @@ class Layout extends StatelessWidget {
       child: SafeArea(
 
         child: Scaffold(
+          appBar: AboTubeAppBar.getAppBar(),
 
           /// INSETS
           resizeToAvoidBottomInset: false, /// if false : prevents keyboard from pushing pyramids up / bottom sheet
           // resizeToAvoidBottomPadding: false,
-          backgroundColor: const Color.fromRGBO(22, 28, 45, 1),
+          backgroundColor: AboTubeTheme.youtubeDarkBlack,
 
           body: Column(
             children: <Widget>[
@@ -96,6 +104,7 @@ class Layout extends StatelessWidget {
 
             ],
           ),
+
         ),
       ),
     );
