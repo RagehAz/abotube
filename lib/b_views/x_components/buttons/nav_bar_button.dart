@@ -1,7 +1,7 @@
+import 'package:abotube/b_views/x_components/app_bar/abo_tube_app_bar.dart';
 import 'package:bldrs_theme/bldrs_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:super_box/super_box.dart';
-import 'package:abotube/b_views/x_components/layout/layout.dart';
 import 'package:abotube/services/helpers/helper_methods.dart';
 import 'package:abotube/services/navigation/navigators.dart';
 
@@ -23,8 +23,9 @@ class NavBarButton extends StatelessWidget {
     final bool _isSelected = _route == route;
 
     return  SuperBox(
-      height: Layout.navBarHeight * 0.8,
-      width: Layout.navBarHeight * 0.8,
+      height: AboTubeAppBar.appBarButtonSize,
+      width: AboTubeAppBar.appBarButtonSize,
+      corners: AboTubeAppBar.appBarButtonSize / 2,
       icon: icon,
       iconSizeFactor: 0.7,
       margins: 5,

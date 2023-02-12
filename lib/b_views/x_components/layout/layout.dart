@@ -1,14 +1,10 @@
 import 'package:abotube/b_views/x_components/app_bar/abo_tube_app_bar.dart';
-import 'package:abotube/services/theme/abo_tube_colors.dart';
-import 'package:bldrs_theme/bldrs_theme.dart';
-import 'package:flutter/material.dart';
-import 'package:scale/scale.dart';
 import 'package:abotube/b_views/x_components/nav_bar/nav_bar.dart';
 import 'package:abotube/services/helpers/helper_methods.dart';
 import 'package:abotube/services/navigation/navigators.dart';
-import 'package:super_box/super_box.dart';
-import 'package:super_image/super_image.dart';
-import 'package:super_text/super_text.dart';
+import 'package:abotube/services/theme/abo_tube_colors.dart';
+import 'package:flutter/material.dart';
+import 'package:scale/scale.dart';
 
 class Layout extends StatelessWidget {
   /// --------------------------------------------------------------------------
@@ -72,10 +68,9 @@ class Layout extends StatelessWidget {
 
     final double _screenWidth = Scale.screenWidth(context);
     final double _viewHeight = getViewHeight();
-    const double _lineThickness = 0.5;
 
     return WillPopScope(
-        key: const ValueKey<String>('Main_layout'),
+      key: const ValueKey<String>('Main_layout'),
       onWillPop: () async {
         await _onBack(context);
         return false;

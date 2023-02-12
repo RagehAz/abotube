@@ -24,13 +24,13 @@ class AboTubeAppBar extends StatelessWidget {
 
   }
   /// --------------------------------------------------------------------------
+  static const double lineThickness = 0.5;
+  static const double appbarClearHeight = Layout.navBarHeight - lineThickness;
+  static const double appBarButtonSize = appbarClearHeight - 10;
+  /// --------------------------------------------------------------------------
   @override
   Widget build(BuildContext context) {
 
-    const double _lineThickness = 0.5;
-
-    const double _appbarClearHeight = Layout.navBarHeight - _lineThickness;
-    const double _appBarButtonSize = _appbarClearHeight - 10;
 
     return SizedBox(
         width: Scale.screenWidth(context),
@@ -42,7 +42,7 @@ class AboTubeAppBar extends StatelessWidget {
             /// CONTENTS
             SizedBox(
               width: Scale.screenWidth(context),
-              height: _appbarClearHeight,
+              height: appbarClearHeight,
               child: Row(
                 children: <Widget>[
 
@@ -53,14 +53,16 @@ class AboTubeAppBar extends StatelessWidget {
                     pic: AboTubeTheme.abotube_logo_white_name,
                   ),
 
+                  /// EXPANDER
                   const Expanded(child: SizedBox()),
 
+                  /// GO TO LAB
                   SuperBox(
-                    width: _appBarButtonSize,
-                    height: _appBarButtonSize,
+                    width: appBarButtonSize,
+                    height: appBarButtonSize,
                     icon: Iconz.lab,
                     iconSizeFactor: 0.6,
-                    corners: _appBarButtonSize / 2,
+                    corners: appBarButtonSize / 2,
                     margins: const EdgeInsets.symmetric(horizontal: 5),
                     onTap: () => blog('Go to Lab'),
                   ),
@@ -70,15 +72,30 @@ class AboTubeAppBar extends StatelessWidget {
             ),
 
             /// LINE
-            Container(
-              width: Scale.screenWidth(context),
-              height: _lineThickness,
-              color: AboTubeTheme.youTubeLightGrey,
-            ),
+            const BarLine(),
 
           ],
         ),
       );
+
+  }
+  /// --------------------------------------------------------------------------
+}
+
+class BarLine extends StatelessWidget {
+  /// --------------------------------------------------------------------------
+  const BarLine({
+    Key key
+  }) : super(key: key);
+  /// --------------------------------------------------------------------------
+  @override
+  Widget build(BuildContext context) {
+
+    return Container(
+      width: Scale.screenWidth(context),
+      height: AboTubeAppBar.lineThickness,
+      color: AboTubeTheme.youTubeLightGrey,
+    );
 
   }
   /// --------------------------------------------------------------------------
