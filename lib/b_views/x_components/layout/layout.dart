@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:scale/scale.dart';
-import 'package:video_translator/b_views/x_components/nav_bar/nav_bar.dart';
-import 'package:video_translator/services/helpers/helper_methods.dart';
-import 'package:video_translator/services/navigation/navigators.dart';
+import 'package:abotube/b_views/x_components/nav_bar/nav_bar.dart';
+import 'package:abotube/services/helpers/helper_methods.dart';
+import 'package:abotube/services/navigation/navigators.dart';
 
 class Layout extends StatelessWidget {
   /// --------------------------------------------------------------------------

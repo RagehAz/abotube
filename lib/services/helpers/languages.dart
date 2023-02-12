@@ -1,5 +1,5 @@
-import 'package:video_translator/a_models/flag.dart';
-import 'package:video_translator/a_models/phrase.dart';
+import 'package:abotube/a_models/flag.dart';
+import 'package:abotube/a_models/phrase.dart';
 
 const Map<String, dynamic> requiredLanguages = {
 'hi-IN' : 'India',

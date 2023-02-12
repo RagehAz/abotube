@@ -1,4 +1,4 @@
-package com.example.video_translator
+package com.abotube.app
 
 import io.flutter.embedding.android.FlutterActivity
 

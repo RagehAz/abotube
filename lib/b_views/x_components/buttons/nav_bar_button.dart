@@ -1,9 +1,9 @@
 import 'package:bldrs_theme/bldrs_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:super_box/super_box.dart';
-import 'package:video_translator/b_views/x_components/layout/layout.dart';
-import 'package:video_translator/services/helpers/helper_methods.dart';
-import 'package:video_translator/services/navigation/navigators.dart';
+import 'package:abotube/b_views/x_components/layout/layout.dart';
+import 'package:abotube/services/helpers/helper_methods.dart';
+import 'package:abotube/services/navigation/navigators.dart';
 
 class NavBarButton extends StatelessWidget {
   /// --------------------------------------------------------------------------

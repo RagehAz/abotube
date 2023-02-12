@@ -1,8 +1,8 @@
 import 'package:bldrs_theme/bldrs_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:video_translator/b_views/x_components/buttons/nav_bar_button.dart';
-import 'package:video_translator/b_views/x_components/nav_bar/nav_bar_box.dart';
-import 'package:video_translator/services/navigation/routing.dart';
+import 'package:abotube/b_views/x_components/buttons/nav_bar_button.dart';
+import 'package:abotube/b_views/x_components/nav_bar/nav_bar_box.dart';
+import 'package:abotube/services/navigation/routing.dart';
 
 class NavBar extends StatelessWidget {
   /// --------------------------------------------------------------------------

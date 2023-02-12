@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:layouts/layouts.dart';
-import 'package:video_translator/b_views/x_components/layout/layout.dart';
-import 'package:video_translator/b_views/x_components/players/youtube_video_player.dart';
+import 'package:abotube/b_views/x_components/layout/layout.dart';
+import 'package:abotube/b_views/x_components/players/youtube_video_player.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class YoutubePlayerScreen extends StatefulWidget {

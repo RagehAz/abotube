@@ -1,7 +1,7 @@
 import 'package:bldrs_theme/bldrs_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:video_translator/b_views/a_screens/b_home_screen.dart';
-import 'package:video_translator/services/navigation/routing.dart';
+import 'package:abotube/b_views/a_screens/b_home_screen.dart';
+import 'package:abotube/services/navigation/routing.dart';
 
 class AppStarter extends StatefulWidget {
   /// --------------------------------------------------------------------------
@@ -61,7 +61,7 @@ class _AppStarterState extends State<AppStarter> {
   Widget build(BuildContext context) {
 
     return MaterialApp(
-      title: 'Video Translator',
+      title: 'AboTube',
 
       /// DEBUG
       debugShowCheckedModeBanner: false,

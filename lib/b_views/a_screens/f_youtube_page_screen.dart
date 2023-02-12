@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:scale/scale.dart';
 import 'package:stringer/stringer.dart';
 import 'package:super_box/super_box.dart';
-import 'package:video_translator/b_views/x_components/layout/layout.dart';
-import 'package:video_translator/b_views/x_components/nav_bar/nav_bar_box.dart';
-import 'package:video_translator/services/protocols/youtube_protocols.dart';
+import 'package:abotube/b_views/x_components/layout/layout.dart';
+import 'package:abotube/b_views/x_components/nav_bar/nav_bar_box.dart';
+import 'package:abotube/services/protocols/youtube_protocols.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 /*
 // Import for Android features.

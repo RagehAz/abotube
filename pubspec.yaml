@@ -1,5 +1,5 @@
-name: video_translator
-description: A platform that translate youtube videos to arabic
+name: abotube
+description: A platform that translates & republishes youtube videos
 publish_to: 'none'
 # --------------------------------------------------------------------------------
 version: 1.0.9
@@ -82,13 +82,33 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   lint: ^1.0.0
+#  flutter_launcher_icons: "^0.11.0"
+  flutter_launcher_name: "^0.0.1"
+  # ---------------------------
+#flutter_icons:
+#  android: "launcher_icon"
+#  ios: true
+#  remove_alpha_ios: true
+#  image_path: "assets/icons/abotube_raster_logo.png"
+#  adaptive_icon_background: "assets/icons/abotube_raster_logo_white.png"
+#  adaptive_icon_foreground: "assets/icons/abotube_raster_logo_white.png"
+#  min_sdk_android: 24
+#  web:
+#      generate: true
+#      image_path: "assets/icons/abotube_raster_logo.png"
+#      background_color: "#ff0000"
+#      theme_color: "#ff0000"
+  # ---------------------------
+flutter_launcher_name:
+  name: "AboTube"
 # --------------------------------------------------------------------------------
 flutter:
   uses-material-design: true
-#  assets:
-#    - assets/
+  assets:
+    - assets/
+    - assets/icons/
+    - assets/fonts/
 #    - assets/aw/
-#    - assets/icons/
 #    - assets/icons/keywords/
 #    - assets/icons/specs/
 #    - assets/icons/flags/

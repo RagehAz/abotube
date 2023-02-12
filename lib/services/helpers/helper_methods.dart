@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:video_translator/b_views/a_screens/a_app_starter.dart';
+import 'package:abotube/b_views/a_screens/a_app_starter.dart';
 // -----------------------------------------------------------------------------
 
 /// CONTEXT

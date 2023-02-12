@@ -2,7 +2,7 @@ import 'package:bldrs_theme/bldrs_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:scale/scale.dart';
 import 'package:super_box/super_box.dart';
-import 'package:video_translator/a_models/translation_progress_model.dart';
+import 'package:abotube/a_models/translation_progress_model.dart';
 
 class ProgressButton extends StatelessWidget {
   /// --------------------------------------------------------------------------

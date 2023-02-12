@@ -18,14 +18,15 @@ import 'package:layouts/layouts.dart';
 import 'package:mapper/mapper.dart';
 import 'package:rest/rest.dart';
 import 'package:text_to_speech/text_to_speech.dart';
-import 'package:video_translator/b_views/a_screens/d_url_video_player_screen.dart';
-import 'package:video_translator/b_views/a_screens/e_youtube_player_screen.dart';
-import 'package:video_translator/b_views/x_components/buttons/lab_button.dart';
-import 'package:video_translator/b_views/x_components/dialogs/language_selector_dialog.dart';
-import 'package:video_translator/b_views/x_components/layout/layout.dart';
-import 'package:video_translator/services/navigation/navigators.dart';
-import 'package:video_translator/services/protocols/translation/google_translator.dart';
-import 'package:video_translator/services/protocols/youtube_protocols.dart';
+import 'package:abotube/b_views/a_screens/d_url_video_player_screen.dart';
+import 'package:abotube/b_views/a_screens/e_youtube_player_screen.dart';
+import 'package:abotube/b_views/x_components/buttons/lab_button.dart';
+import 'package:abotube/b_views/x_components/dialogs/language_selector_dialog.dart';
+import 'package:abotube/b_views/x_components/layout/layout.dart';
+import 'package:abotube/services/navigation/navigators.dart';
+import 'package:abotube/services/protocols/translation/google_translator.dart';
+import 'package:abotube/services/protocols/youtube_protocols.dart';
+import 'package:abotube/services/theme/abo_tube_colors.dart';
 /// ------------------------------------------------------
 class LabScreen extends StatelessWidget {
   // --------------------------------------------------------------------------
@@ -263,6 +264,7 @@ class LabScreen extends StatelessWidget {
 
               _link = 'https://checksub-downloader-doybj.ondigitalocean'
                   '.app//automatic_srt_download?url=https:%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DzQodZYvfTAA&lang=ar';
+
               final http.Response _thing = await Rest.get(
                 context: context,
                 rawLink: _link,
@@ -270,6 +272,7 @@ class LabScreen extends StatelessWidget {
               );
 
               blog(utf8.decode(_thing.bodyBytes));
+
             },
           ),
 
@@ -311,7 +314,7 @@ class LabScreen extends StatelessWidget {
 
           /// TTS GOOGLE APIS
           LabButton(
-            worksPerfect: false,
+            worksPerfect: true,
             text: 'Get Audio by google API',
             icon: Iconz.comGooglePlay,
             onTap: () async {
@@ -331,13 +334,14 @@ class LabScreen extends StatelessWidget {
               blog('client is : ${client.credentials}');
 
               final input = tts.SynthesisInput(
-                text: 'ما تدخل علي نفس الواحد',
                 // ssml:
+                text: ''' ماذا تفعل ايها الصعلوك يا خول يا كلب الكلاب''',
               );
 
+              ///  REFERENCE : https://cloud.google.com/text-to-speech/docs/voices
               final parameters = tts.VoiceSelectionParams(
                 languageCode: 'ar-XA',
-                name: 'ar-XA-Wavenet-A',
+                name: 'ar-XA-Wavenet-B', // 'ar-XA-Wavenet-A'
                 // customVoice: ,
                 // ssmlGender: ,
               );
@@ -460,8 +464,9 @@ class LabScreen extends StatelessWidget {
           LabButton(
             worksPerfect: false,
             text: 'Separate Video from audio',
-            icon: Iconz.filter,
+            icon: AboTubeTheme.abotube_logo,
             onTap: () async {
+
               final ImagePicker _picker = ImagePicker();
 
               /// TASK : NEED TO BE SINGLETON
@@ -494,6 +499,7 @@ class LabScreen extends StatelessWidget {
           ),
 
           const DotSeparator(),
+
         ],
       ),
     );

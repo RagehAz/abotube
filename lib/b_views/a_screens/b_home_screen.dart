@@ -3,10 +3,10 @@ import 'package:bubbles/bubbles.dart';
 import 'package:flutter/material.dart';
 import 'package:numeric/numeric.dart';
 import 'package:super_box/super_box.dart';
-import 'package:video_translator/b_views/x_components/cards/video_card.dart';
-import 'package:video_translator/b_views/x_components/layout/layout.dart';
-import 'package:video_translator/services/navigation/navigators.dart';
-import 'package:video_translator/services/navigation/routing.dart';
+import 'package:abotube/b_views/x_components/cards/video_card.dart';
+import 'package:abotube/b_views/x_components/layout/layout.dart';
+import 'package:abotube/services/navigation/navigators.dart';
+import 'package:abotube/services/navigation/routing.dart';
 
 class HomeScreen extends StatelessWidget {
   /// --------------------------------------------------------------------------

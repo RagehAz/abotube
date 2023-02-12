@@ -3,11 +3,11 @@ import 'package:bubbles/bubbles.dart';
 import 'package:filers/filers.dart';
 import 'package:flutter/material.dart';
 import 'package:stringer/stringer.dart';
-import 'package:video_translator/a_models/translation_progress_model.dart';
-import 'package:video_translator/b_views/x_components/buttons/progress_button.dart';
-import 'package:video_translator/b_views/x_components/cards/video_card.dart';
-import 'package:video_translator/b_views/x_components/layout/layout.dart';
-import 'package:video_translator/services/helpers/former.dart';
+import 'package:abotube/a_models/translation_progress_model.dart';
+import 'package:abotube/b_views/x_components/buttons/progress_button.dart';
+import 'package:abotube/b_views/x_components/cards/video_card.dart';
+import 'package:abotube/b_views/x_components/layout/layout.dart';
+import 'package:abotube/services/helpers/former.dart';
 
 class TranslatorScreen extends StatefulWidget {
   /// --------------------------------------------------------------------------

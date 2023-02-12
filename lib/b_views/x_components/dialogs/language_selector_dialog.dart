@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:stringer/stringer.dart';
 import 'package:text_to_speech/text_to_speech.dart';
-import 'package:video_translator/b_views/x_components/dialogs/bottom_dialog.dart';
-import 'package:video_translator/services/helpers/helper_methods.dart';
-import 'package:video_translator/services/navigation/navigators.dart';
+import 'package:abotube/b_views/x_components/dialogs/bottom_dialog.dart';
+import 'package:abotube/services/helpers/helper_methods.dart';
+import 'package:abotube/services/navigation/navigators.dart';
 
 Future<String> showLanguageDialog() async {
 

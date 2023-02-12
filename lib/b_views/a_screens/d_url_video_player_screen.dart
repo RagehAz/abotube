@@ -9,11 +9,11 @@ import 'package:numeric/numeric.dart';
 import 'package:scale/scale.dart';
 import 'package:super_text/super_text.dart';
 import 'package:video_player/video_player.dart';
-import 'package:video_translator/b_views/x_components/buttons/player_button.dart';
-import 'package:video_translator/b_views/x_components/layout/layout.dart';
-// import 'package:video_translator/b_views/x_components/layout/floating_list.dart';
-// import 'package:video_translator/b_views/x_components/layout/layout.dart';
-import 'package:video_translator/b_views/x_components/players/url_video_player.dart';
+import 'package:abotube/b_views/x_components/buttons/player_button.dart';
+import 'package:abotube/b_views/x_components/layout/layout.dart';
+// import 'package:abotube/b_views/x_components/layout/floating_list.dart';
+// import 'package:abotube/b_views/x_components/layout/layout.dart';
+import 'package:abotube/b_views/x_components/players/url_video_player.dart';
 
 class VideoPlayerScreen extends StatefulWidget {
   /// --------------------------------------------------------------------------

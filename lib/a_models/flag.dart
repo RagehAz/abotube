@@ -3,8 +3,8 @@ import 'package:filers/filers.dart';
 import 'package:flutter/material.dart';
 import 'package:mapper/mapper.dart';
 import 'package:stringer/stringer.dart';
-import 'package:video_translator/a_models/phrase.dart';
-import 'package:video_translator/services/helpers/languages.dart';
+import 'package:abotube/a_models/phrase.dart';
+import 'package:abotube/services/helpers/languages.dart';
 
 /// => TAMAM
 @immutable
