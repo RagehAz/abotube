@@ -26,7 +26,7 @@ import 'package:video_translator/b_views/x_components/layout/layout.dart';
 import 'package:video_translator/services/navigation/navigators.dart';
 import 'package:video_translator/services/protocols/translation/google_translator.dart';
 import 'package:video_translator/services/protocols/youtube_protocols.dart';
-
+/// ------------------------------------------------------
 class LabScreen extends StatelessWidget {
   // --------------------------------------------------------------------------
   const LabScreen({
@@ -331,13 +331,13 @@ class LabScreen extends StatelessWidget {
               blog('client is : ${client.credentials}');
 
               final input = tts.SynthesisInput(
-                text: 'Hello World',
+                text: 'ما تدخل علي نفس الواحد',
                 // ssml:
               );
 
               final parameters = tts.VoiceSelectionParams(
-                languageCode: 'en-US',
-                name: 'en-US-Wavenet-A',
+                languageCode: 'ar-XA',
+                name: 'ar-XA-Wavenet-A',
                 // customVoice: ,
                 // ssmlGender: ,
               );
@@ -366,11 +366,16 @@ class LabScreen extends StatelessWidget {
 
               final List<int> output = response.audioContentAsBytes;
 
+              final File _file = await Filers.createNewEmptyFile(fileName:'testFile');
+              final Uint8List _uint8List = Floaters.getBytesFromInts(output);
+              await Filers.writeUint8ListOnFile(file: _file, uint8list: _uint8List);
+
               blog('the output is : $output');
 
               final AudioPlayer player = AudioPlayer();
 
-              await player.setAudioSource(ByteSourceThing(output));
+              await player.setFilePath(_file.path);
+              // await player.setAudioSource(ByteSourceThing(output));
               await player.play();
 
             },
@@ -496,7 +501,7 @@ class LabScreen extends StatelessWidget {
   }
   // --------------------------------------------------------------------------
 }
-
+/// ------------------------------------------------------
 Future<void> extractAudioAndSaveVideo({
   @required File videoFile,
   @required String audioPath,
@@ -534,7 +539,7 @@ Future<void> extractAudioAndSaveVideo({
   //   blog('Failed to extract audio');
   // }
 }
-
+/// ------------------------------------------------------
 // Future<void> thing() async {
 //   final FlutterFFmpeg _flutterFFmpeg = FlutterFFmpeg();
 //
@@ -542,10 +547,14 @@ Future<void> extractAudioAndSaveVideo({
 //   const String audioFilePath = '/path/to/audio.aac';
 //   const String cmd = '-i $videoFilePath -vn -acodec copy $audioFilePath';
 // }
-
+/// ------------------------------------------------------
+/*
 class ByteSourceThing extends StreamAudioSource {
-  final List<int> bytes;
+
+
   ByteSourceThing(this.bytes);
+
+  final List<int> bytes;
 
   @override
   Future<StreamAudioResponse> request([int start, int end]) async {
@@ -560,3 +569,5 @@ class ByteSourceThing extends StreamAudioSource {
     );
   }
 }
+ */
+/// ------------------------------------------------------
