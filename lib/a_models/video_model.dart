@@ -1,3 +1,4 @@
+import 'package:abotube/a_models/caption_model.dart';
 import 'package:flutter/material.dart';
 
 @immutable
@@ -7,11 +8,13 @@ class VideoModel {
     @required this.id,
     @required this.title,
     @required this.url,
+    @required this.captions,
 });
   // -----------------------------------------------------------------------------
   final String id;
   final String title;
   final String url;
+  final List<CaptionModel> captions;
   // -----------------------------------------------------------------------------
 
   /// CYPHERS
@@ -23,6 +26,7 @@ class VideoModel {
       'id': id,
       'title': title,
       'url': url,
+      'captions': CaptionModel.cipherCaptions(captions),
     };
   }
   // --------------------
@@ -37,6 +41,7 @@ class VideoModel {
         id: map['id'],
         title: map['title'],
         url: map['url'],
+        captions: CaptionModel.decipherCaptions(map['captions']),
       );
     }
 
@@ -58,7 +63,8 @@ class VideoModel {
       if (
       model1.id == model2.id &&
       model1.title == model2.title &&
-      model1.url == model2.url
+      model1.url == model2.url &&
+      CaptionModel.checkCaptionsListsAreIdentical(captions1: model1.captions, captions2: model2.captions)
     ) {
         _identical = true;
       }

@@ -1,6 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 import 'package:filers/filers.dart';
 import 'package:flutter/material.dart';
+import 'package:mapper/mapper.dart';
 import 'package:numeric/numeric.dart';
 import 'package:stringer/stringer.dart';
 
@@ -11,9 +12,72 @@ class CaptionModel {
     @required this.text,
     @required this.second,
   });
-  // -----------------------------------------------------------------------------
+  // --------------------
   final String text;
   final int second;
+  // -----------------------------------------------------------------------------
+
+  /// CYPHERS
+
+  // --------------------
+  /// AI TESTED
+  static Map<String, dynamic> cipherCaptions(List<CaptionModel> captions){
+    Map<String, dynamic> _output = {};
+
+    if (Mapper.checkCanLoopList(captions) == true){
+
+      final List<CaptionModel> _caps = cleanNullSeconds(captions);
+
+      for (final CaptionModel caption in sortCaptionsBySecond(_caps)){
+
+        assert(caption.second != null, 'second can not be null');
+
+        _output = Mapper.insertPairInMap(
+          map: _output,
+          key: caption.second.toString(),
+          value: caption.text,
+          // overrideExisting: false,
+        );
+
+      }
+
+    }
+
+    return _output;
+  }
+  // --------------------
+  /// AI TESTED
+  static List<CaptionModel> decipherCaptions(Map<String, dynamic> map){
+    final List<CaptionModel> _output = <CaptionModel>[];
+
+    if (map != null) {
+      List<String> _keys = map.keys.toList();
+      if (Mapper.checkCanLoopList(_keys) == true) {
+
+        _keys = Stringer.sortAlphabetically(_keys);
+
+        for (final String key in _keys) {
+
+          final int _second = Numeric.transformStringToInt(key);
+
+          if (_second != null){
+
+            final CaptionModel _caption = CaptionModel(
+              second: _second,
+              text: map[key],
+            );
+
+            _output.add(_caption);
+
+          }
+
+        }
+
+      }
+    }
+
+    return _output;
+  }
   // -----------------------------------------------------------------------------
 
   /// CAPTIONS CONVERTERS
@@ -51,6 +115,45 @@ class CaptionModel {
     }
 
     return captions;
+  }
+  // -----------------------------------------------------------------------------
+
+  /// SORTING
+
+  // --------------------
+  /// AI TESTED
+  static List<CaptionModel> sortCaptionsBySecond(List<CaptionModel> captions){
+    final List<CaptionModel> _output = <CaptionModel>[];
+
+    if (Mapper.checkCanLoopList(captions) == true){
+
+      final List<CaptionModel> _captions = List<CaptionModel>.from(captions);
+
+      _captions.sort((CaptionModel a, CaptionModel b) => a.second.compareTo(b.second));
+
+      _output.addAll(_captions);
+
+    }
+
+    return _output;
+  }
+  // --------------------
+  /// AI TESTED
+  static List<CaptionModel> cleanNullSeconds(List<CaptionModel> captions){
+    final List<CaptionModel> _output = <CaptionModel>[];
+
+    if (Mapper.checkCanLoopList(captions) == true){
+
+      for (final CaptionModel caption in captions){
+        if (caption.second != null){
+          _output.add(caption);
+        }
+      }
+
+    }
+
+    return _output;
+
   }
   // -----------------------------------------------------------------------------
 
@@ -166,7 +269,28 @@ class CaptionModel {
   /// BLOGGING
 
   // --------------------
-  ///
+  /// TESTED : WORKS PERFECT
+  static void blogCaptions(List<CaptionModel> captions){
+
+    if (Mapper.checkCanLoopList(captions) == true){
+
+      blog('CAPTIONS BLOG : ${captions.length} captions =>>> ');
+
+      for (final CaptionModel caption in captions){
+
+        final String _timeStamp = convertSecondsTo_mm_i_ss(caption.second);
+        blog('   -> Caption : $_timeStamp : ${caption.text}');
+
+      }
+
+      blog('CAPTIONS BLOG DONE <<<==');
+
+    }
+    else {
+      blog('CAPTIONS BLOG : captions are Empty');
+    }
+
+  }
   // -----------------------------------------------------------------------------
 
   /// EQUALITY
@@ -193,6 +317,19 @@ class CaptionModel {
     }
 
     return _identical;
+  }
+  // --------------------
+  /// TESTED : WORKS PERFECT
+  static bool checkCaptionsListsAreIdentical({
+    @required List<CaptionModel> captions1,
+    @required List<CaptionModel> captions2,
+  }){
+
+    return Mapper.checkMapsAreIdentical(
+        map1: cipherCaptions(captions1),
+        map2: cipherCaptions(captions2)
+    );
+
   }
   // -----------------------------------------------------------------------------
 
