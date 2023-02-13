@@ -1,5 +1,8 @@
 import 'dart:io';
 
+import 'package:abotube/b_views/x_components/buttons/player_button.dart';
+import 'package:abotube/b_views/x_components/layout/basic_layout.dart';
+import 'package:abotube/b_views/x_components/players/url_video_player.dart';
 import 'package:bldrs_theme/bldrs_theme.dart';
 import 'package:bubbles/bubbles.dart';
 import 'package:filers/filers.dart';
@@ -9,11 +12,6 @@ import 'package:numeric/numeric.dart';
 import 'package:scale/scale.dart';
 import 'package:super_text/super_text.dart';
 import 'package:video_player/video_player.dart';
-import 'package:abotube/b_views/x_components/buttons/player_button.dart';
-import 'package:abotube/b_views/x_components/layout/layout.dart';
-// import 'package:abotube/b_views/x_components/layout/floating_list.dart';
-// import 'package:abotube/b_views/x_components/layout/layout.dart';
-import 'package:abotube/b_views/x_components/players/url_video_player.dart';
 
 class VideoPlayerScreen extends StatefulWidget {
   /// --------------------------------------------------------------------------
@@ -181,8 +179,8 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   Widget build(BuildContext context) {
 
     // --------------------
-    return Layout(
-      viewWidget: FloatingList(
+    return BasicLayout(
+      body: FloatingList(
         // padding: const EdgeInsets.only(top: Ratioz.stratosphere, bottom: Ratioz.horizon),
         columnChildren: <Widget>[
 

@@ -1,7 +1,7 @@
+import 'package:abotube/b_views/x_components/layout/basic_layout.dart';
+import 'package:abotube/b_views/x_components/players/youtube_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:layouts/layouts.dart';
-import 'package:abotube/b_views/x_components/layout/layout.dart';
-import 'package:abotube/b_views/x_components/players/youtube_video_player.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class YoutubePlayerScreen extends StatefulWidget {
@@ -76,8 +76,8 @@ class _YoutubePlayerScreenState extends State<YoutubePlayerScreen> {
   @override
   Widget build(BuildContext context) {
     // --------------------
-    return Layout(
-      viewWidget: FloatingList(
+    return BasicLayout(
+      body: FloatingList(
         // padding: const EdgeInsets.only(top: Ratioz.stratosphere, bottom: Ratioz.horizon),
         columnChildren: <Widget>[
 

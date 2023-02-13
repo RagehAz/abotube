@@ -29,6 +29,7 @@ dependencies:
   video_player: ^2.2.10
   webview_flutter: ^4.0.2
   youtube_player_flutter: ^8.1.2
+  provider: ^6.0.3
   # ---------------------------
   # MY WIDGETS
   super_image:

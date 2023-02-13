@@ -1,4 +1,4 @@
-import 'package:abotube/b_views/x_components/layout/layout.dart';
+import 'package:abotube/b_views/a_structure/b_layout.dart';
 import 'package:abotube/services/theme/abo_tube_colors.dart';
 import 'package:bldrs_theme/bldrs_theme.dart';
 import 'package:filers/filers.dart';
@@ -16,10 +16,24 @@ class AboTubeAppBar extends StatelessWidget {
   static PreferredSizeWidget getAppBar(){
 
     return AppBar(
-      backgroundColor: AboTubeTheme.youtubeDarkBlack,
+      backgroundColor: AboTubeTheme.blackLight,
       toolbarHeight: Layout.navBarHeight,
       leading: const SizedBox(), // to close default back button
       flexibleSpace: const AboTubeAppBar(),
+    );
+
+  }
+
+  static PreferredSizeWidget getBackAppBar(){
+
+    return AppBar(
+      backgroundColor: AboTubeTheme.blackLight,
+      toolbarHeight: Layout.navBarHeight,
+      // leading: IconButton(
+      //   icon: Iconz.back,
+      //   onPressed: () => Navigator.pop(getContext()),
+      // ),
+      // flexibleSpace: const AboTubeAppBar(),
     );
 
   }
@@ -60,11 +74,10 @@ class AboTubeAppBar extends StatelessWidget {
                   SuperBox(
                     width: appBarButtonSize,
                     height: appBarButtonSize,
-                    icon: Iconz.lab,
-                    iconSizeFactor: 0.6,
+                    icon: Iconz.dvRageh,
                     corners: appBarButtonSize / 2,
                     margins: const EdgeInsets.symmetric(horizontal: 5),
-                    onTap: () => blog('Go to Lab'),
+                    onTap: () => blog('This is Awesome'),
                   ),
 
                 ],
@@ -94,7 +107,7 @@ class BarLine extends StatelessWidget {
     return Container(
       width: Scale.screenWidth(context),
       height: AboTubeAppBar.lineThickness,
-      color: AboTubeTheme.youTubeLightGrey,
+      color: AboTubeTheme.greyLight,
     );
 
   }

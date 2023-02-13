@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:scale/scale.dart';
 import 'package:stringer/stringer.dart';
 import 'package:super_box/super_box.dart';
-import 'package:abotube/b_views/x_components/layout/layout.dart';
-import 'package:abotube/b_views/x_components/nav_bar/nav_bar_box.dart';
+import 'package:abotube/b_views/a_structure/b_layout.dart';
+import 'package:abotube/b_views/x_components/bars/nav_bar/nav_bar_box.dart';
 import 'package:abotube/services/protocols/youtube_protocols.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 /*
@@ -14,18 +14,18 @@ import 'package:webview_flutter_android/webview_flutter_android.dart';
 import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
  */
 
-class YoutubeWebpageScreen extends StatefulWidget {
+class YoutubeWebPage extends StatefulWidget {
   /// --------------------------------------------------------------------------
-  const YoutubeWebpageScreen({
+  const YoutubeWebPage({
     Key key
   }) : super(key: key);
   /// --------------------------------------------------------------------------
   @override
-  _YoutubeWebpageScreenState createState() => _YoutubeWebpageScreenState();
+  _YoutubeWebPageState createState() => _YoutubeWebPageState();
   /// --------------------------------------------------------------------------
 }
 
-class _YoutubeWebpageScreenState extends State<YoutubeWebpageScreen> {
+class _YoutubeWebPageState extends State<YoutubeWebPage> {
   // -----------------------------------------------------------------------------
   static const String _link = 'https://www.youtube.com';
   String _currentURL;
@@ -136,8 +136,7 @@ class _YoutubeWebpageScreenState extends State<YoutubeWebpageScreen> {
     // --------------------
     // _getCurrentURl();
     // --------------------
-    return Layout(
-      viewWidget: SizedBox(
+    return SizedBox(
         width: Scale.screenWidth(context),
         height: Layout.getViewHeight(),
         child: Column(
@@ -220,8 +219,7 @@ class _YoutubeWebpageScreenState extends State<YoutubeWebpageScreen> {
           ],
         ),
 
-      ),
-    );
+      );
     // --------------------
   }
   // --------------------------------------------------------------------------

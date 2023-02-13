@@ -1,9 +1,9 @@
+import 'package:abotube/b_views/x_components/layout/basic_layout.dart';
 import 'package:bldrs_theme/bldrs_theme.dart';
 import 'package:filers/filers.dart';
 import 'package:flutter/material.dart';
 import 'package:scale/scale.dart';
 import 'package:super_text/super_text.dart';
-import 'package:abotube/b_views/x_components/layout/layout.dart';
 
 /// ============================================================================
 
@@ -63,8 +63,8 @@ class _TheStatefulScreenState extends State<TheStatefulScreen> {
   @override
   Widget build(BuildContext context) {
     // --------------------
-    return Layout(
-      viewWidget: DummyView(
+    return BasicLayout(
+      body: DummyView(
         title: 'Stateful',
         onTap: (){},
       ),
@@ -87,8 +87,8 @@ class TheStatelessScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // --------------------
-    return Layout(
-        viewWidget: DummyView(
+    return BasicLayout(
+        body: DummyView(
           title: 'Stateless',
           onTap: (){},
         ),
@@ -118,8 +118,8 @@ class DummyView extends StatelessWidget {
     // --------------------
     final double _referenceLength = Scale.screenShortestSide(context);
     // --------------------
-    return Layout(
-      viewWidget: Center(
+    return BasicLayout(
+      body: Center(
         child: SuperText(
           text: title,
           font: BldrsThemeFonts.fontBldrsHeadlineFont,

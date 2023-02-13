@@ -1,26 +1,25 @@
+import 'package:abotube/a_models/translation_progress_model.dart';
+import 'package:abotube/b_views/x_components/buttons/progress_button.dart';
+import 'package:abotube/b_views/x_components/cards/video_card.dart';
+import 'package:abotube/services/helpers/former.dart';
 import 'package:bldrs_theme/bldrs_theme.dart';
 import 'package:bubbles/bubbles.dart';
 import 'package:filers/filers.dart';
 import 'package:flutter/material.dart';
 import 'package:stringer/stringer.dart';
-import 'package:abotube/a_models/translation_progress_model.dart';
-import 'package:abotube/b_views/x_components/buttons/progress_button.dart';
-import 'package:abotube/b_views/x_components/cards/video_card.dart';
-import 'package:abotube/b_views/x_components/layout/layout.dart';
-import 'package:abotube/services/helpers/former.dart';
 
-class TranslatorScreen extends StatefulWidget {
+class TranslatorPage extends StatefulWidget {
   /// --------------------------------------------------------------------------
-  const TranslatorScreen({
+  const TranslatorPage({
     Key key
   }) : super(key: key);
   /// --------------------------------------------------------------------------
   @override
-  _TranslatorScreenState createState() => _TranslatorScreenState();
+  _TranslatorPageState createState() => _TranslatorPageState();
   /// --------------------------------------------------------------------------
 }
 
-class _TranslatorScreenState extends State<TranslatorScreen> {
+class _TranslatorPageState extends State<TranslatorPage> {
   // -----------------------------------------------------------------------------
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   // -----------------------------------------------------------------------------
@@ -261,8 +260,7 @@ class _TranslatorScreenState extends State<TranslatorScreen> {
     // --------------------
     final double _bubbleWidth = Bubble.bubbleWidth(context: context);
     // --------------------
-    return Layout(
-      viewWidget: ListView(
+    return ListView(
         physics: const BouncingScrollPhysics(),
         padding: const EdgeInsets.symmetric(vertical: 20),
         children: <Widget>[
@@ -337,8 +335,7 @@ class _TranslatorScreenState extends State<TranslatorScreen> {
           ),
 
         ],
-      ),
-    );
+      );
     // --------------------
   }
   // --------------------------------------------------------------------------

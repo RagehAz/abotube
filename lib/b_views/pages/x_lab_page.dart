@@ -1,6 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:abotube/b_views/a_structure/x_url_video_player_screen.dart';
+import 'package:abotube/b_views/a_structure/x_youtube_player_screen.dart';
+import 'package:abotube/b_views/x_components/buttons/lab_button.dart';
+import 'package:abotube/b_views/x_components/dialogs/language_selector_dialog.dart';
+import 'package:abotube/services/navigation/navigators.dart';
+import 'package:abotube/services/protocols/translation/google_translator.dart';
+import 'package:abotube/services/protocols/youtube_protocols.dart';
+import 'package:abotube/services/theme/abo_tube_colors.dart';
 import 'package:bldrs_theme/bldrs_theme.dart';
 import 'package:bubbles/bubbles.dart';
 import 'package:extension_google_sign_in_as_googleapis_auth/extension_google_sign_in_as_googleapis_auth.dart';
@@ -9,8 +17,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_youtube_downloader/flutter_youtube_downloader.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:googleapis/youtube/v3.dart' as yt;
 import 'package:googleapis/texttospeech/v1.dart' as tts;
+import 'package:googleapis/youtube/v3.dart' as yt;
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:just_audio/just_audio.dart';
@@ -18,27 +26,17 @@ import 'package:layouts/layouts.dart';
 import 'package:mapper/mapper.dart';
 import 'package:rest/rest.dart';
 import 'package:text_to_speech/text_to_speech.dart';
-import 'package:abotube/b_views/a_screens/d_url_video_player_screen.dart';
-import 'package:abotube/b_views/a_screens/e_youtube_player_screen.dart';
-import 'package:abotube/b_views/x_components/buttons/lab_button.dart';
-import 'package:abotube/b_views/x_components/dialogs/language_selector_dialog.dart';
-import 'package:abotube/b_views/x_components/layout/layout.dart';
-import 'package:abotube/services/navigation/navigators.dart';
-import 'package:abotube/services/protocols/translation/google_translator.dart';
-import 'package:abotube/services/protocols/youtube_protocols.dart';
-import 'package:abotube/services/theme/abo_tube_colors.dart';
 /// ------------------------------------------------------
-class LabScreen extends StatelessWidget {
+class LabPage extends StatelessWidget {
   // --------------------------------------------------------------------------
-  const LabScreen({
+  const LabPage({
     Key key
   }) : super(key: key);
   // --------------------------------------------------------------------------
   @override
   Widget build(BuildContext context) {
     // --------------------
-    return Layout(
-      viewWidget: FloatingList(
+    return FloatingList(
         // padding: const EdgeInsets.only(top: Ratioz.stratosphere, bottom: Ratioz.horizon),
         columnChildren: <Widget>[
           const DotSeparator(),
@@ -501,8 +499,7 @@ class LabScreen extends StatelessWidget {
           const DotSeparator(),
 
         ],
-      ),
-    );
+      );
     // --------------------
   }
   // --------------------------------------------------------------------------

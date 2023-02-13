@@ -19,10 +19,15 @@ class AboTubeTheme {
   static const Color youtubeColorLighter = Color(0xFFff6666);
   static const Color youtubeColorLightest = Color(0xFFff9999);
   // --------------------
-  static const Color youTubeBlackBlack = Color(0xFF000000);
-  static const Color youtubeDarkBlack = Color(0xFF0f0f0f);
-  static const Color youTubeDarkGrey = Color(0xFF0f0f0f);
-  static const Color youTubeLightGrey = Color(0xFF434343);
+  /// BLACK
+  static const Color blackDark = Color(0xFF000000);
+
+  static const Color blackLight = Color.fromRGBO(15, 15, 15, 1);
+  /// GREY
+  static const Color greyDark = Color.fromRGBO(24, 24, 24, 1);
+  static const Color greyMid = Color.fromRGBO(32, 32, 32, 1);
+  static const Color greyLight = Color.fromRGBO(62, 62, 62, 1);
+  /// WHITE
   static const Color youTubeWhite = Color(0xFFf1f1f1);
   // -----------------------------------------------------------------------------
 

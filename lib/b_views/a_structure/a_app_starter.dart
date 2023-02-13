@@ -1,7 +1,10 @@
+import 'package:abotube/b_views/a_structure/b_layout.dart';
+import 'package:abotube/providers/ui_provider.dart';
 import 'package:bldrs_theme/bldrs_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:abotube/b_views/a_screens/b_home_screen.dart';
 import 'package:abotube/services/navigation/routing.dart';
+import 'package:provider/provider.dart';
+import 'package:provider/single_child_widget.dart';
 
 class AppStarter extends StatefulWidget {
   /// --------------------------------------------------------------------------
@@ -60,47 +63,56 @@ class _AppStarterState extends State<AppStarter> {
   @override
   Widget build(BuildContext context) {
 
-    return MaterialApp(
-      title: 'AboTube',
+    return MultiProvider(
+      providers: <SingleChildWidget>[
 
-      /// DEBUG
-      debugShowCheckedModeBanner: false,
-      // debugShowMaterialGrid: false,
-      // showPerformanceOverlay: false,
-      // checkerboardRasterCacheImages: false,
-      // showSemanticsDebugger: ,
-      // checkerboardOffscreenLayers: ,
+          ChangeNotifierProvider<UiProvider>(
+            create: (BuildContext ctx) => UiProvider(),
+          ),
 
-      /// THEME
-      theme: ThemeData(
-        canvasColor: Colorz.nothing,
-        primarySwatch: const MaterialColor(0xFF13244b, {
-          50: Color(0xFF13244b),
-          100: Color(0xFF13244b),
-          200: Color(0xFF13244b),
-          300: Color(0xFF13244b),
-          400: Color(0xFF13244b),
-          500: Color(0xFF13244b),
-          600: Color(0xFF13244b),
-          700: Color(0xFF13244b),
-          800: Color(0xFF13244b),
-          900: Color(0xFF13244b),
-        }),
-        textSelectionTheme: const TextSelectionThemeData(
-          selectionHandleColor: Colorz.white255,
-          selectionColor: Colorz.white50,
+      ],
+      child: MaterialApp(
+        title: 'AboTube',
+
+        /// DEBUG
+        debugShowCheckedModeBanner: false,
+        // debugShowMaterialGrid: false,
+        // showPerformanceOverlay: false,
+        // checkerboardRasterCacheImages: false,
+        // showSemanticsDebugger: ,
+        // checkerboardOffscreenLayers: ,
+
+        /// THEME
+        theme: ThemeData(
+          canvasColor: Colorz.nothing,
+          primarySwatch: const MaterialColor(0xFF13244b, {
+            50: Color(0xFF13244b),
+            100: Color(0xFF13244b),
+            200: Color(0xFF13244b),
+            300: Color(0xFF13244b),
+            400: Color(0xFF13244b),
+            500: Color(0xFF13244b),
+            600: Color(0xFF13244b),
+            700: Color(0xFF13244b),
+            800: Color(0xFF13244b),
+            900: Color(0xFF13244b),
+          }),
+          textSelectionTheme: const TextSelectionThemeData(
+            selectionHandleColor: Colorz.white255,
+            selectionColor: Colorz.white50,
+          ),
         ),
-      ),
 
-      /// ROUTES
-      home: const HomeScreen(),
-      // navigatorObservers: [],
-      // onGenerateInitialRoutes: ,
-      // onUnknownRoute: ,
-      navigatorKey: AppStarter.navigatorKey,
-      onGenerateRoute: Routing.allRoutes,
-      initialRoute: Routing.homeRoute,
-      routes: Routing.routesMap,
+        /// ROUTES
+        home: const Layout(),
+        // navigatorObservers: [],
+        // onGenerateInitialRoutes: ,
+        // onUnknownRoute: ,
+        navigatorKey: AppStarter.navigatorKey,
+        onGenerateRoute: Routing.allRoutes,
+        // initialRoute: Routing.homeRoute,
+        routes: Routing.routesMap,
+      ),
     );
 
   }

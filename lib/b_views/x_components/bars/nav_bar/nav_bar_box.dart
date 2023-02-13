@@ -1,8 +1,8 @@
-import 'package:abotube/b_views/x_components/app_bar/abo_tube_app_bar.dart';
+import 'package:abotube/b_views/x_components/bars/app_bar/abo_tube_app_bar.dart';
 import 'package:abotube/services/theme/abo_tube_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:scale/scale.dart';
-import 'package:abotube/b_views/x_components/layout/layout.dart';
+import 'package:abotube/b_views/a_structure/b_layout.dart';
 
 class NavBarBox extends StatelessWidget {
   /// --------------------------------------------------------------------------
@@ -31,7 +31,7 @@ class NavBarBox extends StatelessWidget {
         Container(
           width: _screenWidth,
           height: AboTubeAppBar.appbarClearHeight,
-          color: AboTubeTheme.youtubeDarkBlack,
+          color: AboTubeTheme.blackLight,
           child: ListView(
             physics: const BouncingScrollPhysics(),
             scrollDirection: Axis.horizontal,

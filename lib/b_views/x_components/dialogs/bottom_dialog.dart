@@ -250,16 +250,7 @@ class BottomDialog extends StatelessWidget {
     String title,
   }) async {
 
-    final int _widgetsLength = numberOfWidgets;
-
     final double _spacing = buttonHeight * 0.1;
-    final double _height =
-        BottomDialog.draggerZoneHeight(draggable: draggable)
-            + BottomDialog.draggerMarginValue(draggable: draggable)
-            + BottomDialog.titleZoneHeight(titleIsOn: title != null)
-            + (buttonHeight * _widgetsLength)
-            + (_spacing * _widgetsLength) * 0.5;
-
 
     await showStatefulBottomDialog(
       context: context,

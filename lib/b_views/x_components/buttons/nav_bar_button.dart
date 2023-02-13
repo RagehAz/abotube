@@ -1,4 +1,4 @@
-import 'package:abotube/b_views/x_components/app_bar/abo_tube_app_bar.dart';
+import 'package:abotube/b_views/x_components/bars/app_bar/abo_tube_app_bar.dart';
 import 'package:bldrs_theme/bldrs_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:super_box/super_box.dart';

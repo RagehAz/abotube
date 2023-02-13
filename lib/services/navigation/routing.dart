@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:abotube/b_views/a_screens/c_translator_screen.dart';
-import 'package:abotube/b_views/a_screens/x_lab_screen.dart';
-import 'package:abotube/b_views/a_screens/f_youtube_page_screen.dart';
+import 'package:abotube/b_views/pages/b_translator_page.dart';
+import 'package:abotube/b_views/pages/x_lab_page.dart';
+import 'package:abotube/b_views/pages/c_youtube_web_page.dart';
 import 'package:abotube/services/navigation/navigators.dart';
-import 'package:abotube/b_views/a_screens/b_home_screen.dart';
+import 'package:abotube/b_views/pages/a_home_page.dart';
 
 class Routing {
   // -----------------------------------------------------------------------------
@@ -31,32 +31,24 @@ class Routing {
 
     /// HOME
       case homeRoute:
-        return Nav.fadeToScreen(const HomeScreen(), settings);
+        return Nav.fadeToScreen(const HomePage(), settings);
         break;
     /// LAB
       case labRoute:
-        return Nav.fadeToScreen(const LabScreen(), settings);
+        return Nav.fadeToScreen(const LabPage(), settings);
         break;
     /// TRANSLATOR
       case translator:
-        return Nav.fadeToScreen(const TranslatorScreen(), settings);
+        return Nav.fadeToScreen(const TranslatorPage(), settings);
         break;
     /// TRANSLATOR
       case youtubeWebpage:
-        return Nav.fadeToScreen(const YoutubeWebpageScreen(), settings);
+        return Nav.fadeToScreen(const YoutubeWebPage(), settings);
         break;
 
-    // /// TERMS
-    //   case terms:
-    //     return Nav.fadeToScreen(const TermsScreen(), settings);
-    //     break;
-    // /// PRIVACY
-    //   case privacy:
-    //     return Nav.fadeToScreen(const PrivacyScreen(), settings);
-    //     break;
 
     }
-    return Nav.fadeToScreen(const HomeScreen(), settings);
+    return Nav.fadeToScreen(const HomePage(), settings);
   }
   // -----------------------------------------------------------------------------
 
@@ -64,12 +56,10 @@ class Routing {
 
   // --------------------
   static Map<String, Widget Function(BuildContext)> routesMap = {
-    homeRoute: (context) => const HomeScreen(),
-    labRoute: (context) => const LabScreen(),
-    translator: (context) => const TranslatorScreen(),
-    youtubeWebpage: (context) => const YoutubeWebpageScreen(),
-    // terms: (context) => const TermsScreen(),
-    // privacy: (context) => const PrivacyScreen(),
+    // homeRoute: (context) => const HomeScreen(),
+    // labRoute: (context) => const LabPage(),
+    // translator: (context) => const TranslatorPage(),
+    // youtubeWebpage: (context) => const YoutubeWebPage(),
   };
   // -----------------------------------------------------------------------------
 }
