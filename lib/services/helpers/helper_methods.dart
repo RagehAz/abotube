@@ -1,5 +1,5 @@
+import 'package:abotube/main.dart';
 import 'package:flutter/material.dart';
-import 'package:abotube/b_views/a_structure/a_app_starter.dart';
 // -----------------------------------------------------------------------------
 
 /// CONTEXT

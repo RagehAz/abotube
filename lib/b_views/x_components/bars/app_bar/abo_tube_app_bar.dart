@@ -1,4 +1,4 @@
-import 'package:abotube/b_views/a_structure/b_layout.dart';
+import 'package:abotube/b_views/a_screens/a_main_screen/a_main_screen.dart';
 import 'package:abotube/services/theme/abo_tube_colors.dart';
 import 'package:bldrs_theme/bldrs_theme.dart';
 import 'package:filers/filers.dart';

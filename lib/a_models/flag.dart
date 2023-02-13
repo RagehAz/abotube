@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mapper/mapper.dart';
 import 'package:stringer/stringer.dart';
 import 'package:abotube/a_models/phrase.dart';
-import 'package:abotube/services/helpers/languages.dart';
+import 'package:abotube/a_models/languages.dart';
 
 /// => TAMAM
 @immutable

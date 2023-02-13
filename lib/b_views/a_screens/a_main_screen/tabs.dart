@@ -1,7 +1,7 @@
-import 'package:abotube/b_views/pages/a_home_page.dart';
-import 'package:abotube/b_views/pages/b_translator_page.dart';
-import 'package:abotube/b_views/pages/c_youtube_web_page.dart';
-import 'package:abotube/b_views/pages/x_lab_page.dart';
+import 'package:abotube/b_views/a_screens/a_main_screen/pages/a_home_page.dart';
+import 'package:abotube/b_views/a_screens/a_main_screen/pages/b_translator_page.dart';
+import 'package:abotube/b_views/a_screens/a_main_screen/pages/c_youtube_web_page.dart';
+import 'package:abotube/b_views/a_screens/a_main_screen/pages/x_lab_page.dart';
 import 'package:abotube/b_views/x_components/buttons/tab_button.dart';
 import 'package:abotube/b_views/x_components/layout/view_page.dart';
 import 'package:bldrs_theme/bldrs_theme.dart';

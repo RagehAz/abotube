@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:abotube/b_views/x_components/buttons/player_button.dart';
 import 'package:abotube/b_views/x_components/layout/basic_layout.dart';
-import 'package:abotube/b_views/x_components/players/url_video_player.dart';
+import 'package:abotube/b_views/x_components/players/the_video_player.dart';
 import 'package:bldrs_theme/bldrs_theme.dart';
 import 'package:bubbles/bubbles.dart';
 import 'package:filers/filers.dart';
@@ -185,7 +185,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
         columnChildren: <Widget>[
 
           /// VIDEO PLAYER
-          URLVideoPlayer(
+          TheVideoPlayer(
             onTap: _play,
             onDoubleTap: _pause,
             width: Scale.screenWidth(context),

@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:abotube/b_views/a_structure/x_url_video_player_screen.dart';
-import 'package:abotube/b_views/a_structure/x_youtube_player_screen.dart';
+import 'package:abotube/b_views/a_screens/x_url_video_player_screen.dart';
+import 'package:abotube/b_views/a_screens/x_youtube_player_screen.dart';
 import 'package:abotube/b_views/x_components/buttons/lab_button.dart';
 import 'package:abotube/b_views/x_components/dialogs/language_selector_dialog.dart';
 import 'package:abotube/services/navigation/navigators.dart';

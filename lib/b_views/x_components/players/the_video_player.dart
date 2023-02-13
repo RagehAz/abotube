@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:super_box/super_box.dart';
 import 'package:video_player/video_player.dart';
 
-class URLVideoPlayer extends StatelessWidget {
+class TheVideoPlayer extends StatelessWidget {
   /// --------------------------------------------------------------------------
-  const URLVideoPlayer({
+  const TheVideoPlayer({
     @required this.onTap,
     @required this.onDoubleTap,
     @required this.width,

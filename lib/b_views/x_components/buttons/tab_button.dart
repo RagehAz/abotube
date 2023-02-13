@@ -1,5 +1,5 @@
 import 'package:abotube/b_views/x_components/bars/app_bar/abo_tube_app_bar.dart';
-import 'package:abotube/providers/ui_provider.dart';
+import 'package:abotube/services/providers/ui_provider.dart';
 import 'package:bldrs_theme/bldrs_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

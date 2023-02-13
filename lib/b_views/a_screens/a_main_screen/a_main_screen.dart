@@ -1,6 +1,6 @@
 import 'package:abotube/b_views/x_components/bars/app_bar/abo_tube_app_bar.dart';
-import 'package:abotube/b_views/x_components/layout/tabs.dart';
-import 'package:abotube/providers/ui_provider.dart';
+import 'package:abotube/b_views/a_screens/a_main_screen/tabs.dart';
+import 'package:abotube/services/providers/ui_provider.dart';
 import 'package:abotube/services/helpers/helper_methods.dart';
 import 'package:abotube/services/navigation/navigators.dart';
 import 'package:abotube/services/theme/abo_tube_colors.dart';

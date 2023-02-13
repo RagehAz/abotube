@@ -2,7 +2,7 @@ import 'package:abotube/b_views/x_components/bars/app_bar/abo_tube_app_bar.dart'
 import 'package:abotube/services/theme/abo_tube_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:scale/scale.dart';
-import 'package:abotube/b_views/a_structure/b_layout.dart';
+import 'package:abotube/b_views/a_screens/a_main_screen/a_main_screen.dart';
 
 class NavBarBox extends StatelessWidget {
   /// --------------------------------------------------------------------------
