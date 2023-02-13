@@ -192,10 +192,10 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "7b2118bd561fa19a2d454a6ee559419d74dde793"
+      resolved-ref: ea1333ac9a4e3787d43247fa046a0f98b87aa86e
       url: "https://github.com/RagehAz/filers.git"
     source: git
-    version: "0.0.2"
+    version: "0.0.3"
   firebase_core:
     dependency: "direct main"
     description:
@@ -708,10 +708,10 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: c1b344c133d670dbe4e694423675823091cd48b7
+      resolved-ref: ed2437cf5d7895d7505a9a00d8c0485a84477edb
       url: "https://github.com/RagehAz/rest.git"
     source: git
-    version: "0.0.5"
+    version: "0.0.6"
   rxdart:
     dependency: transitive
     description:

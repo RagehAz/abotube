@@ -66,6 +66,30 @@ class VideoModel {
 
     return _identical;
   }
+  // --------------------
+  /// TESTED : WORKS PERFECT
+  static bool isValidYouTubeLink(String link) {
+    final youtubeLinkPattern = RegExp(
+        r'^(https?\:\/\/)?(www\.youtube\.com\/watch\?v=|m\.youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)');
+    return youtubeLinkPattern.hasMatch(link);
+  }
+  // --------------------
+  /// TESTED : WORKS PERFECT
+  static String extractVideoID(String link) {
+    String _output;
+
+    if (isValidYouTubeLink(link) == true) {
+
+      final youtubeLinkPattern = RegExp(
+          r'^(https?\:\/\/)?(www\.youtube\.com\/watch\?v=|m\.youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)');
+
+      final match = youtubeLinkPattern.firstMatch(link);
+
+      _output = match.group(3);
+    }
+
+    return _output;
+  }
   // -----------------------------------------------------------------------------
 
   /// OVERRIDES

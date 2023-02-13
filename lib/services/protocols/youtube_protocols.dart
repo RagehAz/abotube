@@ -1,8 +1,12 @@
+import 'dart:convert';
+
+import 'package:abotube/services/helpers/former.dart';
 import 'package:filers/filers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_youtube_downloader/flutter_youtube_downloader.dart';
+import 'package:http/http.dart' as http;
+import 'package:rest/rest.dart';
 import 'package:stringer/stringer.dart';
-import 'package:abotube/services/helpers/former.dart';
 
 class YoutubeProtocols {
   // --------------------------------------------------------------------------
@@ -39,5 +43,53 @@ class YoutubeProtocols {
 
   }
   // --------------------------------------------------------------------------
+  ///
+  static Future<String> readTranscription({
+    @required String videoID,
+    @required String langCode,
+  }) async {
 
+    String _output = '';
+
+    if (videoID != null && langCode != null && langCode.length == 2){
+
+      final String _link =  'https://checksub-downloader-doybj.ondigitalocean.app//'
+                            'automatic_srt_download?'
+                            'url=https:'
+                            '%'
+                            '2F'
+                            '%'
+                            '2Fwww.youtube.com'
+                            '%'
+                            '2Fwatch'
+                            '%'
+                            '3Fv'
+                            '%'
+                            '$videoID'
+                            '&'
+                            'lang=$langCode';
+
+      /// GET REQUEST
+      final http.Response _response = await Rest.get(
+        rawLink: _link,
+        invoker: 'readTranscription',
+      );
+
+      /// ERROR
+      if (_response.statusCode >= 400) {
+        blog('response : error : ${_response.body}');
+      }
+
+      /// SUCCESS
+      else if (_response.statusCode == 200) {
+        final String _captions = utf8.decode(_response.bodyBytes);
+        blog('Captions : $_captions');
+        _output = _captions;
+      }
+
+    }
+
+    return _output;
+  }
+  // --------------------
 }

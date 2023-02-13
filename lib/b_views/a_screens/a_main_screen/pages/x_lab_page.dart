@@ -39,6 +39,7 @@ class LabPage extends StatelessWidget {
     return FloatingList(
         // padding: const EdgeInsets.only(top: Ratioz.stratosphere, bottom: Ratioz.horizon),
         columnChildren: <Widget>[
+
           const DotSeparator(),
 
           /// GO TO MP4 PLAYER
@@ -146,7 +147,6 @@ class LabPage extends StatelessWidget {
                   'https://www.googleapis.com/youtube/v3/captions?videoId=$_videoID&part=snippet&key=$apiKey';
 
               final http.Response _response = await Rest.get(
-                context: context,
                 rawLink: _url,
                 invoker: 'getTranscriptAndTimestamps',
               );
@@ -172,7 +172,6 @@ class LabPage extends StatelessWidget {
                     'http://gdata.youtube.com/feeds/api/videos/$_videoID/captiondata/$_theID';
 
                 final http.Response _response2 = await Rest.get(
-                  context: context,
                   rawLink: _url2,
                   invoker: 'getTranscriptAndTimestamps 2 ',
                 );
@@ -224,7 +223,6 @@ class LabPage extends StatelessWidget {
                   'http://www.youtube.com/get_video_info?&video_id=$videoId';
 
               final http.Response response = await Rest.get(
-                context: context,
                 rawLink: _url,
                 invoker: 'getVideoInfoFromUrl',
               );
@@ -257,19 +255,12 @@ class LabPage extends StatelessWidget {
             onTap: () async {
               // const String _videoID = 'mqaODYJ702s';
 
-              String _link = 'https://checksub-downloader-doybj.ondigitalocean'
-                  '.app//manual_srt_download?url=https:%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DzQodZYvfTAA&lang=en';
-
-              _link = 'https://checksub-downloader-doybj.ondigitalocean'
-                  '.app//automatic_srt_download?url=https:%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DzQodZYvfTAA&lang=ar';
-
-              final http.Response _thing = await Rest.get(
-                context: context,
-                rawLink: _link,
-                invoker: 'thing',
+              final String _transcription = await YoutubeProtocols.readTranscription(
+                  videoID: 'mqaODYJ702s',
+                  langCode: 'en',
               );
 
-              blog(utf8.decode(_thing.bodyBytes));
+              blog('GO TRANSCRIPTION : $_transcription');
 
             },
           ),
