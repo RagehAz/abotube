@@ -89,4 +89,61 @@ void main() {
 
   });
 
+  group('isValidYouTubeVideoId', (){
+
+    test('Test valid YouTube video IDs', () {
+      expect(VideoModel.isValidYouTubeVideoID('cIZ7625Ts6A'), true);
+      expect(VideoModel.isValidYouTubeVideoID('jNQXAC9IVRw'), true);
+      expect(VideoModel.isValidYouTubeVideoID('0_5IHQ6_cG4'), true);
+    });
+
+    test('Test invalid YouTube video IDs', () {
+      expect(VideoModel.isValidYouTubeVideoID(''), false);
+      expect(VideoModel.isValidYouTubeVideoID('cIZ7625Ts6A!'), false);
+      expect(VideoModel.isValidYouTubeVideoID('cIZ7625Ts6A@'), false);
+      expect(VideoModel.isValidYouTubeVideoID('cIZ7625Ts6A#'), false);
+      expect(VideoModel.isValidYouTubeVideoID(r'cIZ7625Ts6A$'), false);
+      expect(VideoModel.isValidYouTubeVideoID('cIZ7625Ts6A%'), false);
+      expect(VideoModel.isValidYouTubeVideoID('cIZ7625Ts6A^'), false);
+      expect(VideoModel.isValidYouTubeVideoID('cIZ7625Ts6A&'), false);
+      expect(VideoModel.isValidYouTubeVideoID('cIZ7625Ts6A*'), false);
+      expect(VideoModel.isValidYouTubeVideoID('cIZ7625Ts6A('), false);
+      expect(VideoModel.isValidYouTubeVideoID('cIZ7625Ts6A)'), false);
+      expect(VideoModel.isValidYouTubeVideoID('cIZ7625Ts6A_'), false);
+      expect(VideoModel.isValidYouTubeVideoID('cIZ7625Ts6A-'), false);
+    });
+
+  });
+
+
+  group('formatTranscript test', () {
+
+    test('correctly formats a transcript with short sentences and 0-1:30 time durations', () {
+      const transcript = '''
+              0:00 Short sentence one
+              0:10 Short sentence two
+              0:20 Short sentence three
+              0:30 Short sentence four
+              1:00 Short sentence five
+              1:10 Short sentence six
+              1:20 Short sentence seven
+              1:30 Short sentence eight
+                   ''';
+
+      final expectedOutput = {
+        '0': 'Short sentence one',
+        '10': 'Short sentence two',
+        '20': 'Short sentence three',
+        '30': 'Short sentence four',
+        '100': 'Short sentence five',
+        '110': 'Short sentence six',
+        '120': 'Short sentence seven',
+        '130': 'Short sentence eight',
+      };
+
+      expect(VideoModel.formatTranscript(transcript), expectedOutput);
+    });
+
+  });
+
 }

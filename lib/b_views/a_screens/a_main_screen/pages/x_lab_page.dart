@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
+import 'package:abotube/a_models/video_model.dart';
 import 'package:abotube/b_views/a_screens/x_url_video_player_screen.dart';
 import 'package:abotube/b_views/a_screens/x_youtube_player_screen.dart';
 import 'package:abotube/b_views/x_components/buttons/lab_button.dart';
@@ -250,16 +252,20 @@ class LabPage extends StatelessWidget {
           /// CHECK SUB DOWNLOADER
           LabButton(
             worksPerfect: true,
-            text: 'checksub downloader API',
-            icon: Iconz.comWebsite,
+            text: 'Read Transcription',
+            icon: Iconz.language,
             onTap: () async {
               // const String _videoID = 'mqaODYJ702s';
 
+              const String link = 'https://www.youtube.com/watch?v=zYJ8qYKvuak';
+              final String _videoID = VideoModel.extractVideoID(link);
+
               final String _transcription = await YoutubeProtocols.readTranscription(
-                  videoID: 'mqaODYJ702s',
+                  videoID: _videoID,
                   langCode: 'en',
               );
-              blog('GOT TRANSCRIPTION : $_transcription');
+
+              log('GOT. TRANSCRIPTION : $_transcription');
 
             },
           ),

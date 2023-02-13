@@ -48,8 +48,9 @@ class YoutubeProtocols {
     @required String videoID,
     @required String langCode,
   }) async {
-
     String _output = '';
+
+    blog('readTranscription : START : videoID : $videoID : langCode : $langCode');
 
     if (videoID != null && langCode != null && langCode.length == 2){
 
@@ -65,9 +66,10 @@ class YoutubeProtocols {
                             '%'
                             '3Fv'
                             '%'
-                            '$videoID'
+                            '3D$videoID'
                             '&'
                             'lang=$langCode';
+
 
       /// GET REQUEST
       final http.Response _response = await Rest.get(
@@ -77,17 +79,19 @@ class YoutubeProtocols {
 
       /// ERROR
       if (_response.statusCode >= 400) {
-        blog('response : error : ${_response.body}');
+        blog('the response : error code : ${_response.statusCode} : ${_response.body}');
       }
 
       /// SUCCESS
       else if (_response.statusCode == 200) {
         final String _captions = utf8.decode(_response.bodyBytes);
-        blog('Captions : $_captions');
+        // blog('Captions : $_captions');
         _output = _captions;
       }
 
     }
+
+    blog('readTranscription : END');
 
     return _output;
   }

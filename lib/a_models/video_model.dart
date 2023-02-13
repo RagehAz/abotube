@@ -1,4 +1,8 @@
+import 'package:abotube/services/standards.dart';
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:rest/rest.dart';
 
 @immutable
 class VideoModel {
@@ -43,6 +47,76 @@ class VideoModel {
   }
   // -----------------------------------------------------------------------------
 
+  /// LINK CHECKS
+
+  // --------------------
+  /// AI TESTED
+  static bool isValidYouTubeLink(String link) {
+    final youtubeLinkPattern = RegExp(
+        r'^(https?\:\/\/)?(www\.youtube\.com\/watch\?v=|m\.youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)');
+    return youtubeLinkPattern.hasMatch(link);
+  }
+  // --------------------
+  /// AI TESTED
+  static String extractVideoID(String link) {
+    String _output;
+
+    if (isValidYouTubeLink(link) == true) {
+
+      final youtubeLinkPattern = RegExp(
+          r'^(https?\:\/\/)?(www\.youtube\.com\/watch\?v=|m\.youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)');
+
+      final match = youtubeLinkPattern.firstMatch(link);
+
+      _output = match.group(3);
+    }
+
+    return _output;
+  }
+  // --------------------
+  /// AI TESTED
+  static bool isValidYouTubeVideoID(String videoId) {
+    final youtubeVideoIdPattern = RegExp(r'^[a-zA-Z0-9_-]+$');
+    return youtubeVideoIdPattern.hasMatch(videoId) && videoId.length <= 11;
+  }
+  // --------------------
+  /// TASK : TEST ME
+  static Future<bool> checkYouTubeVideoExists(String videoId) async {
+
+    const String youtubeDataApiKey = Standards.apiKey;
+    final url = 'https://www.googleapis.com/youtube/v3/videos?part=id&id=$videoId&key=$youtubeDataApiKey';
+    final http.Response response = await Rest.get(rawLink: url, invoker: 'isValidYouTubeVideoId');
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      if (data['items'].isNotEmpty) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+  // -----------------------------------------------------------------------------
+
+  /// TRANSCRIPTION
+
+  // --------------------
+  /// TASK : NOT WORKING - NEED TO BE REWRITTEN
+  static Map<String, dynamic> formatTranscript(String transcript) {
+    final Map<String, dynamic> formattedTranscript = {};
+    final List<String> lines = transcript.split('\n');
+
+    for (final String line in lines) {
+      final List<String> lineElements = line.split(' ');
+      final int timeStamp = int.parse(lineElements[0].replaceAll(':', ''));
+      final String text = lineElements.skip(1).join(' ');
+      formattedTranscript[timeStamp.toString()] = text;
+    }
+
+    return formattedTranscript;
+  }
+  // -----------------------------------------------------------------------------
+
   /// EQUALITY
 
   // --------------------
@@ -65,30 +139,6 @@ class VideoModel {
     }
 
     return _identical;
-  }
-  // --------------------
-  /// TESTED : WORKS PERFECT
-  static bool isValidYouTubeLink(String link) {
-    final youtubeLinkPattern = RegExp(
-        r'^(https?\:\/\/)?(www\.youtube\.com\/watch\?v=|m\.youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)');
-    return youtubeLinkPattern.hasMatch(link);
-  }
-  // --------------------
-  /// TESTED : WORKS PERFECT
-  static String extractVideoID(String link) {
-    String _output;
-
-    if (isValidYouTubeLink(link) == true) {
-
-      final youtubeLinkPattern = RegExp(
-          r'^(https?\:\/\/)?(www\.youtube\.com\/watch\?v=|m\.youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)');
-
-      final match = youtubeLinkPattern.firstMatch(link);
-
-      _output = match.group(3);
-    }
-
-    return _output;
   }
   // -----------------------------------------------------------------------------
 
