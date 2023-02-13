@@ -1,120 +1,120 @@
-import 'package:abotube/a_models/video_model.dart';
+import 'package:abotube/services/protocols/transcription_protocols.dart';
+import 'package:abotube/services/protocols/youtube_url_protocols.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
 
-  group('isValidYouTubeLink', () {
+  group('isValidYoutubeLink', () {
 
-    test('Test valid YouTube links', () {
-      expect(VideoModel.isValidYouTubeLink('https://www.youtube.com/watch?v=cIZ7625Ts6A'), true);
-      expect(VideoModel.isValidYouTubeLink('youtu.be/cIZ7625Ts6A'), true);
+    test('Test valid Youtube links', () {
+      expect(YoutubeURLProtocols.isValidYoutubeLink('https://www.youtube.com/watch?v=cIZ7625Ts6A'), true);
+      expect(YoutubeURLProtocols.isValidYoutubeLink('youtu.be/cIZ7625Ts6A'), true);
     });
 
-    test('Test invalid YouTube links', () {
-      expect(VideoModel.isValidYouTubeLink('https://www.youtube.com/watch?v='), false);
-      expect(VideoModel.isValidYouTubeLink('https://www.youtube.com'), false);
-      expect(VideoModel.isValidYouTubeLink('https://www.google.com'), false);
-      expect(VideoModel.isValidYouTubeLink('https://www.google.com/watch?v=cIZ7625Ts6A'), false);
+    test('Test invalid Youtube links', () {
+      expect(YoutubeURLProtocols.isValidYoutubeLink('https://www.youtube.com/watch?v='), false);
+      expect(YoutubeURLProtocols.isValidYoutubeLink('https://www.youtube.com'), false);
+      expect(YoutubeURLProtocols.isValidYoutubeLink('https://www.google.com'), false);
+      expect(YoutubeURLProtocols.isValidYoutubeLink('https://www.google.com/watch?v=cIZ7625Ts6A'), false);
     });
 
-    test('Test valid YouTube links', () {
-      expect(VideoModel.isValidYouTubeLink('https://www.youtube.com/watch?v=cIZ7625Ts6A'), true);
-      expect(VideoModel.isValidYouTubeLink('youtu.be/cIZ7625Ts6A'), true);
+    test('Test valid Youtube links', () {
+      expect(YoutubeURLProtocols.isValidYoutubeLink('https://www.youtube.com/watch?v=cIZ7625Ts6A'), true);
+      expect(YoutubeURLProtocols.isValidYoutubeLink('youtu.be/cIZ7625Ts6A'), true);
     });
 
-    test('Test invalid YouTube links', () {
-      expect(VideoModel.isValidYouTubeLink('https://www.youtube.com/watch?v='), false);
-      expect(VideoModel.isValidYouTubeLink('https://www.youtube.com'), false);
-      expect(VideoModel.isValidYouTubeLink('https://www.google.com'), false);
-      expect(VideoModel.isValidYouTubeLink('https://www.google.com/watch?v=cIZ7625Ts6A'), false);
+    test('Test invalid Youtube links', () {
+      expect(YoutubeURLProtocols.isValidYoutubeLink('https://www.youtube.com/watch?v='), false);
+      expect(YoutubeURLProtocols.isValidYoutubeLink('https://www.youtube.com'), false);
+      expect(YoutubeURLProtocols.isValidYoutubeLink('https://www.google.com'), false);
+      expect(YoutubeURLProtocols.isValidYoutubeLink('https://www.google.com/watch?v=cIZ7625Ts6A'), false);
     });
 
     test('Test links with different parameters', () {
       expect(
-          VideoModel.isValidYouTubeLink(
+          YoutubeURLProtocols.isValidYoutubeLink(
               'https://www.youtube.com/watch?v=cIZ7625Ts6A&list=PLjxrf2q8roU23XGwz3Km7sKzDZDw1O5tX'),
           true);
       expect(
-          VideoModel.isValidYouTubeLink(
+          YoutubeURLProtocols.isValidYoutubeLink(
               'https://www.youtube.com/watch?v=cIZ7625Ts6A&feature=youtu.be'),
           true);
       expect(
-          VideoModel.isValidYouTubeLink('https://www.youtube.com/watch?v=cIZ7625Ts6A&t=2s'), true);
+          YoutubeURLProtocols.isValidYoutubeLink('https://www.youtube.com/watch?v=cIZ7625Ts6A&t=2s'), true);
     });
 
     test('Test links with different protocols', () {
-      expect(VideoModel.isValidYouTubeLink('http://www.youtube.com/watch?v=cIZ7625Ts6A'), true);
-      expect(VideoModel.isValidYouTubeLink('ftp://www.youtube.com/watch?v=cIZ7625Ts6A'), false);
+      expect(YoutubeURLProtocols.isValidYoutubeLink('http://www.youtube.com/watch?v=cIZ7625Ts6A'), true);
+      expect(YoutubeURLProtocols.isValidYoutubeLink('ftp://www.youtube.com/watch?v=cIZ7625Ts6A'), false);
     });
 
     test('Test links with different subdomains', () {
-      expect(VideoModel.isValidYouTubeLink('https://m.youtube.com/watch?v=cIZ7625Ts6A'), true);
+      expect(YoutubeURLProtocols.isValidYoutubeLink('https://m.youtube.com/watch?v=cIZ7625Ts6A'), true);
       expect(
-          VideoModel.isValidYouTubeLink('https://youtube-nocookie.com/watch?v=cIZ7625Ts6A'), false);
+          YoutubeURLProtocols.isValidYoutubeLink('https://youtube-nocookie.com/watch?v=cIZ7625Ts6A'), false);
     });
 
   });
 
   group('extractVideoID', (){
 
-    test('Test valid YouTube links', () {
-      expect(VideoModel.extractVideoID('https://www.youtube.com/watch?v=cIZ7625Ts6A'), 'cIZ7625Ts6A');
-      expect(VideoModel.extractVideoID('youtu.be/cIZ7625Ts6A'), 'cIZ7625Ts6A');
-      expect(VideoModel.extractVideoID('https://m.youtube.com/watch?v=cIZ7625Ts6A'), 'cIZ7625Ts6A');
+    test('Test valid Youtube links', () {
+      expect(YoutubeURLProtocols.extractVideoID('https://www.youtube.com/watch?v=cIZ7625Ts6A'), 'cIZ7625Ts6A');
+      expect(YoutubeURLProtocols.extractVideoID('youtu.be/cIZ7625Ts6A'), 'cIZ7625Ts6A');
+      expect(YoutubeURLProtocols.extractVideoID('https://m.youtube.com/watch?v=cIZ7625Ts6A'), 'cIZ7625Ts6A');
     });
 
-    test('Test invalid YouTube links', () {
-      expect(VideoModel.extractVideoID('https://www.youtube.com/watch?v='), null);
-      expect(VideoModel.extractVideoID('https://www.youtube.com'), null);
-      expect(VideoModel.extractVideoID('https://www.google.com'), null);
-      expect(VideoModel.extractVideoID('https://www.google.com/watch?v=cIZ7625Ts6A'), null);
+    test('Test invalid Youtube links', () {
+      expect(YoutubeURLProtocols.extractVideoID('https://www.youtube.com/watch?v='), null);
+      expect(YoutubeURLProtocols.extractVideoID('https://www.youtube.com'), null);
+      expect(YoutubeURLProtocols.extractVideoID('https://www.google.com'), null);
+      expect(YoutubeURLProtocols.extractVideoID('https://www.google.com/watch?v=cIZ7625Ts6A'), null);
     });
 
     test('Test links with different parameters', () {
-      expect(VideoModel.extractVideoID('https://www.youtube'
+      expect(YoutubeURLProtocols.extractVideoID('https://www.youtube'
           '.com/watch?v=cIZ7625Ts6A&list=PLjxrf2q8roU23XGwz3Km7sKzDZDw1O5tX'), 'cIZ7625Ts6A');
-      expect(VideoModel.extractVideoID('https://www.youtube.com/watch?v=cIZ7625Ts6A&feature=youtu.be'), 'cIZ7625Ts6A');
-      expect(VideoModel.extractVideoID('https://www.youtube.com/watch?v=cIZ7625Ts6A&t=2s'), 'cIZ7625Ts6A');
+      expect(YoutubeURLProtocols.extractVideoID('https://www.youtube.com/watch?v=cIZ7625Ts6A&feature=youtu.be'), 'cIZ7625Ts6A');
+      expect(YoutubeURLProtocols.extractVideoID('https://www.youtube.com/watch?v=cIZ7625Ts6A&t=2s'), 'cIZ7625Ts6A');
     });
 
     test('Test links with different protocols', () {
-      expect(VideoModel.extractVideoID('http://www.youtube.com/watch?v=cIZ7625Ts6A'), 'cIZ7625Ts6A');
-      expect(VideoModel.extractVideoID('ftp://www.youtube.com/watch?v=cIZ7625Ts6A'), null);
+      expect(YoutubeURLProtocols.extractVideoID('http://www.youtube.com/watch?v=cIZ7625Ts6A'), 'cIZ7625Ts6A');
+      expect(YoutubeURLProtocols.extractVideoID('ftp://www.youtube.com/watch?v=cIZ7625Ts6A'), null);
     });
 
     test('Test links with different subdomains', () {
-      expect(VideoModel.extractVideoID('https://m.youtube.com/watch?v=cIZ7625Ts6A'), 'cIZ7625Ts6A');
-      expect(VideoModel.extractVideoID('https://youtube-nocookie.com/watch?v=cIZ7625Ts6A'), null);
+      expect(YoutubeURLProtocols.extractVideoID('https://m.youtube.com/watch?v=cIZ7625Ts6A'), 'cIZ7625Ts6A');
+      expect(YoutubeURLProtocols.extractVideoID('https://youtube-nocookie.com/watch?v=cIZ7625Ts6A'), null);
     });
 
   });
 
-  group('isValidYouTubeVideoId', (){
+  group('isValidYoutubeVideoID', (){
 
-    test('Test valid YouTube video IDs', () {
-      expect(VideoModel.isValidYouTubeVideoID('cIZ7625Ts6A'), true);
-      expect(VideoModel.isValidYouTubeVideoID('jNQXAC9IVRw'), true);
-      expect(VideoModel.isValidYouTubeVideoID('0_5IHQ6_cG4'), true);
+    test('Test valid Youtube video IDs', () {
+      expect(YoutubeURLProtocols.isValidYoutubeVideoID('cIZ7625Ts6A'), true);
+      expect(YoutubeURLProtocols.isValidYoutubeVideoID('jNQXAC9IVRw'), true);
+      expect(YoutubeURLProtocols.isValidYoutubeVideoID('0_5IHQ6_cG4'), true);
     });
 
-    test('Test invalid YouTube video IDs', () {
-      expect(VideoModel.isValidYouTubeVideoID(''), false);
-      expect(VideoModel.isValidYouTubeVideoID('cIZ7625Ts6A!'), false);
-      expect(VideoModel.isValidYouTubeVideoID('cIZ7625Ts6A@'), false);
-      expect(VideoModel.isValidYouTubeVideoID('cIZ7625Ts6A#'), false);
-      expect(VideoModel.isValidYouTubeVideoID(r'cIZ7625Ts6A$'), false);
-      expect(VideoModel.isValidYouTubeVideoID('cIZ7625Ts6A%'), false);
-      expect(VideoModel.isValidYouTubeVideoID('cIZ7625Ts6A^'), false);
-      expect(VideoModel.isValidYouTubeVideoID('cIZ7625Ts6A&'), false);
-      expect(VideoModel.isValidYouTubeVideoID('cIZ7625Ts6A*'), false);
-      expect(VideoModel.isValidYouTubeVideoID('cIZ7625Ts6A('), false);
-      expect(VideoModel.isValidYouTubeVideoID('cIZ7625Ts6A)'), false);
-      expect(VideoModel.isValidYouTubeVideoID('cIZ7625Ts6A_'), false);
-      expect(VideoModel.isValidYouTubeVideoID('cIZ7625Ts6A-'), false);
+    test('Test invalid Youtube video IDs', () {
+      expect(YoutubeURLProtocols.isValidYoutubeVideoID(''), false);
+      expect(YoutubeURLProtocols.isValidYoutubeVideoID('cIZ7625Ts6A!'), false);
+      expect(YoutubeURLProtocols.isValidYoutubeVideoID('cIZ7625Ts6A@'), false);
+      expect(YoutubeURLProtocols.isValidYoutubeVideoID('cIZ7625Ts6A#'), false);
+      expect(YoutubeURLProtocols.isValidYoutubeVideoID(r'cIZ7625Ts6A$'), false);
+      expect(YoutubeURLProtocols.isValidYoutubeVideoID('cIZ7625Ts6A%'), false);
+      expect(YoutubeURLProtocols.isValidYoutubeVideoID('cIZ7625Ts6A^'), false);
+      expect(YoutubeURLProtocols.isValidYoutubeVideoID('cIZ7625Ts6A&'), false);
+      expect(YoutubeURLProtocols.isValidYoutubeVideoID('cIZ7625Ts6A*'), false);
+      expect(YoutubeURLProtocols.isValidYoutubeVideoID('cIZ7625Ts6A('), false);
+      expect(YoutubeURLProtocols.isValidYoutubeVideoID('cIZ7625Ts6A)'), false);
+      expect(YoutubeURLProtocols.isValidYoutubeVideoID('cIZ7625Ts6A_'), false);
+      expect(YoutubeURLProtocols.isValidYoutubeVideoID('cIZ7625Ts6A-'), false);
     });
 
   });
-
 
   group('formatTranscript test', () {
 
@@ -141,7 +141,7 @@ void main() {
         '130': 'Short sentence eight',
       };
 
-      expect(VideoModel.formatTranscript(transcript), expectedOutput);
+      expect(TranscriptionProtocols.formatTranscript(transcript), expectedOutput);
     });
 
   });

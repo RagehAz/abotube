@@ -1,3 +1,4 @@
+import 'package:abotube/a_models/flag.dart';
 import 'package:flutter/material.dart';
 import 'package:stringer/stringer.dart';
 import 'package:text_to_speech/text_to_speech.dart';
@@ -11,11 +12,11 @@ Future<String> showLanguageDialog() async {
 
   final BuildContext context = getContext();
   final TextToSpeech tts = TextToSpeech();
-  List<String> _langs = await tts.getLanguages();
 
+
+  // List<String> _langs = await tts.getLanguages();
+  List<String> _langs = Flag.getALlLangCodes();
   _langs = Stringer.sortAlphabetically(_langs);
-
-  // final List<String> _langs = Flag.getALlLangCodes();
 
   await BottomDialog.showButtonsBottomDialog(
     context: context,

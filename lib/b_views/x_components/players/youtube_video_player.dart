@@ -44,10 +44,10 @@ class YoutubeVideoPlayer extends StatelessWidget {
 
       /// FUNCTIONS
       onReady: () {
-        blog('YouTubePlayer is READY.');
+        blog('YoutubePlayer is READY.');
       },
       onEnded: (YoutubeMetaData metaData) {
-        blog('YouTubePlayer is ENDED : metaData : $metaData');
+        blog('YoutubePlayer is ENDED : metaData : $metaData');
       },
 
     );

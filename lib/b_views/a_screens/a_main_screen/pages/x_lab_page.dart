@@ -2,14 +2,15 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:abotube/a_models/video_model.dart';
 import 'package:abotube/b_views/a_screens/x_url_video_player_screen.dart';
 import 'package:abotube/b_views/a_screens/x_youtube_player_screen.dart';
 import 'package:abotube/b_views/x_components/buttons/lab_button.dart';
 import 'package:abotube/b_views/x_components/dialogs/language_selector_dialog.dart';
 import 'package:abotube/services/navigation/navigators.dart';
+import 'package:abotube/services/protocols/transcription_protocols.dart';
 import 'package:abotube/services/protocols/translation/google_translator.dart';
-import 'package:abotube/services/protocols/youtube_protocols.dart';
+import 'package:abotube/services/protocols/youtube_url_protocols.dart';
+import 'package:abotube/services/protocols/youtube_video_protocols.dart';
 import 'package:abotube/services/theme/abo_tube_colors.dart';
 import 'package:bldrs_theme/bldrs_theme.dart';
 import 'package:bubbles/bubbles.dart';
@@ -69,7 +70,7 @@ class LabPage extends StatelessWidget {
           /// DOWNLOAD CAPTION BY YOUTUBE API
           LabButton(
             worksPerfect: false,
-            text: 'Download Caption by YouTube API',
+            text: 'Download Caption by Youtube API',
             icon: Iconz.arrowDown,
             onTap: () async {
               /// INITIALIZE GOOGLE SIGN IN
@@ -257,12 +258,15 @@ class LabPage extends StatelessWidget {
             onTap: () async {
               // const String _videoID = 'mqaODYJ702s';
 
-              const String link = 'https://www.youtube.com/watch?v=zYJ8qYKvuak';
-              final String _videoID = VideoModel.extractVideoID(link);
+              const String link = 'https://www.youtube.com/watch?v=bl4gyaM5BEQ';
 
-              final String _transcription = await YoutubeProtocols.readTranscription(
-                  videoID: _videoID,
-                  langCode: 'en',
+              blog('link : $link');
+
+              final String _videoID = YoutubeURLProtocols.extractVideoID(link);
+
+              final String _transcription = await TranscriptionProtocols.readCheckSubTranscription(
+                videoID: _videoID,
+                langCode: 'ar',
               );
 
               log('GOT. TRANSCRIPTION : $_transcription');
@@ -405,7 +409,7 @@ class LabPage extends StatelessWidget {
                   );
                 }
               } on PlatformException {
-                link = 'Failed to Extract YouTube Video Link.';
+                link = 'Failed to Extract Youtube Video Link.';
               }
 
               blog('link : $link');

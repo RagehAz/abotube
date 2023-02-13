@@ -5,7 +5,7 @@ import 'package:stringer/stringer.dart';
 import 'package:super_box/super_box.dart';
 import 'package:abotube/b_views/a_screens/a_main_screen/a_main_screen.dart';
 import 'package:abotube/b_views/x_components/bars/nav_bar/nav_bar_box.dart';
-import 'package:abotube/services/protocols/youtube_protocols.dart';
+import 'package:abotube/services/protocols/youtube_video_protocols.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 /*
 // Import for Android features.
