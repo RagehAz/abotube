@@ -259,8 +259,7 @@ class LabPage extends StatelessWidget {
                   videoID: 'mqaODYJ702s',
                   langCode: 'en',
               );
-
-              blog('GO TRANSCRIPTION : $_transcription');
+              blog('GOT TRANSCRIPTION : $_transcription');
 
             },
           ),
