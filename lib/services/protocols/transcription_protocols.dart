@@ -1,72 +1,22 @@
+// ignore_for_file: non_constant_identifier_names
 import 'dart:convert';
 
 import 'package:filers/filers.dart';
 import 'package:flutter/material.dart';
-import 'package:stringer/stringer.dart';
 import 'package:http/http.dart' as http;
 import 'package:rest/rest.dart';
 
-class TranscriptionProtocols {
+class YouTubeCaptionProtocols {
   // -----------------------------------------------------------------------------
 
-  const TranscriptionProtocols();
+  const YouTubeCaptionProtocols();
 
-
-  // -----------------------------------------------------------------------------
-
-  /// TEXT CONVERTERS
-
-  // --------------------
-  /// TASK : NOT WORKING - NEED TO BE REWRITTEN
-  static Map<String, dynamic> formatTranscript(String transcript) {
-    final Map<String, dynamic> formattedTranscript = {};
-    final List<String> lines = transcript.split('\n');
-
-    for (final String line in lines) {
-      final List<String> lineElements = line.split(' ');
-      final int timeStamp = int.parse(lineElements[0].replaceAll(':', ''));
-      final String text = lineElements.skip(1).join(' ');
-      formattedTranscript[timeStamp.toString()] = text;
-    }
-
-    return formattedTranscript;
-  }
-  // --------------------
-  /// TASK : TEST ME
-  static Map<String, dynamic> convertCheckSubTimeStampToDateTimes({
-    @required String checkSubTimeStamp,
-  }){
-    DateTime _start;
-    DateTime _end;
-
-    /// CHECK SUB TIME STAMP LOOKS LIKE THIS : 00:00:00,000 --> 00:00:00,000
-    if (TextCheck.isEmpty(checkSubTimeStamp) == false){
-
-      final List<String> _timeStampsStrings = checkSubTimeStamp.split(' --> ');
-
-      /// ASSERT THAT THE TIME STAMPS ARE IN THE CORRECT FORMAT
-      assert(_timeStampsStrings.length == 2, 'time stamps are not in the correct format');
-      /// ASSERT THAT THE TIME STAMPS ARE NOT EMPTY
-      assert(TextCheck.isEmpty(_timeStampsStrings[0]) == false, 'time stamp 1 is empty');
-      /// ASSERT THAT A TIME STAMP IN THE CORRECT FORMAT
-      // TASK : WRITE ME
-
-      _start = DateTime.parse(_timeStampsStrings[0]);
-      _end = DateTime.parse(_timeStampsStrings[1]);
-
-    }
-
-    return {
-      'start': _start,
-      'end': _end,
-    };
-  }
   // -----------------------------------------------------------------------------
 
   /// TEXT CONVERTERS
 
   // --------------------
-  ///
+  /// TESTED : WORKS PERFECT
   static Future<String> readCheckSubTranscription({
     @required String videoID,
     @required String langCode,

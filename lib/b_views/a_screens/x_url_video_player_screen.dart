@@ -49,7 +49,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   // --------------------
   @override
   void dispose() {
-    _videoPlayerController.dispose();
+    _videoPlayerController?.dispose();
     super.dispose();
   }
   // --------------------------------------------------------------------------
@@ -92,8 +92,8 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   void _play() {
 
     setState(() {
-      _videoPlayerController.play();
-      _videoPlayerController.setLooping(true);
+      _videoPlayerController?.play();
+      _videoPlayerController?.setLooping(true);
     });
     // _value.isPlaying.log();
 
@@ -103,8 +103,8 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   void _pause() {
 
     setState(() {
-      _videoPlayerController.pause();
-      _videoPlayerController.setLooping(false);
+      _videoPlayerController?.pause();
+      _videoPlayerController?.setLooping(false);
     });
     // _value.isPlaying.log();
 
@@ -117,7 +117,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
 
     if (_volume != volume){
       setState(() {
-        _videoPlayerController.setVolume(volume);
+        _videoPlayerController?.setVolume(volume);
         _volume = volume;
       });
     }

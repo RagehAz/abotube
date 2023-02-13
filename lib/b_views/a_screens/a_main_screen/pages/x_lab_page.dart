@@ -264,7 +264,7 @@ class LabPage extends StatelessWidget {
 
               final String _videoID = YoutubeURLProtocols.extractVideoID(link);
 
-              final String _transcription = await TranscriptionProtocols.readCheckSubTranscription(
+              final String _transcription = await YouTubeCaptionProtocols.readCheckSubTranscription(
                 videoID: _videoID,
                 langCode: 'ar',
               );
@@ -437,17 +437,19 @@ class LabPage extends StatelessWidget {
             text: 'Pick video from Gallery',
             icon: Iconz.fingerTap,
             onTap: () async {
-              final ImagePicker _picker = ImagePicker();
 
               /// TASK : NEED TO BE SINGLETON
+              final ImagePicker _picker = ImagePicker();
+
               final XFile image = await _picker.pickVideo(
                 source: ImageSource.gallery,
                 // maxDuration:,
                 // preferredCameraDevice: ,
               );
-              final File _file = File(image.path);
 
-              if (_file != null) {
+              if (image != null) {
+                final File _file = File(image.path);
+
                 await Nav.goToNewScreen(
                   context: context,
                   screen: VideoPlayerScreen(
@@ -455,7 +457,8 @@ class LabPage extends StatelessWidget {
                   ),
                 );
               }
-            },
+
+              },
           ),
 
           /// PICK VIDEO FROM GALLERY
