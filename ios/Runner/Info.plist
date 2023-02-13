@@ -3,33 +3,25 @@
 <plist version="1.0">
 	<dict>
 		<!--===============================================-->
-
 		<!-- APP IDs -->
-
 		<!--===============================================-->
 		<key>CFBundleIdentifier</key>
 		<string>com.abotube.app</string>
 		<!--===============================================-->
 		<key>CFBundleName</key>
-	    <string>AboTube</string>
+		<string>AboTube</string>
 		<!--===============================================-->
-
 		<!-- FIRE BASE ID -->
-
 		<!--===============================================-->
 		<key>GADApplicationIdentifier</key>
 		<string>ca-app-pub-1416346029613600~5098797361</string>
 		<!--===============================================-->
-
 		<!-- APP NAME -->
-
 		<!--===============================================-->
 		<key>CFBundleDisplayName</key>
-	    <string>AboTube</string>
+		<string>AboTube</string>
 		<!--===============================================-->
-
 		<!-- APP VERSION -->
-
 		<!--===============================================-->
 		<key>CFBundleVersion</key>
 		<string>1.0.12</string>
@@ -37,19 +29,15 @@
 		<key>CFBundleShortVersionString</key>
 		<string>1.0</string>
 		<!--===============================================-->
-
 		<!-- APP LANGUAGE -->
-
 		<!--===============================================-->
 		<key>CFBundleDevelopmentRegion</key>
 		<string>en</string>
 		<!--===============================================-->
-
 		<!-- SYSTEM -->
-
 		<!--===============================================-->
 		<key>CADisableMinimumFrameDurationOnPhone</key>
-		<true />
+		<true/>
 		<!--===============================================-->
 		<key>CFBundleExecutable</key>
 		<string>$(EXECUTABLE_NAME)</string>
@@ -64,11 +52,9 @@
 		<string>????</string>
 		<!--===============================================-->
 		<key>LSRequiresIPhoneOS</key>
-		<true />
+		<true/>
 		<!--===============================================-->
-
 		<!-- URL TYPES -->
-
 		<!--===============================================-->
 		<!--     <key>CFBundleURLTypes</key>                         -->
 		<!--     <array>                                             -->
@@ -85,49 +71,37 @@
 		<!--     	<dict/>                                          -->
 		<!--     </array>                                            -->
 		<!--===============================================-->
-
 		<!-- NOTIFICATIONS -->
-
 		<!--===============================================-->
 		<key>FIRMessagingAutoRegisterEnabledflag</key>
-		<true />
+		<true/>
 		<!--===============================================-->
-
 		<!-- FIREBASE APP DELEGATE -->
-
 		<!--===============================================-->
 		<!--    <key>FirebaseAppDelegateProxyEnabled</key>    -->
 		<!--     <true/>                                      -->
 		<!--===============================================-->
-
 		<!-- DYNAMIC LINKS -->
-
 		<!--===============================================-->
 		<!--     <key>FirebaseDynamicLinksCustomDomains</key>         -->
 		<!--     <array>                                              -->
 		<!--     	<string>https://www.abotube</string>      -->
 		<!--     </array>                                             -->
 		<!--===============================================-->
-
 		<!-- VIDEO PLAYER -->
-
 		<!--===============================================-->
 		<key>NSAppTransportSecurity</key>
 		<dict>
 			<key>NSAllowsArbitraryLoads</key>
-			<true />
+			<true/>
 		</dict>
 		<!--===============================================-->
-
 		<!-- CAMERA PERMISSION -->
-
 		<!--===============================================-->
 		<key>NSCameraUsageDescription</key>
 		<string>AboTube requires access to device's Camera</string>
 		<!--===============================================-->
-
 		<!-- PHOTO LIBRARY PERMISSION -->
-
 		<!--===============================================-->
 		<key>NSPhotoLibraryAddUsageDescription</key>
 		<string>AboTube requires access to add Images to your photos</string>
@@ -135,9 +109,7 @@
 		<key>NSPhotoLibraryUsageDescription</key>
 		<string>AboTube requires access to device's photo library</string>
 		<!--===============================================-->
-
 		<!-- MEDIA LIBRARY PERMISSION -->
-
 		<!--===============================================-->
 		<key>NSAppleMusicUsageDescription</key>
 		<string>AboTube requires access to your music files</string>
@@ -145,20 +117,15 @@
 		<key>kTCCServiceMediaLibrary</key>
 		<string>AboTube requires access to Media Libraries</string>
 		<!--===============================================-->
-
-
 		<!-- MICROPHONE PERMISSION -->
-
 		<!--===============================================-->
 		<key>NSMicrophoneUsageDescription</key>
 		<string>AboTube requires access to your microphone</string>
 		<!--===============================================-->
-
 		<!-- UI -->
-
 		<!--===============================================-->
 		<key>UIApplicationSupportsIndirectInputEvents</key>
-		<true />
+		<true/>
 		<!--===============================================-->
 		<key>UIBackgroundModes</key>
 		<array>
@@ -166,9 +133,7 @@
 			<string>remote-notification</string>
 		</array>
 		<!--===============================================-->
-
 		<!-- SPLASH SCREEN-->
-
 		<!--===============================================-->
 		<key>UILaunchStoryboardName</key>
 		<string>LaunchScreen</string>
@@ -176,9 +141,7 @@
 		<key>UIMainStoryboardFile</key>
 		<string>Main</string>
 		<!--===============================================-->
-
 		<!-- ORIENTATION -->
-
 		<!--===============================================-->
 		<key>UISupportedInterfaceOrientations</key>
 		<array>
@@ -187,9 +150,7 @@
 			<string>UIInterfaceOrientationLandscapeRight</string>
 		</array>
 		<!--===============================================-->
-
 		<!-- IPAD ORIENTATION -->
-
 		<!--===============================================-->
 		<key>UISupportedInterfaceOrientations~ipad</key>
 		<array>
@@ -199,15 +160,13 @@
 			<string>UIInterfaceOrientationLandscapeRight</string>
 		</array>
 		<!--===============================================-->
-
 		<!-- STATUS BAR-->
-
 		<!--===============================================-->
 		<key>UIViewControllerBasedStatusBarAppearance</key>
-		<false />
+		<false/>
 		<!--===============================================-->
 		<key>UIStatusBarHidden</key>
-		<false />
+		<false/>
 		<!--===============================================-->
 		<key>io.flutter.embedded_views_preview</key>
 		<string>YES</string>
@@ -216,7 +175,7 @@
 			<!--Include
 			to allow all connections (DANGER)-->
 			<key>NSAllowsArbitraryLoads</key>
-			<true />
+			<true/>
 		</dict>
 	</dict>
 </plist>

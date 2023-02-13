@@ -30,6 +30,7 @@ dependencies:
   webview_flutter: ^4.0.2
   youtube_player_flutter: ^8.1.2
   provider: ^6.0.3
+  flutter_native_splash: ^2.2.9
   # ---------------------------
   # MY WIDGETS
   super_image:
@@ -100,7 +101,22 @@ dev_dependencies:
 #      image_path: "assets/icons/abotube_raster_logo.png"
 #      background_color: "#ff0000"
 #      theme_color: "#ff0000"
-  # ---------------------------
+  # ------------------------------------
+flutter_native_splash:
+  # -> run the following command in the terminal:
+  # -> flutter pub run flutter_native_splash:create
+
+  color: "#13244b"
+  #background_image: "assets/background.png"
+  image: assets/icons/abotube_raster_logo.png
+  # branding: assets/aw/aw_bldrs_app_icon.png
+  # branding_mode: bottom #bottomRight / bottomLeft / The default values is bottom
+  color_dark: "#0F0F0F"
+  #background_image_dark: "assets/dark-background.png"
+  android: true
+  ios: true
+  web: true
+  # ------------------------------------
 #flutter_app_name:
 #  name: "AboTube"
 # --------------------------------------------------------------------------------
