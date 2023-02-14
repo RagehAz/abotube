@@ -12,6 +12,10 @@ class TabButton extends StatelessWidget {
     @required this.text,
     @required this.iconSizeFactor,
     this.colorize = false,
+    this.onTap,
+    this.color,
+    this.hasMargins = false,
+    this.isDisabled = false,
     Key key
   }) : super(key: key);
   // -----------------------------------------------------------------------------
@@ -19,6 +23,10 @@ class TabButton extends StatelessWidget {
   final String text;
   final double iconSizeFactor;
   final bool colorize;
+  final Function onTap;
+  final Color color;
+  final bool hasMargins;
+  final bool isDisabled;
   // -----------------------------------------------------------------------------
   @override
   Widget build(BuildContext context) {
@@ -49,6 +57,10 @@ class TabButton extends StatelessWidget {
           textCentered: false,
           iconSizeFactor: iconSizeFactor,
           textScaleFactor: 1 / iconSizeFactor,
+          onTap: onTap,
+          color: color,
+          margins: hasMargins == true ? const EdgeInsets.symmetric(horizontal: 5) : EdgeInsets.zero,
+          isDisabled: isDisabled,
         );
 
       },

@@ -1,21 +1,18 @@
 import 'package:abotube/a_models/flag.dart';
-import 'package:flutter/material.dart';
-import 'package:stringer/stringer.dart';
-import 'package:text_to_speech/text_to_speech.dart';
 import 'package:abotube/b_views/x_components/dialogs/bottom_dialog.dart';
 import 'package:abotube/services/helpers/helper_methods.dart';
 import 'package:abotube/services/navigation/navigators.dart';
+import 'package:flutter/material.dart';
+import 'package:stringer/stringer.dart';
 
 Future<String> showLanguageDialog() async {
 
   String _output;
 
   final BuildContext context = getContext();
-  final TextToSpeech tts = TextToSpeech();
-
-
-  // List<String> _langs = await tts.getLanguages();
+  // final TextToSpeech tts = TextToSpeech();
   List<String> _langs = Flag.getALlLangCodes();
+  // List<String> _langs = await tts.getLanguages();
   _langs = Stringer.sortAlphabetically(_langs);
 
   await BottomDialog.showButtonsBottomDialog(

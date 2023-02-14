@@ -438,17 +438,9 @@ class LabPage extends StatelessWidget {
             icon: Iconz.fingerTap,
             onTap: () async {
 
-              /// TASK : NEED TO BE SINGLETON
-              final ImagePicker _picker = ImagePicker();
+              final File _file = await GalleryProtocols.pickGalleryVideo();
 
-              final XFile image = await _picker.pickVideo(
-                source: ImageSource.gallery,
-                // maxDuration:,
-                // preferredCameraDevice: ,
-              );
-
-              if (image != null) {
-                final File _file = File(image.path);
+              if (_file != null) {
 
                 await Nav.goToNewScreen(
                   context: context,
@@ -512,6 +504,29 @@ class LabPage extends StatelessWidget {
               blog('exists : $exists');
               },
           ),
+
+          // /// TEXT FIELD
+          // Form(
+          //   key: _formKey,
+          //   child: TextFieldBubble(
+          //     formKey: _formKey,
+          //     isFormField: true,
+          //     bubbleHeaderVM: const BubbleHeaderVM(
+          //       font: BldrsThemeFonts.fontBldrsHeadlineFont,
+          //       headlineText: 'Youtube URL',
+          //     ),
+          //     bubbleWidth: _bubbleWidth,
+          //     pasteFunction: _onPaste,
+          //     hintText: 'https://www.youtube.com/watch?v=5UTmN8jPJS0',
+          //     textController: _textController,
+          //     validator: (String text) => Formers.webSiteValidator(
+          //       context: context,
+          //       website: _textController.text,
+          //     ),
+          //     fieldTextFont: BldrsThemeFonts.fontBldrsBodyFont,
+          //   ),
+          // ),
+
 
         ],
       );

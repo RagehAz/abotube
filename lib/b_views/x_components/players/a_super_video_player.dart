@@ -30,6 +30,7 @@ class SuperVideoPlayer extends StatefulWidget {
     @required bool mounted,
     String url,
     File file,
+    bool addListener = true,
   }) {
     VideoPlayerController _output;
 
@@ -42,12 +43,7 @@ class SuperVideoPlayer extends StatefulWidget {
           videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true))
         ..initialize()
         ..setVolume(1)
-        ..play()
-        ..addListener(() => _listenToVideo(
-          mounted: mounted,
-          videoValue: videoValue,
-          videoPlayerController: _output,
-        ));
+        ..play();
     }
 
     if (file != null) {
@@ -55,12 +51,15 @@ class SuperVideoPlayer extends StatefulWidget {
           videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true))
         ..initialize()
         ..setVolume(1)
-        ..play()
-        ..addListener(() => _listenToVideo(
-          mounted: mounted,
-          videoValue: videoValue,
-          videoPlayerController: _output,
-        ));
+        ..play();
+    }
+
+    if (addListener == true) {
+      _output.addListener(() => _listenToVideo(
+            mounted: mounted,
+            videoValue: videoValue,
+            videoPlayerController: _output,
+          ));
     }
 
     return _output;
@@ -76,6 +75,7 @@ class SuperVideoPlayer extends StatefulWidget {
       notifier: videoValue,
       mounted: mounted,
       value: videoPlayerController.value,
+      addPostFrameCallBack: true,
     );
   }
   // --------------------------------------------------------------------------

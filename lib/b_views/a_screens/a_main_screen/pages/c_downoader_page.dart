@@ -1,13 +1,17 @@
+import 'package:abotube/b_views/a_screens/a_main_screen/a_main_screen.dart';
+import 'package:abotube/b_views/x_components/bars/nav_bar/nav_bar_box.dart';
+import 'package:abotube/b_views/x_components/buttons/downloader_button.dart';
+import 'package:abotube/services/protocols/youtube_video_protocols.dart';
+import 'package:abotube/services/providers/ui_provider.dart';
+import 'package:abotube/services/theme/abo_tube_colors.dart';
 import 'package:bldrs_theme/bldrs_theme.dart';
 import 'package:filers/filers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_youtube_downloader/flutter_youtube_downloader.dart';
+import 'package:provider/provider.dart';
 import 'package:scale/scale.dart';
 import 'package:stringer/stringer.dart';
-import 'package:super_box/super_box.dart';
-import 'package:abotube/b_views/a_screens/a_main_screen/a_main_screen.dart';
-import 'package:abotube/b_views/x_components/bars/nav_bar/nav_bar_box.dart';
-import 'package:abotube/services/protocols/youtube_video_protocols.dart';
+import 'package:super_text/super_text.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 /*
 // Import for Android features.
@@ -30,7 +34,6 @@ class DownloaderPage extends StatefulWidget {
 class _DownloaderPageState extends State<DownloaderPage> {
   // -----------------------------------------------------------------------------
   static const String _link = 'https://www.youtube.com';
-  String _currentURL;
   // --------------------
   WebViewController controller;
   // -----------------------------------------------------------------------------
@@ -51,15 +54,21 @@ class _DownloaderPageState extends State<DownloaderPage> {
   void initState() {
 
     controller = WebViewController()
-      ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setBackgroundColor(const Color(0x00000000))
       ..setNavigationDelegate(
         NavigationDelegate(
-          onProgress: (int progress) {
-            // Update loading bar.
+          onProgress: (int progress) async {
+
+            if (progress == 100){
+              await _getCurrentURl();
+            }
+
           },
-          onPageStarted: (String url) {},
-          onPageFinished: (String url) {},
+          onPageStarted: (String url) {
+            // WORKS ONLY ON INIT : NOT USEFUL
+          },
+          onPageFinished: (String url) {
+            // WORKS ONLY ON INIT : NOT USEFUL
+          },
           onWebResourceError: (WebResourceError error) {},
           onNavigationRequest: (NavigationRequest request) {
             if (request.url.startsWith('https://www.youtube.com/')) {
@@ -69,6 +78,8 @@ class _DownloaderPageState extends State<DownloaderPage> {
           },
         ),
       )
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setBackgroundColor(AboTubeTheme.blackLight)
       ..loadRequest(Uri.parse(_link));
 
     _getCurrentURl();
@@ -103,32 +114,43 @@ class _DownloaderPageState extends State<DownloaderPage> {
   // --------------------------------------------------------------------------
   Future<void> _getCurrentURl() async {
     final String _url = await controller.currentUrl();
-    setState(() {
-      _currentURL = _url;
-    });
+    UiProvider.proSetDownloaderURL(
+        url: _url,
+        notify: true,
+    );
   }
   // --------------------------------------------------------------------------
-  String _formatURL(String url) {
+  ///
+  Future<void> _onComposeVideo() async {
+    await _getCurrentURl();
+    final String _url = UiProvider.proGetDownloaderURL(listen: false);
+    final bool _isAtHomePage = _url == 'https://m.youtube.com/';
 
-    if (url == null) {
-      return '';
+    if (_isAtHomePage == false) {
+      final String _title = await controller.getTitle();
+      await YoutubeProtocols.composeVideoModel(
+        url: _url,
+        videoTitle: _title,
+      );
     }
 
-    else {
-      const int _number = 22;
+  }
+  // --------------------
+  ///
+  Future<void> _copyURL() async {
+    await _getCurrentURl();
+    final String _url = UiProvider.proGetDownloaderURL(listen: false);
+    await TextClipBoard.copy(copy: _url);
+  }
+  // --------------------
+  ///
+  Future<void> _copyStreamLink() async {
 
-      final String _end = TextMod.removeNumberOfCharactersFromBeginningOfAString(
-        numberOfCharacters: _number,
-        string: url,
-      );
-
-      final String _start = TextMod.removeAllCharactersAfterNumberOfCharacters(
-          input: url,
-          numberOfChars: _number
-      );
-
-      return '$_start\n$_end';
-    }
+    blog('Extracting link...');
+    final String _url = UiProvider.proGetDownloaderURL(listen: false);
+    final String link = await FlutterYoutubeDownloader.extractYoutubeLink(_url, 18);
+    await TextClipBoard.copy(copy: link);
+    blog('Link copied to clipboard.');
 
   }
   // --------------------------------------------------------------------------
@@ -136,10 +158,10 @@ class _DownloaderPageState extends State<DownloaderPage> {
   Widget build(BuildContext context) {
     // --------------------
     final double _screenWidth = Scale.screenWidth(context);
-    final double _webviewHeight = Layout.getViewHeight() - Layout.navBarHeight;
-    const double _topButtonHeight = Layout.navBarHeight - 10;
+    const double _urlBarHeight = 20;
+    final double _webviewHeight = Layout.getViewHeight() - Layout.navBarHeight - _urlBarHeight;
     // --------------------
-    // _getCurrentURl();
+    _getCurrentURl();
     // --------------------
     return SizedBox(
       width: Scale.screenWidth(context),
@@ -147,76 +169,52 @@ class _DownloaderPageState extends State<DownloaderPage> {
       child: Column(
         children: <Widget>[
 
+          /// URL LINE
+          Container(
+            width: Scale.screenWidth(context),
+            height: _urlBarHeight,
+            color: AboTubeTheme.greyDark,
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              scrollDirection: Axis.horizontal,
+              child: Selector(
+                key: const ValueKey<String>('DownloaderButton'),
+                selector: (_, UiProvider uiProvider) => uiProvider.downloaderURL,
+                builder: (_, String currentURL, Widget child) {
+                  return SuperText(
+                    text: currentURL,
+                    textHeight: _urlBarHeight - 2,
+                    boxColor: Colorz.white20,
+                    margins: const EdgeInsets.symmetric(horizontal: 5),
+                  );
+                },
+              ),
+            ),
+          ),
+
+          /// DOWNLOADER PANEL
           NavBarBox(
             children: <Widget>[
 
-              /// CURRENT URL
-              SuperBox(
-                  height: _topButtonHeight,
-                  icon: Iconz.comWebsite,
-                  iconSizeFactor: 0.5,
-                  text: _formatURL(_currentURL),
-                  onTap: () async {
-                    await _getCurrentURl();
-                  },
-                  textMaxLines: 2,
-                  textCentered: false,
-                ),
-
-              /// COPY
-              SuperBox(
-                height: _topButtonHeight,
-                icon: Iconz.bxProductsOff,
-                iconSizeFactor: 0.5,
-                text: 'Copy\nURL',
-                isDisabled: _currentURL == 'https://m.youtube.com/',
-                onTap: () async {
-                  await TextClipBoard.copy(copy: _currentURL);
-                  },
-                textMaxLines: 2,
-                textCentered: false,
+              /// COPY URL
+              DownloaderButton(
+                icon: Iconz.flyerCollection,
+                text: 'COPY URL',
+                onTap: _copyURL,
               ),
 
               /// DOWNLOAD
-              SuperBox(
-                height: _topButtonHeight,
-                icon: Iconz.arrowDown,
-                iconSizeFactor: 0.3,
-                textScaleFactor: 1.5,
-                text: 'Download\nVideo',
-                isDisabled: _currentURL == 'https://m.youtube.com/',
-                onTap: () async {
-                  await _getCurrentURl();
-                  final bool _isAtHomePage = _currentURL == 'https://m.youtube.com/';
-                  if (_isAtHomePage == false){
-                    final String _title = await controller.getTitle();
-                    await YoutubeProtocols.downloadYoutubeVideo(
-                      url: _currentURL,
-                      videoTitle: _title,
-                    );
-                  }},
-                textMaxLines: 2,
-                textCentered: false,
+              DownloaderButton(
+                icon: Iconz.addFlyer,
+                text: 'COMPOSE',
+                onTap: _onComposeVideo,
               ),
 
               /// GET STREAM LINK
-              SuperBox(
-                height: _topButtonHeight,
-                icon: Iconz.arrowDown,
-                iconSizeFactor: 0.3,
-                textScaleFactor: 1.5,
-                text: 'Copy\nstream Link',
-                isDisabled: _currentURL == 'https://m.youtube.com/',
-                textMaxLines: 2,
-                textCentered: false,
-                onTap: () async {
-
-                  blog('Extracting link...');
-                  final String link = await FlutterYoutubeDownloader.extractYoutubeLink(_currentURL, 18);
-                  await TextClipBoard.copy(copy: link);
-                  blog('Link copied to clipboard.');
-
-                  },
+              DownloaderButton(
+                icon: Iconz.play,
+                text: 'STREAM LINK',
+                onTap: _copyStreamLink,
               ),
 
               ],
@@ -232,9 +230,9 @@ class _DownloaderPageState extends State<DownloaderPage> {
               // layoutDirection: ,
               // key: ,
             ),
-          )
+          ),
 
-          ],
+        ],
         ),
 
       );

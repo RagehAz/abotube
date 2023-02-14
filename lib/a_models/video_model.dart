@@ -1,5 +1,6 @@
 import 'package:abotube/a_models/caption_model.dart';
 import 'package:flutter/material.dart';
+import 'package:stringer/stringer.dart';
 
 @immutable
 class VideoModel {
@@ -49,6 +50,13 @@ class VideoModel {
   }
   // -----------------------------------------------------------------------------
 
+  /// MODIFIERS
+
+  // --------------------
+  static String fixVideoTitle(String title){
+    return TextMod.fixSearchText(TextMod.fixCountryName(title));
+  }
+  // -----------------------------------------------------------------------------
   /// EQUALITY
 
   // --------------------

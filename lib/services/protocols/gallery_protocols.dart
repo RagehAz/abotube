@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:external_path/external_path.dart';
 import 'package:filers/filers.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:stringer/stringer.dart';
 
 class GalleryProtocols {
@@ -9,6 +10,30 @@ class GalleryProtocols {
 
   const GalleryProtocols();
 
+  // -----------------------------------------------------------------------------
+
+  /// PICKING
+
+  // --------------------
+  static Future<File> pickGalleryVideo() async {
+
+    /// TASK : NEED TO BE SINGLETON
+    final ImagePicker _picker = ImagePicker();
+
+    final XFile image = await _picker.pickVideo(
+      source: ImageSource.gallery,
+      // maxDuration:,
+      // preferredCameraDevice: ,
+    );
+
+    if (image == null) {
+      return null;
+    }
+    else {
+      return File(image.path);
+    }
+
+  }
   // -----------------------------------------------------------------------------
 
   /// CHECKERS
