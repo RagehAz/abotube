@@ -7,6 +7,7 @@ import 'package:abotube/b_views/a_screens/x_youtube_player_screen.dart';
 import 'package:abotube/b_views/x_components/buttons/lab_button.dart';
 import 'package:abotube/b_views/x_components/dialogs/language_selector_dialog.dart';
 import 'package:abotube/services/navigation/navigators.dart';
+import 'package:abotube/services/protocols/gallery_protocols.dart';
 import 'package:abotube/services/protocols/transcription_protocols.dart';
 import 'package:abotube/services/protocols/translation/google_translator.dart';
 import 'package:abotube/services/protocols/youtube_url_protocols.dart';
@@ -392,8 +393,7 @@ class LabPage extends StatelessWidget {
             icon: Iconz.comYoutube,
             onTap: () async {
               // ignore: constant_identifier_names
-              const String youTube_link =
-                  'https://www.youtube.com/watch?v=WrK_Vnl3S-0';
+              const String youTube_link = 'https://www.youtube.com/watch?v=WrK_Vnl3S-0';
               String link;
 
               try {
@@ -500,6 +500,18 @@ class LabPage extends StatelessWidget {
           ),
 
           const DotSeparator(),
+
+          /// CHECK FILE EXISTS IN DOWNLOADS
+          LabButton(
+            worksPerfect: false,
+            text: 'Check gallery file exists',
+            icon: Iconz.info,
+            onTap: () async {
+              final bool  exists = await GalleryProtocols.doesFileExistInGallery
+                ('queen_nikki___nipples_official_video___youtubemp4.mp4');
+              blog('exists : $exists');
+              },
+          ),
 
         ],
       );

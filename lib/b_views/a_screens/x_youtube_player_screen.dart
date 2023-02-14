@@ -1,5 +1,5 @@
 import 'package:abotube/b_views/x_components/layout/basic_layout.dart';
-import 'package:abotube/b_views/x_components/players/youtube_video_player.dart';
+import 'package:abotube/b_views/x_components/players/b_youtube_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:layouts/layouts.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';

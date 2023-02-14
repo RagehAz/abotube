@@ -126,6 +126,7 @@ class _LayoutState extends State<Layout> with TickerProviderStateMixin{
                   controller: _controller,
                   labelColor: Colorz.white255,
                   unselectedLabelColor: Colorz.white80,
+
                 ),
                 decoration: const BoxDecoration(
                   border: Border(
@@ -139,7 +140,7 @@ class _LayoutState extends State<Layout> with TickerProviderStateMixin{
             ),
 
           body: TabBarView(
-            physics: const BouncingScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             controller: _controller,
             children: AboTubeTabs.allViews,
           ),

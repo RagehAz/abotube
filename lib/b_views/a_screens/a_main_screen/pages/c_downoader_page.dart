@@ -1,5 +1,7 @@
 import 'package:bldrs_theme/bldrs_theme.dart';
+import 'package:filers/filers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_youtube_downloader/flutter_youtube_downloader.dart';
 import 'package:scale/scale.dart';
 import 'package:stringer/stringer.dart';
 import 'package:super_box/super_box.dart';
@@ -14,18 +16,18 @@ import 'package:webview_flutter_android/webview_flutter_android.dart';
 import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
  */
 
-class YoutubeWebPage extends StatefulWidget {
+class DownloaderPage extends StatefulWidget {
   /// --------------------------------------------------------------------------
-  const YoutubeWebPage({
+  const DownloaderPage({
     Key key
   }) : super(key: key);
   /// --------------------------------------------------------------------------
   @override
-  _YoutubeWebPageState createState() => _YoutubeWebPageState();
+  _DownloaderPageState createState() => _DownloaderPageState();
   /// --------------------------------------------------------------------------
 }
 
-class _YoutubeWebPageState extends State<YoutubeWebPage> {
+class _DownloaderPageState extends State<DownloaderPage> {
   // -----------------------------------------------------------------------------
   static const String _link = 'https://www.youtube.com';
   String _currentURL;
@@ -107,9 +109,11 @@ class _YoutubeWebPageState extends State<YoutubeWebPage> {
   }
   // --------------------------------------------------------------------------
   String _formatURL(String url) {
+
     if (url == null) {
       return '';
     }
+
     else {
       const int _number = 22;
 
@@ -125,6 +129,7 @@ class _YoutubeWebPageState extends State<YoutubeWebPage> {
 
       return '$_start\n$_end';
     }
+
   }
   // --------------------------------------------------------------------------
   @override
@@ -137,16 +142,16 @@ class _YoutubeWebPageState extends State<YoutubeWebPage> {
     // _getCurrentURl();
     // --------------------
     return SizedBox(
-        width: Scale.screenWidth(context),
-        height: Layout.getViewHeight(),
-        child: Column(
-          children: <Widget>[
+      width: Scale.screenWidth(context),
+      height: Layout.getViewHeight(),
+      child: Column(
+        children: <Widget>[
 
-            NavBarBox(
-              children: <Widget>[
+          NavBarBox(
+            children: <Widget>[
 
-                /// CURRENT URL
-                SuperBox(
+              /// CURRENT URL
+              SuperBox(
                   height: _topButtonHeight,
                   icon: Iconz.comWebsite,
                   iconSizeFactor: 0.5,
@@ -158,63 +163,76 @@ class _YoutubeWebPageState extends State<YoutubeWebPage> {
                   textCentered: false,
                 ),
 
-                /// COPY
-                SuperBox(
-                  height: _topButtonHeight,
-                  icon: Iconz.bxProductsOff,
-                  iconSizeFactor: 0.5,
-                  text: 'Copy\nURL',
-                  isDisabled: _currentURL == 'https://m.youtube.com/',
-                  onTap: () async {
-                    await TextClipBoard.copy(copy: _currentURL);
+              /// COPY
+              SuperBox(
+                height: _topButtonHeight,
+                icon: Iconz.bxProductsOff,
+                iconSizeFactor: 0.5,
+                text: 'Copy\nURL',
+                isDisabled: _currentURL == 'https://m.youtube.com/',
+                onTap: () async {
+                  await TextClipBoard.copy(copy: _currentURL);
                   },
-                  textMaxLines: 2,
-                  textCentered: false,
-                ),
+                textMaxLines: 2,
+                textCentered: false,
+              ),
 
-                /// DOWNLOAD
-                SuperBox(
-                  height: _topButtonHeight,
-                  icon: Iconz.arrowDown,
-                  iconSizeFactor: 0.3,
-                  textScaleFactor: 1.5,
-                  text: 'Download\nVideo',
-                  isDisabled: _currentURL == 'https://m.youtube.com/',
-                  onTap: () async {
+              /// DOWNLOAD
+              SuperBox(
+                height: _topButtonHeight,
+                icon: Iconz.arrowDown,
+                iconSizeFactor: 0.3,
+                textScaleFactor: 1.5,
+                text: 'Download\nVideo',
+                isDisabled: _currentURL == 'https://m.youtube.com/',
+                onTap: () async {
+                  await _getCurrentURl();
+                  final bool _isAtHomePage = _currentURL == 'https://m.youtube.com/';
+                  if (_isAtHomePage == false){
+                    final String _title = await controller.getTitle();
+                    await YoutubeProtocols.downloadYoutubeVideo(
+                      url: _currentURL,
+                      videoTitle: _title,
+                    );
+                  }},
+                textMaxLines: 2,
+                textCentered: false,
+              ),
 
-                    await _getCurrentURl();
+              /// GET STREAM LINK
+              SuperBox(
+                height: _topButtonHeight,
+                icon: Iconz.arrowDown,
+                iconSizeFactor: 0.3,
+                textScaleFactor: 1.5,
+                text: 'Copy\nstream Link',
+                isDisabled: _currentURL == 'https://m.youtube.com/',
+                textMaxLines: 2,
+                textCentered: false,
+                onTap: () async {
 
-                    final bool _isAtHomePage = _currentURL == 'https://m.youtube.com/';
-
-                    if (_isAtHomePage == false){
-
-                      final String _title = await controller.getTitle();
-
-                      await YoutubeProtocols.downloadYoutubeVideo(
-                        url: _currentURL,
-                        videoTitle: _title,
-                      );
-                    }
+                  blog('Extracting link...');
+                  final String link = await FlutterYoutubeDownloader.extractYoutubeLink(_currentURL, 18);
+                  await TextClipBoard.copy(copy: link);
+                  blog('Link copied to clipboard.');
 
                   },
-                  textMaxLines: 2,
-                  textCentered: false,
-                ),
+              ),
 
               ],
             ),
 
-            /// WEB VIEW
-            SizedBox(
-              width: _screenWidth,
-              height: _webviewHeight,
-              child: WebViewWidget(
-                controller: controller,
-                // gestureRecognizers: ,
-                // layoutDirection: ,
-                // key: ,
-              ),
-            )
+          /// WEB VIEW
+          SizedBox(
+            width: _screenWidth,
+            height: _webviewHeight,
+            child: WebViewWidget(
+              controller: controller,
+              // gestureRecognizers: ,
+              // layoutDirection: ,
+              // key: ,
+            ),
+          )
 
           ],
         ),

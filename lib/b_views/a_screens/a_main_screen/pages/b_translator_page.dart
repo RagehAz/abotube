@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:abotube/a_models/translation_progress_model.dart';
-import 'package:abotube/b_views/x_components/buttons/lab_button.dart';
 import 'package:abotube/b_views/x_components/buttons/progress_button.dart';
 import 'package:abotube/b_views/x_components/cards/video_card.dart';
 import 'package:abotube/services/helpers/former.dart';
@@ -12,7 +11,6 @@ import 'package:filers/filers.dart';
 import 'package:flutter/material.dart';
 import 'package:stringer/stringer.dart';
 import 'package:super_box/super_box.dart';
-import 'package:external_path/external_path.dart';
 
 class TranslatorPage extends StatefulWidget {
   /// --------------------------------------------------------------------------
@@ -28,6 +26,8 @@ class TranslatorPage extends StatefulWidget {
 class _TranslatorPageState extends State<TranslatorPage> {
   // -----------------------------------------------------------------------------
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  // --------------------
+  File _videoFile;
   // -----------------------------------------------------------------------------
   bool _loading = false;
   // --------------------
@@ -248,59 +248,15 @@ class _TranslatorPageState extends State<TranslatorPage> {
 
   }
   // --------------------------------------------------------------------------
-
-
-  /// TESTED : WORKS PERFECT
-  Future<bool> doesFileExistInGallery(String fileName) async {
-    bool exists = false;
-
-    blog('fileName: ($fileName)');
-
-    if (TextCheck.isEmpty(fileName) == false) {
-
-      // final List<String> path = await ExternalPath.getExternalStorageDirectories();
-
-      // Stringer.blogStrings(strings: path, invoker: 'doesFileExistInGallery');
-
-      final String gallery = await ExternalPath.getExternalStoragePublicDirectory(
-          ExternalPath.DIRECTORY_DOWNLOADS,
-      );
-
-      // blog('gallery: ($gallery)');
-      // final Directory directory = await getExternalStorageDirectory();
-
-      final String filePath = '$gallery/$fileName';
-      final File file = File(filePath);
-      exists = await file.exists();
-
-      blog('file: ($file)');
-      blog('exists : $exists');
-    }
-
-    return exists;
-  }
-
   @override
   Widget build(BuildContext context) {
     // --------------------
     final double _bubbleWidth = Bubble.bubbleWidth(context: context);
     // --------------------
     return ListView(
-        physics: const BouncingScrollPhysics(),
-        padding: const EdgeInsets.symmetric(vertical: 20),
+      physics: const BouncingScrollPhysics(),
+      padding: const EdgeInsets.symmetric(vertical: 20),
         children: <Widget>[
-
-          LabButton(
-              worksPerfect: false,
-              text: 'Check gallery file exists',
-              icon: Iconz.info,
-              onTap: () async {
-
-                final bool  exists = await doesFileExistInGallery('queen_nikki___nipples_official_video___youtubemp4.mp4');
-                blog('exists : $exists');
-
-              },
-          ),
 
           /// TEXT FIELD
           Form(
@@ -369,6 +325,7 @@ class _TranslatorPageState extends State<TranslatorPage> {
           VideoCard(
             headline: 'New Video',
             loading: _loading,
+            url: 'https://rr5---sn-uxaxjvhxbt2u-j5pl6.googlevideo.com/videoplayback?expire=1676440323&ei=ox7sY8z4FYSz0wWw94vwCg&ip=156.213.106.139&id=o-AEkoKOIbu3ab2rJPW-Y3fK_OAqYm4oEwVXCUD04yvO2k&itag=18&source=youtube&requiressl=yes&mh=d7&mm=31%2C29&mn=sn-uxaxjvhxbt2u-j5pl6%2Csn-hgn7rn7k&ms=au%2Crdu&mv=m&mvi=5&pl=23&initcwndbps=706250&vprv=1&mime=video%2Fmp4&ns=zS394KhvPqVAoSd3C47kjwML&cnr=14&ratebypass=yes&dur=393.090&lmt=1665465590358048&mt=1676418292&fvip=4&fexp=24007246&c=WEB&txp=5438434&n=iVR1kAwOocbr9Xhici&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cvprv%2Cmime%2Cns%2Ccnr%2Cratebypass%2Cdur%2Clmt&sig=AOq0QJ8wRQIgCwcGsyQ3-VUNBEQrZw8WuPDKGx4EMFAtuC2sUCyHkLsCIQCH7l8PTjvjN3NaoK7NCrg1ewfC7nORyO-7_CSwqDulcQ%3D%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRQIgcTEU71RZYNla-45TRasO42VnC4p-BKbMUu3h3cKGwkICIQDUPo3pcTmWdOE3LThkKQOvB_wtkIhB6_YLG13e_PaRKw%3D%3D',
           ),
 
           const Align(

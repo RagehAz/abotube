@@ -1,6 +1,6 @@
 import 'package:abotube/b_views/a_screens/a_main_screen/pages/a_home_page.dart';
 import 'package:abotube/b_views/a_screens/a_main_screen/pages/b_translator_page.dart';
-import 'package:abotube/b_views/a_screens/a_main_screen/pages/c_youtube_web_page.dart';
+import 'package:abotube/b_views/a_screens/a_main_screen/pages/c_downoader_page.dart';
 import 'package:abotube/b_views/a_screens/a_main_screen/pages/x_lab_page.dart';
 import 'package:abotube/b_views/x_components/buttons/tab_button.dart';
 import 'package:abotube/b_views/x_components/layout/view_page.dart';
@@ -19,7 +19,7 @@ class AboTubeTabs {
   // --------------------
   static const String homeTabTitle = 'Home';
   static const String translatorTabTitle = 'Translator';
-  static const String youtubeWebTabTitle = 'Youtube Web';
+  static const String downloader = 'Downloader';
   static const String labPageTitle = 'Lab';
   // --------------------
   static const List<Widget> allTabs = <Widget>[
@@ -44,11 +44,11 @@ class AboTubeTabs {
       ),
     ),
 
-    /// YOUTUBE WEB
+    /// DOWNLOADER
     Tab(
       iconMargin: EdgeInsets.zero,
       child: TabButton(
-        text: youtubeWebTabTitle,
+        text: downloader,
         icon: Iconz.comYoutube,
         iconSizeFactor: 0.5,
         colorize: true,
@@ -82,10 +82,10 @@ class AboTubeTabs {
       child: TranslatorPage(),
     ),
 
-    /// YOUTUBE WEB
+    /// DOWNLOADER
     ViewPage(
-      title: youtubeWebTabTitle,
-      child: YoutubeWebPage(),
+      title: downloader,
+      child: DownloaderPage(),
     ),
 
     /// LAB
@@ -107,7 +107,7 @@ class AboTubeTabs {
     switch (index){
       case 0: return homeTabTitle; break;
       case 1: return translatorTabTitle; break;
-      case 2: return youtubeWebTabTitle; break;
+      case 2: return downloader; break;
       case 3: return labPageTitle; break;
       default: return null;
     }
