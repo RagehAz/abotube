@@ -36,6 +36,7 @@ class VideoModel {
     if (map == null) {
       return null;
     }
+
     else {
       return VideoModel(
         id: map['id'],

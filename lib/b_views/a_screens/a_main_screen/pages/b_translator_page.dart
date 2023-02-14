@@ -1,12 +1,18 @@
+import 'dart:io';
+
 import 'package:abotube/a_models/translation_progress_model.dart';
+import 'package:abotube/b_views/x_components/buttons/lab_button.dart';
 import 'package:abotube/b_views/x_components/buttons/progress_button.dart';
 import 'package:abotube/b_views/x_components/cards/video_card.dart';
 import 'package:abotube/services/helpers/former.dart';
+import 'package:abotube/services/theme/abo_tube_colors.dart';
 import 'package:bldrs_theme/bldrs_theme.dart';
 import 'package:bubbles/bubbles.dart';
 import 'package:filers/filers.dart';
 import 'package:flutter/material.dart';
 import 'package:stringer/stringer.dart';
+import 'package:super_box/super_box.dart';
+import 'package:path_provider/path_provider.dart';
 
 class TranslatorPage extends StatefulWidget {
   /// --------------------------------------------------------------------------
@@ -52,19 +58,6 @@ class _TranslatorPageState extends State<TranslatorPage> {
   }
   // -----------------------------------------------------------------------------
   final TextEditingController _textController = TextEditingController();
-  // -----------------------------------------------------------------------------
-  /*
-  /// --- LOADING
-  final ValueNotifier<bool> _loading = ValueNotifier(false);
-  // --------------------
-  Future<void> _triggerLoading({@required bool setTo}) async {
-    setNotifier(
-      notifier: _loading,
-      mounted: mounted,
-      value: setTo,
-    );
-  }
-   */
   // -----------------------------------------------------------------------------
   @override
   void initState() {
@@ -255,6 +248,18 @@ class _TranslatorPageState extends State<TranslatorPage> {
 
   }
   // --------------------------------------------------------------------------
+
+
+
+
+  Future<bool> doesFileExistInGallery(String fileName) async {
+    final Directory galleryDir = await getExternalStorageDirectory();
+    blog('galleryDir: ($galleryDir)');
+    final file = File('${galleryDir.path}/$fileName');
+    blog('file: ($file)');
+    return file.exists();
+  }
+
   @override
   Widget build(BuildContext context) {
     // --------------------
@@ -264,6 +269,17 @@ class _TranslatorPageState extends State<TranslatorPage> {
         physics: const BouncingScrollPhysics(),
         padding: const EdgeInsets.symmetric(vertical: 20),
         children: <Widget>[
+
+          LabButton(
+              worksPerfect: false,
+              text: 'Check gallery file exists',
+              icon: Iconz.info,
+              onTap: () async {
+
+                final bool = await doesFileExistInGallery('boob.jpeg');
+
+              },
+          ),
 
           /// TEXT FIELD
           Form(
@@ -285,6 +301,12 @@ class _TranslatorPageState extends State<TranslatorPage> {
               ),
               fieldTextFont: BldrsThemeFonts.fontBldrsBodyFont,
             ),
+          ),
+
+          /// SPACER
+          const SizedBox(
+            width: 10,
+            height: 50,
           ),
 
           /// 1- SEPARATED
@@ -322,16 +344,25 @@ class _TranslatorPageState extends State<TranslatorPage> {
             onTap: () => blog('combine : fuck you'),
           ),
 
-          /// SPACER
-          const SizedBox(
-            width: 10,
-            height: 50,
-          ),
-
           /// VIDEO
           VideoCard(
             headline: 'New Video',
             loading: _loading,
+          ),
+
+          const Align(
+            alignment: Alignment.centerRight,
+            child: SuperBox(
+              height: 50,
+              width: 150,
+              textItalic: true,
+              text: 'Publish',
+              textFont: BldrsThemeFonts.fontBldrsHeadlineFont,
+              color: AboTubeTheme.youtubeColor,
+              textColor: Colorz.white200,
+              margins: 10,
+              isDisabled: true,
+            ),
           ),
 
         ],
