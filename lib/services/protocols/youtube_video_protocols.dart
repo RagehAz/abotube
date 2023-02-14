@@ -30,7 +30,7 @@ class YoutubeProtocols {
 
     if (_isURLFormat == true){
 
-      blog('downloading video...');
+      blog('downloading video : $url');
       final dynamic result = await FlutterYoutubeDownloader.downloadVideo(
         url,
         TextMod.fixSearchText(TextMod.fixCountryName(videoTitle)),

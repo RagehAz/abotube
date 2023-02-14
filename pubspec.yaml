@@ -80,6 +80,7 @@ dependencies:
     git:
       url: https://github.com/RagehAz/filers.git
   path_provider: ^2.0.12
+  external_path: ^1.0.3
 # --------------------------------------------------------------------------------
 dev_dependencies:
   flutter_test:

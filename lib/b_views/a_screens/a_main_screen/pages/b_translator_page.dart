@@ -12,7 +12,7 @@ import 'package:filers/filers.dart';
 import 'package:flutter/material.dart';
 import 'package:stringer/stringer.dart';
 import 'package:super_box/super_box.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:external_path/external_path.dart';
 
 class TranslatorPage extends StatefulWidget {
   /// --------------------------------------------------------------------------
@@ -250,14 +250,34 @@ class _TranslatorPageState extends State<TranslatorPage> {
   // --------------------------------------------------------------------------
 
 
-
-
+  /// TESTED : WORKS PERFECT
   Future<bool> doesFileExistInGallery(String fileName) async {
-    final Directory galleryDir = await getExternalStorageDirectory();
-    blog('galleryDir: ($galleryDir)');
-    final file = File('${galleryDir.path}/$fileName');
-    blog('file: ($file)');
-    return file.exists();
+    bool exists = false;
+
+    blog('fileName: ($fileName)');
+
+    if (TextCheck.isEmpty(fileName) == false) {
+
+      // final List<String> path = await ExternalPath.getExternalStorageDirectories();
+
+      // Stringer.blogStrings(strings: path, invoker: 'doesFileExistInGallery');
+
+      final String gallery = await ExternalPath.getExternalStoragePublicDirectory(
+          ExternalPath.DIRECTORY_DOWNLOADS,
+      );
+
+      // blog('gallery: ($gallery)');
+      // final Directory directory = await getExternalStorageDirectory();
+
+      final String filePath = '$gallery/$fileName';
+      final File file = File(filePath);
+      exists = await file.exists();
+
+      blog('file: ($file)');
+      blog('exists : $exists');
+    }
+
+    return exists;
   }
 
   @override
@@ -276,7 +296,8 @@ class _TranslatorPageState extends State<TranslatorPage> {
               icon: Iconz.info,
               onTap: () async {
 
-                final bool = await doesFileExistInGallery('boob.jpeg');
+                final bool  exists = await doesFileExistInGallery('queen_nikki___nipples_official_video___youtubemp4.mp4');
+                blog('exists : $exists');
 
               },
           ),
