@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:abotube/a_models/video_model.dart';
@@ -34,10 +35,12 @@ class YoutubeProtocols {
     if (_isURLFormat == true) {
 
       /// DOWNLOAD VIDEO
-      await downloadYoutubeVideo(
+      unawaited(
+        downloadYoutubeVideo(
         url: url,
         videoTitle: videoTitle,
         iTag: iTag,
+      )
       );
 
       /// CREATE INITIAL VIDEO MODEL

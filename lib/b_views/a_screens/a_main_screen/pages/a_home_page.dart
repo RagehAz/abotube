@@ -1,79 +1,108 @@
+import 'package:abotube/a_models/video_model.dart';
 import 'package:abotube/b_views/x_components/cards/video_card.dart';
-import 'package:abotube/services/navigation/navigators.dart';
-import 'package:abotube/services/navigation/routing.dart';
-import 'package:bldrs_theme/bldrs_theme.dart';
-import 'package:bubbles/bubbles.dart';
+import 'package:abotube/services/ldb/video_ldb_ops.dart';
+import 'package:filers/filers.dart';
 import 'package:flutter/material.dart';
+import 'package:mapper/mapper.dart';
 import 'package:numeric/numeric.dart';
-import 'package:super_box/super_box.dart';
+import 'package:super_text/super_text.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   /// --------------------------------------------------------------------------
   const HomePage({
     Key key
   }) : super(key: key);
   /// --------------------------------------------------------------------------
   @override
+  State<HomePage> createState() => _HomePageState();
+  /// --------------------------------------------------------------------------
+}
+
+class _HomePageState extends State<HomePage> {
+  // -----------------------------------------------------------------------------
+  List<VideoModel> _videos = [];
+  // -----------------------------------------------------------------------------
+  /// --- LOADING
+  final ValueNotifier<bool> _loading = ValueNotifier(false);
+  // --------------------
+  Future<void> _triggerLoading({@required bool setTo}) async {
+    setNotifier(
+      notifier: _loading,
+      mounted: mounted,
+      value: setTo,
+    );
+  }
+  // -----------------------------------------------------------------------------
+  @override
+  void initState() {
+    super.initState();
+  }
+  // --------------------
+  bool _isInit = true;
+  @override
+  void didChangeDependencies() {
+    if (_isInit && mounted) {
+
+      _triggerLoading(setTo: true).then((_) async {
+
+        final List<VideoModel> _stored = await VideoLDBOps.readAll();
+
+        setState(() {
+          _videos = _stored;
+        });
+
+        await _triggerLoading(setTo: false);
+      });
+
+      _isInit = false;
+    }
+    super.didChangeDependencies();
+  }
+  // --------------------
+  @override
+  void dispose() {
+    _loading.dispose();
+    super.dispose();
+  }
+  // --------------------------------------------------------------------------
+  @override
   Widget build(BuildContext context) {
 
-    // final double _referenceLength = Scale.screenShortestSide(context);
-    final double _bubbleWidth = Bubble.bubbleWidth(
-      context: context,
-    );
+    if (Mapper.checkCanLoopList(_videos) == false){
 
-    const List<String> _videos = <String>[
-      'Video One',
-      'Video Two',
-      'Video Three',
-      'Video Four',
-      'Video Five',
-      'Video Six',
-      'Video Seven',
-      'Video Eight',
-      'Video Nine',
-      'Video Ten',
-    ];
+      return const Center(
+        child: SuperText(
+          text: 'No Videos Found',
+        ),
+      );
 
-    return ListView.builder(
+    }
+
+    else {
+
+      return ListView.builder(
         physics: const BouncingScrollPhysics(),
-        itemCount: _videos.length + 1,
+        itemCount: _videos.length,
         padding: const EdgeInsets.symmetric(vertical: 20),
         itemBuilder: (_, int index){
 
-          final bool _isFirst = index == 0;
-
-          /// ADD VIDEO BUTTON
-          if (_isFirst == true){
-            return SuperBox(
-              width: _bubbleWidth,
-              height: 60,
-              icon: Iconz.plus,
-              iconSizeFactor: 0.7,
-              onTap: () => Nav.goToRoute(context, Routing.translator),
-            );
-          }
-
-          /// OLD VIDEOS
-          else {
-
-            final int _videoIndex = index - 1;
-            final int _num = _videoIndex + 1;
+            final int _num = index + 1;
             final String _n = Numeric.formatIndexDigits(
               index: _num,
               listLength: _videos.length,
             );
-            final String _videoHeadline = _videos[_videoIndex];
+            final VideoModel _videoModel = _videos[index];
 
             return VideoCard(
               loading:  false,
-              headline: '$_n : $_videoHeadline',
+              headline: '$_n : ${_videoModel.title}',
             );
-
-          }
 
           },
       );
 
+    }
+
   }
-  /// --------------------------------------------------------------------------
+  // --------------------------------------------------------------------------
 }

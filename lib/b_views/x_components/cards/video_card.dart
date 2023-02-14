@@ -115,7 +115,6 @@ class VideoCard extends StatelessWidget {
           ],
         ),
 
-
       ],
     );
   }

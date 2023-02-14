@@ -1,5 +1,6 @@
 import 'package:abotube/a_models/caption_model.dart';
 import 'package:flutter/material.dart';
+import 'package:mapper/mapper.dart';
 import 'package:stringer/stringer.dart';
 
 @immutable
@@ -47,6 +48,24 @@ class VideoModel {
       );
     }
 
+  }
+  // --------------------
+  /// TASK : TEST ME
+  static List<VideoModel> decipherMaps(List<Map<String, dynamic>> maps){
+    final List<VideoModel> _output = <VideoModel>[];
+
+    if (Mapper.checkCanLoopList(maps) == true){
+
+      for (final Map<String, dynamic> map in maps){
+
+        final VideoModel _video = decipher(map);
+        _output.add(_video);
+
+      }
+
+    }
+
+    return _output;
   }
   // -----------------------------------------------------------------------------
 
