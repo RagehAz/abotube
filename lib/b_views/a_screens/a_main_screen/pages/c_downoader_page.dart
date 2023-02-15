@@ -128,7 +128,7 @@ class _DownloaderPageState extends State<DownloaderPage> {
 
     if (_isAtHomePage == false) {
       final String _title = await controller.getTitle();
-      await YoutubeProtocols.composeVideoModel(
+      await VideoProtocols.composeVideoModel(
         url: _url,
         videoTitle: _title,
       );

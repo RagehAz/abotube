@@ -1,6 +1,7 @@
 import 'package:abotube/a_models/video_model.dart';
-import 'package:abotube/b_views/x_components/cards/draft_video_card.dart';
+import 'package:abotube/b_views/x_components/cards/draft_video_card/draft_video_card.dart';
 import 'package:abotube/services/ldb/video_ldb_ops.dart';
+import 'package:abotube/services/protocols/youtube_video_protocols.dart';
 import 'package:filers/filers.dart';
 import 'package:flutter/material.dart';
 import 'package:mapper/mapper.dart';
@@ -65,26 +66,61 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
   // --------------------------------------------------------------------------
+  /// TESTED : WORKS PERFECT
+  Future<void> _onDeleteVideo(VideoModel videoModel) async {
+
+    await _triggerLoading(setTo: true);
+
+    await VideoProtocols.wipeVideo(videoID: videoModel.id);
+
+    final List<VideoModel> _updated = VideoModel.removeVideo(
+      videoID: videoModel.id,
+      videos: _videos,
+    );
+
+    setState(() {
+      _videos = _updated;
+    });
+
+    await _triggerLoading(setTo: false);
+
+  }
+  // --------------------------------------------------------------------------
   @override
   Widget build(BuildContext context) {
 
-    if (Mapper.checkCanLoopList(_videos) == false){
+    return ValueListenableBuilder(
+      valueListenable: _loading,
+      builder: (_, bool isLoading, Widget child) {
 
-      return const Center(
-        child: SuperText(
-          text: 'No Videos Found',
-        ),
-      );
+        if (isLoading == true) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
 
-    }
+        else {
 
-    else {
+          if (Mapper.checkCanLoopList(_videos) == false) {
+            return const Center(
+              child: SuperText(
+                text: 'No Videos Found',
+              ),
+            );
+          }
 
-      return ListView.builder(
+          else {
+            return child;
+          }
+
+        }
+
+      },
+      child: ListView.builder(
         physics: const BouncingScrollPhysics(),
         itemCount: _videos.length,
         padding: const EdgeInsets.symmetric(vertical: 20),
-        itemBuilder: (_, int index){
+        itemBuilder: (_, int index) {
 
           final int _num = index + 1;
           final String _n = Numeric.formatIndexDigits(
@@ -97,13 +133,11 @@ class _HomePageState extends State<HomePage> {
           return DraftVideoCard(
             videoModel: _videoModel,
             number: _n,
+            onDeleteVideo: () => _onDeleteVideo(_videoModel),
           );
-
-          },
-      );
-
-    }
-
+        },
+      ),
+    );
   }
   // --------------------------------------------------------------------------
 }

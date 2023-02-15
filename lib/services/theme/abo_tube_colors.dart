@@ -14,7 +14,7 @@ class AboTubeTheme {
   // --------------------
   static const Color youtubeColorRGB = Color.fromRGBO(255, 0, 0, 1);
   static const Color youtubeColor = Color(0xFFff0000);
-  static const Color youtubeColorDark = Color(0xFFc40000);
+  static const Color youtubeColorDark = Color(0xff8f0a0a);
   static const Color youtubeColorLight = Color(0xFFff3333);
   static const Color youtubeColorLighter = Color(0xFFff6666);
   static const Color youtubeColorLightest = Color(0xFFff9999);

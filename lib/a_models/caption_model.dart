@@ -118,6 +118,23 @@ class CaptionModel {
   }
   // -----------------------------------------------------------------------------
 
+  /// GETTERS
+
+  // --------------------
+  /// AI TESTED
+  static List<String> getTexts(List<CaptionModel> captions) {
+    final List<String> _output = <String>[];
+
+    if (Mapper.checkCanLoopList(captions) == true) {
+      for (final CaptionModel caption in captions) {
+        _output.add(caption.text);
+      }
+    }
+
+    return _output;
+  }
+  // -----------------------------------------------------------------------------
+
   /// SORTING
 
   // --------------------

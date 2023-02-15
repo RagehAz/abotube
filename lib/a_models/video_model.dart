@@ -72,8 +72,23 @@ class VideoModel {
   /// MODIFIERS
 
   // --------------------
+  /// TESTED : WORKS PERFECT
   static String fixVideoTitle(String title){
     return TextMod.fixSearchText(TextMod.fixCountryName(title));
+  }
+  // --------------------
+  /// TESTED : WORKS PERFECT
+  static List<VideoModel> removeVideo({
+    @required List<VideoModel> videos,
+    @required String videoID,
+  }){
+    final List<VideoModel> _output = <VideoModel>[ ...?videos ];
+
+    if (Mapper.checkCanLoopList(videos) == true && videoID != null){
+      _output.removeWhere((element) => element.id == videoID);
+    }
+
+    return _output;
   }
   // -----------------------------------------------------------------------------
   /// EQUALITY

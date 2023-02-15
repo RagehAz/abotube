@@ -421,7 +421,7 @@ class LabPage extends StatelessWidget {
             text: 'Download youtube Video to device',
             icon: Iconz.arrowDown,
             onTap: () async {
-              await YoutubeProtocols.downloadYoutubeVideo(
+              await VideoProtocols.downloadYoutubeVideo(
                 url: 'https://m.youtube.com/watch?v=dAHqcEnPIXw',
                 videoTitle: 'test video',
               );

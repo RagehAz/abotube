@@ -12,10 +12,10 @@ import 'package:flutter_youtube_downloader/flutter_youtube_downloader.dart';
 import 'package:http/http.dart' as http;
 import 'package:rest/rest.dart';
 
-class YoutubeProtocols {
+class VideoProtocols {
   // --------------------------------------------------------------------------
 
-  const YoutubeProtocols();
+  const VideoProtocols();
 
   // --------------------------------------------------------------------------
 
@@ -87,6 +87,27 @@ class YoutubeProtocols {
     blog('result runType : ${result.runtimeType}');
     blog(result);
 
+    }
+
+  }
+  // --------------------------------------------------------------------------
+
+  /// RENOVATE
+
+  // --------------------
+  ///
+  // --------------------------------------------------------------------------
+
+  /// WIPE
+
+  // --------------------
+  /// TESTED : WORKS PERFECT
+  static Future<void> wipeVideo({
+    @required String videoID,
+  }) async {
+
+    if (videoID != null) {
+      await VideoLDBOps.delete(id: videoID);
     }
 
   }
