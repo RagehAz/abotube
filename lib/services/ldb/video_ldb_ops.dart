@@ -17,34 +17,40 @@ class VideoLDBOps {
     @required VideoModel videoModel,
   }) async {
 
-          if (videoModel != null){
+    if (videoModel != null){
 
-            await LDBOps.insertMap(
-              docName: 'VideoLDBOps',
-              primaryKey: 'id',
-              input: videoModel.toMap(),
-          );
+      await LDBOps.insertMap(
+        docName: 'VideoLDBOps',
+        primaryKey: 'id',
+        input: videoModel.toMap(
+          toJSON: true,
+        ),
+      );
 
-          }
+    }
 
-        }
+  }
   // --------------------------------------------------------------------------
 
   /// READ
 
   // --------------------
-  /// TASK : TEST ME
+  /// TESTED : WORKS PERFECT
   static Future<VideoModel> read({
     @required String id,
   }) async {
 
     final Map<String, dynamic> _map = await LDBOps.readMap(
-        docName: 'VideoLDBOps',
-        id: id,
-        primaryKey: 'id',
+      docName: 'VideoLDBOps',
+      id: id,
+      primaryKey: 'id',
     );
 
-    return VideoModel.decipher(_map);
+    return VideoModel.decipher(
+      map: _map,
+      fromJSON: true,
+    );
+
   }
   // --------------------
   /// TESTED : WORKS PERFECT
@@ -54,14 +60,18 @@ class VideoLDBOps {
         docName: 'VideoLDBOps',
     );
 
-    return VideoModel.decipherMaps(_maps);
+    return VideoModel.decipherMaps(
+      maps: _maps,
+      fromJSON: true,
+    );
+
   }
   // --------------------------------------------------------------------------
 
   /// DELETE
 
   // --------------------
-  /// TASK : TEST ME
+  /// TESTED : WORKS PERFECT
   static Future<void> delete({
     @required String id,
   }) async {

@@ -170,10 +170,17 @@ class _DraftVideoCardState extends State<DraftVideoCard> {
       context: context,
     );
 
+    final String _timeString = VideoModel.calculateSuperTimeDifferenceString(
+      from: widget.videoModel?.createdAt,
+      to: DateTime.now(),
+    );
+
+    final String _isDownloadedText = _file == null ? 'NO' : 'YES';
+
     return Bubble(
       width: _bubbleWidth,
       bubbleHeaderVM: BubbleHeaderVM(
-        headlineText: '${widget.number}. ${widget.videoModel.id}',
+        headlineText: '${widget.number}. ${widget.videoModel.id} . $_timeString',
         headlineHeight: 20,
         font: BldrsThemeFonts.fontBldrsHeadlineFont,
 
@@ -210,24 +217,10 @@ class _DraftVideoCardState extends State<DraftVideoCard> {
         ),
 
         /// IS DOWNLOADED
-        FutureBuilder(
-          future: VideoProtocols.checkVideoIsDownloaded(
-            videoID: widget.videoModel?.id,
-          ),
-          builder: (_, AsyncSnapshot<bool> snapshot) {
-
-            final bool _isDownloaded = snapshot.data ?? false;
-
-            final String text = snapshot.connectionState == ConnectionState.done
-              ? _isDownloaded ? 'YES' : 'NO'
-              : '...';
-
-            return VideoInfoLine(
-              width: _clearWidth,
-              title: 'is Downloaded ?',
-              text: text,
-            );
-          }
+        VideoInfoLine(
+          width: _clearWidth,
+          title: 'is Downloaded ?',
+          text: _isDownloadedText,
         ),
 
         /// CAPTIONS

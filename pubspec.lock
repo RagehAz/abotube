@@ -775,7 +775,7 @@ packages:
     source: hosted
     version: "1.9.1"
   space_time:
-    dependency: transitive
+    dependency: "direct main"
     description:
       path: "."
       ref: HEAD

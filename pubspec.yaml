@@ -31,6 +31,8 @@ dependencies:
   youtube_player_flutter: ^8.1.2
   provider: ^6.0.3
   flutter_native_splash: ^2.2.9
+  path_provider: ^2.0.12
+  external_path: ^1.0.3
   # ---------------------------
   # MY WIDGETS
   super_image:
@@ -79,8 +81,9 @@ dependencies:
   filers:
     git:
       url: https://github.com/RagehAz/filers.git
-  path_provider: ^2.0.12
-  external_path: ^1.0.3
+  space_time:
+    git:
+      url: https://github.com/RagehAz/space_time.git
 # --------------------------------------------------------------------------------
 dev_dependencies:
   flutter_test:

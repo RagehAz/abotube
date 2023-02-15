@@ -71,13 +71,13 @@ class VideoProtocols {
         iTag: iTag,
       );
 
-
       /// CREATE INITIAL VIDEO MODEL
       _videoModel = VideoModel(
         id: YoutubeURLProtocols.extractVideoID(url),
         url: url,
         title: VideoModel.fixVideoTitle(title),
         captions: const [],
+        createdAt: DateTime.now(),
       );
 
       /// INSERT VIDEO MODEL INTO LDB
@@ -135,7 +135,12 @@ class VideoProtocols {
         videoID: videoID,
       );
 
-      final bool _exists = await File(filePath).exists();
+      final String gallery = await ExternalPath.getExternalStoragePublicDirectory(
+        ExternalPath.DIRECTORY_DOWNLOADS,
+      );
+      final String _path = '$gallery/$videoID.mp4';
+      final bool _exists = await File(_path).exists();
+      blog('_path : $_path : _exists : $_exists');
       if (_exists == true){
         _output = filePath;
       }
@@ -156,7 +161,7 @@ class VideoProtocols {
         ExternalPath.DIRECTORY_DOWNLOADS,
       );
 
-      _output = '$gallery/${videoID}mp4.mp4';
+      _output = '$gallery/$videoID.mp4';
     }
 
     return _output;
