@@ -1,5 +1,5 @@
 import 'package:abotube/a_models/video_model.dart';
-import 'package:abotube/b_views/x_components/cards/video_card.dart';
+import 'package:abotube/b_views/x_components/cards/draft_video_card.dart';
 import 'package:abotube/services/ldb/video_ldb_ops.dart';
 import 'package:filers/filers.dart';
 import 'package:flutter/material.dart';
@@ -86,17 +86,18 @@ class _HomePageState extends State<HomePage> {
         padding: const EdgeInsets.symmetric(vertical: 20),
         itemBuilder: (_, int index){
 
-            final int _num = index + 1;
-            final String _n = Numeric.formatIndexDigits(
-              index: _num,
-              listLength: _videos.length,
-            );
-            final VideoModel _videoModel = _videos[index];
+          final int _num = index + 1;
+          final String _n = Numeric.formatIndexDigits(
+            index: _num,
+            listLength: _videos.length,
+          );
 
-            return VideoCard(
-              loading:  false,
-              headline: '$_n : ${_videoModel.title}',
-            );
+          final VideoModel _videoModel = _videos[index];
+
+          return DraftVideoCard(
+            videoModel: _videoModel,
+            number: _n,
+          );
 
           },
       );

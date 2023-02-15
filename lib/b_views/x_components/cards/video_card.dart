@@ -1,7 +1,6 @@
 import 'dart:io';
 
-import 'package:abotube/b_views/x_components/players/a_super_video_player.dart';
-import 'package:abotube/b_views/x_components/players/aa_video_viewer.dart';
+import 'package:abotube/b_views/x_components/super_video_player/super_video_player.dart';
 import 'package:bldrs_theme/bldrs_theme.dart';
 import 'package:bubbles/bubbles.dart';
 import 'package:flutter/material.dart';
@@ -82,35 +81,30 @@ class VideoCard extends StatelessWidget {
               ),
 
             if (_canShowAddVideoButton == true)
-            SizedBox(
-              width: _clearWidth,
-              height: VideoViewer.getHeightByAspectRatio(
-                aspectRatio: 16 / 9,
+              VideoBox(
                 width: _clearWidth,
-                force169: true,
+                child: SuperBox(
+                  height: _clearWidth * 0.1,
+                  icon: Iconz.plus,
+                  bubble: false,
+                  text: 'ADD VIDEO',
+                  textFont: BldrsThemeFonts.fontBldrsHeadlineFont,
+                  textItalic: true,
+                  iconSizeFactor: 0.7,
+                  textScaleFactor: 1.8,
+                ),
               ),
-              child: SuperBox(
-                    height: _clearWidth * 0.1,
-                    icon: Iconz.plus,
-                    bubble: false,
-                    text: 'ADD VIDEO',
-                    textFont: BldrsThemeFonts.fontBldrsHeadlineFont,
-                    textItalic: true,
-                    iconSizeFactor: 0.7,
-                    textScaleFactor: 1.8,
-                  ),
-            ),
 
             if (_canShowAddVideoButton == true)
-            SuperBox(
-              width: _clearWidth,
-              height: VideoViewer.getHeightByAspectRatio(
-                aspectRatio: 16 / 9,
+              SuperBox(
                 width: _clearWidth,
-                force169: true,
+                height: VideoBox.getHeightByAspectRatio(
+                  aspectRatio: 16 / 9,
+                  width: _clearWidth,
+                  force169: true,
+                ),
+                onTap: onAddVideo,
               ),
-              onTap: onAddVideo,
-            ),
 
           ],
         ),

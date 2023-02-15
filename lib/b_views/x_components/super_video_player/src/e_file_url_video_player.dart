@@ -1,14 +1,8 @@
-import 'dart:io';
+part of super_video_player;
 
-import 'package:abotube/b_views/x_components/players/aa_video_viewer.dart';
-import 'package:filers/filers.dart';
-import 'package:flutter/material.dart';
-import 'package:scale/scale.dart';
-import 'package:video_player/video_player.dart';
-
-class SuperVideoPlayer extends StatefulWidget {
+class FileAndURLVideoPlayer extends StatefulWidget {
   /// --------------------------------------------------------------------------
-  const SuperVideoPlayer({
+  const FileAndURLVideoPlayer({
     this.file,
     this.url,
     this.controller,
@@ -22,7 +16,7 @@ class SuperVideoPlayer extends StatefulWidget {
   final double width;
   /// --------------------------------------------------------------------------
   @override
-  _SuperVideoPlayerState createState() => _SuperVideoPlayerState();
+  _FileAndURLVideoPlayerState createState() => _FileAndURLVideoPlayerState();
   // --------------------------------------------------------------------------
   /// TESTED : WORKS PERFECT
   static VideoPlayerController initializeVideoController({
@@ -81,7 +75,7 @@ class SuperVideoPlayer extends StatefulWidget {
   // --------------------------------------------------------------------------
 }
 
-class _SuperVideoPlayerState extends State<SuperVideoPlayer> {
+class _FileAndURLVideoPlayerState extends State<FileAndURLVideoPlayer> {
   // --------------------------------------------------------------------------
   final ValueNotifier<VideoPlayerValue> _videoValue = ValueNotifier(null);
   final ValueNotifier<bool> _isChangingVolume = ValueNotifier(false);
@@ -93,7 +87,7 @@ class _SuperVideoPlayerState extends State<SuperVideoPlayer> {
   void initState() {
     super.initState();
 
-    _videoPlayerController = widget.controller ?? SuperVideoPlayer.initializeVideoController(
+    _videoPlayerController = widget.controller ?? FileAndURLVideoPlayer.initializeVideoController(
       url: widget.url,
       file: widget.file,
       videoValue: _videoValue,
@@ -217,5 +211,5 @@ class _SuperVideoPlayerState extends State<SuperVideoPlayer> {
     // --------------------
 
   }
-  // --------------------------------------------------------------------------
+
 }

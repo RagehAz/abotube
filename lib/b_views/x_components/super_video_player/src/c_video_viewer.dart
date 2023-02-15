@@ -4,6 +4,7 @@ import 'package:filers/filers.dart';
 import 'package:flutter/material.dart';
 import 'package:super_box/super_box.dart';
 import 'package:video_player/video_player.dart';
+import '../super_video_player.dart';
 
 class VideoViewer extends StatelessWidget {
   /// --------------------------------------------------------------------------
@@ -28,24 +29,6 @@ class VideoViewer extends StatelessWidget {
    final ValueChanged<double> onVolumeChanged;
    final ValueNotifier<bool> isChangingVolume;
   // --------------------
-  /// TESTED : WORKS PERFECT
-  static double getHeightByAspectRatio({
-    @required double aspectRatio,
-    @required double width,
-    @required bool force169,
-  }){
-    double _output = width / (16 / 9);
-
-    if (aspectRatio != null && width != null && force169 == false) {
-      /// AspectRatio = (widthA / heightA)
-      ///             = (widthB / heightB)
-      ///
-      /// so heightB = widthB / aspectRatio
-      _output = width / aspectRatio;
-    }
-
-    return _output;
-  }
   // --------------------
   /// TESTED : WORKS PERFECT
   static bool _videoIsLoading({
@@ -128,7 +111,7 @@ class VideoViewer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final double _boxHeight = getHeightByAspectRatio(
+    final double _boxHeight = VideoBox.getHeightByAspectRatio(
       width: width,
       aspectRatio: aspectRatio,
       force169: true,

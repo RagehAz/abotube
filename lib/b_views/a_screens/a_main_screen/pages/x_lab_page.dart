@@ -62,7 +62,9 @@ class LabPage extends StatelessWidget {
             icon: Iconz.comYoutube,
             onTap: () => Nav.goToNewScreen(
               context: context,
-              screen: const YoutubePlayerScreen(),
+              screen: const YoutubePlayerScreen(
+                videoID: 'QRS8MkLhQmM',
+              ),
             ),
           ),
 
@@ -145,10 +147,8 @@ class LabPage extends StatelessWidget {
 
               const String apiKey = 'AIzaSyA32TxS3tQeMZGPEf8y9pvgrLo5rGpz0fs';
 
-              String _url =
-                  'https://www.googleapis.com/youtube/v3/captions?part=snippet&videoId=$_videoID&key=$apiKey';
-              _url =
-                  'https://www.googleapis.com/youtube/v3/captions?videoId=$_videoID&part=snippet&key=$apiKey';
+              String _url = 'https://www.googleapis.com/youtube/v3/captions?part=snippet&videoId=$_videoID&key=$apiKey';
+              _url = 'https://www.googleapis.com/youtube/v3/captions?videoId=$_videoID&part=snippet&key=$apiKey';
 
               final http.Response _response = await Rest.get(
                 rawLink: _url,
@@ -213,8 +213,7 @@ class LabPage extends StatelessWidget {
             onTap: () async {
               const String _videoID = 'mqaODYJ702s';
 
-              const String videoUrl =
-                  'https://www.youtube.com/watch?v=$_videoID';
+              const String videoUrl = 'https://www.youtube.com/watch?v=$_videoID';
 
               final RegExp regExp = RegExp(
                 r'#(?<=v=)[a-zA-Z0-9-]+(?=&)|(?<=v\/)'
