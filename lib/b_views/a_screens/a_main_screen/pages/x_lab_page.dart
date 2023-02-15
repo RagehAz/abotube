@@ -7,11 +7,10 @@ import 'package:abotube/b_views/a_screens/x_youtube_player_screen.dart';
 import 'package:abotube/b_views/x_components/buttons/lab_button.dart';
 import 'package:abotube/b_views/x_components/dialogs/language_selector_dialog.dart';
 import 'package:abotube/services/navigation/navigators.dart';
-import 'package:abotube/services/protocols/gallery_protocols.dart';
 import 'package:abotube/services/protocols/transcription_protocols.dart';
 import 'package:abotube/services/protocols/translation/google_translator.dart';
 import 'package:abotube/services/protocols/youtube_url_protocols.dart';
-import 'package:abotube/services/protocols/youtube_video_protocols.dart';
+import 'package:abotube/services/protocols/video_protocols.dart';
 import 'package:abotube/services/theme/abo_tube_colors.dart';
 import 'package:bldrs_theme/bldrs_theme.dart';
 import 'package:bubbles/bubbles.dart';
@@ -222,8 +221,7 @@ class LabPage extends StatelessWidget {
               );
               final match = regExp.firstMatch(videoUrl);
               final videoId = match.group(0);
-              final String _url =
-                  'http://www.youtube.com/get_video_info?&video_id=$videoId';
+              final String _url = 'http://www.youtube.com/get_video_info?&video_id=$videoId';
 
               final http.Response response = await Rest.get(
                 rawLink: _url,
@@ -231,8 +229,7 @@ class LabPage extends StatelessWidget {
               );
 
               final responseBody = response.body;
-              final videoInfoArray =
-                  Uri.splitQueryString(responseBody).cast<String, dynamic>();
+              final videoInfoArray = Uri.splitQueryString(responseBody).cast<String, dynamic>();
 
               if (videoInfoArray.containsKey('caption_tracks')) {
                 final List<String> tracks =
@@ -421,7 +418,7 @@ class LabPage extends StatelessWidget {
             text: 'Download youtube Video to device',
             icon: Iconz.arrowDown,
             onTap: () async {
-              await VideoProtocols.downloadYoutubeVideo(
+              VideoProtocols.downloadYoutubeVideo(
                 url: 'https://m.youtube.com/watch?v=dAHqcEnPIXw',
                 videoTitle: 'test video',
               );
@@ -437,7 +434,7 @@ class LabPage extends StatelessWidget {
             icon: Iconz.fingerTap,
             onTap: () async {
 
-              final File _file = await GalleryProtocols.pickGalleryVideo();
+              final File _file = await VideoProtocols.pickGalleryVideo();
 
               if (_file != null) {
 
@@ -498,8 +495,9 @@ class LabPage extends StatelessWidget {
             text: 'Check gallery file exists',
             icon: Iconz.info,
             onTap: () async {
-              final bool  exists = await GalleryProtocols.doesFileExistInGallery
-                ('queen_nikki___nipples_official_video___youtubemp4.mp4');
+              final bool  exists = await VideoProtocols.checkVideoIsDownloaded(
+                videoID: null,
+              );
               blog('exists : $exists');
               },
           ),

@@ -353,6 +353,7 @@ class BottomDialog extends StatelessWidget {
       onDisabledTap: onDeactivatedTap,
       color: color,
       textFont: BldrsThemeFonts.fontBldrsHeadlineFont,
+      textItalic: true,
     );
 
   }

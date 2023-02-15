@@ -5,11 +5,13 @@ class YoutubeVideoPlayer extends StatefulWidget {
   const YoutubeVideoPlayer({
     @required this.videoID,
     this.width,
+    this.autoPlay = false,
     Key key
   }) : super(key: key);
   // --------------------------------------------------------------------------
   final String videoID;
   final double width;
+  final bool autoPlay;
   // --------------------------------------------------------------------------
   @override
   State<YoutubeVideoPlayer> createState() => _YoutubeVideoPlayerState();
@@ -33,6 +35,13 @@ class _YoutubeVideoPlayerState extends State<YoutubeVideoPlayer> {
         //   autoPlay: true,
         // ),
       );
+    }
+
+    if (widget.autoPlay == true){
+      _controller.play();
+    }
+    else {
+      _controller.pause();
     }
 
   }

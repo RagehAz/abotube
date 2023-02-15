@@ -6,12 +6,14 @@ class SuperVideoPlayer extends StatelessWidget {
     this.file,
     this.url,
     this.width,
+    this.autoPlay = false,
     Key key
   }) : super(key: key);
   // --------------------
   final String url;
   final File file;
   final double width;
+  final bool autoPlay;
   /// --------------------------------------------------------------------------
   @override
   Widget build(BuildContext context) {
@@ -26,6 +28,7 @@ class SuperVideoPlayer extends StatelessWidget {
         return YoutubeVideoPlayer(
           videoID: YoutubeURLProtocols.extractVideoID(url),
           width: width,
+          autoPlay: autoPlay,
         );
       }
 
@@ -34,6 +37,7 @@ class SuperVideoPlayer extends StatelessWidget {
         return FileAndURLVideoPlayer(
           url: url,
           width: width,
+          autoPlay: autoPlay,
         );
       }
 
@@ -42,9 +46,10 @@ class SuperVideoPlayer extends StatelessWidget {
     /// FILE
     else if (file != null){
       return FileAndURLVideoPlayer(
-          file: file,
-          width: width,
-        );
+        file: file,
+        width: width,
+        autoPlay: autoPlay,
+      );
     }
 
     /// NOTHING

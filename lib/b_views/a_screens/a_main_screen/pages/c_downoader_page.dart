@@ -1,7 +1,7 @@
 import 'package:abotube/b_views/a_screens/a_main_screen/a_main_screen.dart';
 import 'package:abotube/b_views/x_components/bars/nav_bar/nav_bar_box.dart';
 import 'package:abotube/b_views/x_components/buttons/downloader_button.dart';
-import 'package:abotube/services/protocols/youtube_video_protocols.dart';
+import 'package:abotube/services/protocols/video_protocols.dart';
 import 'package:abotube/services/providers/ui_provider.dart';
 import 'package:abotube/services/theme/abo_tube_colors.dart';
 import 'package:bldrs_theme/bldrs_theme.dart';
@@ -130,7 +130,7 @@ class _DownloaderPageState extends State<DownloaderPage> {
       final String _title = await controller.getTitle();
       await VideoProtocols.composeVideoModel(
         url: _url,
-        videoTitle: _title,
+        title: _title,
       );
     }
 

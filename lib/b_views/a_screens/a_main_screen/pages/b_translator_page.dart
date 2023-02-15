@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:abotube/a_models/translation_progress_model.dart';
 import 'package:abotube/b_views/x_components/buttons/progress_button.dart';
 import 'package:abotube/b_views/x_components/cards/video_card.dart';
-import 'package:abotube/services/protocols/gallery_protocols.dart';
+import 'package:abotube/services/protocols/video_protocols.dart';
 import 'package:abotube/services/theme/abo_tube_colors.dart';
 import 'package:bldrs_theme/bldrs_theme.dart';
 import 'package:filers/filers.dart';
@@ -255,7 +255,7 @@ class _TranslatorPageState extends State<TranslatorPage> {
       _videoFile = null;
     });
 
-    final File _file = await GalleryProtocols.pickGalleryVideo();
+    final File _file = await VideoProtocols.pickGalleryVideo();
 
     if (_file != null) {
       setState(() {

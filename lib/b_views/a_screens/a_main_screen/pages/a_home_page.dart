@@ -1,7 +1,7 @@
 import 'package:abotube/a_models/video_model.dart';
 import 'package:abotube/b_views/x_components/cards/draft_video_card/draft_video_card.dart';
 import 'package:abotube/services/ldb/video_ldb_ops.dart';
-import 'package:abotube/services/protocols/youtube_video_protocols.dart';
+import 'package:abotube/services/protocols/video_protocols.dart';
 import 'package:filers/filers.dart';
 import 'package:flutter/material.dart';
 import 'package:mapper/mapper.dart';
@@ -85,6 +85,18 @@ class _HomePageState extends State<HomePage> {
     await _triggerLoading(setTo: false);
 
   }
+  // --------------------
+  /// TESTED : WORKS PERFECT
+  Future<void> _onRedownloadVideo(VideoModel videoModel) async {
+
+    blog('a77a');
+
+    VideoProtocols.downloadYoutubeVideo(
+        url: videoModel.url,
+        videoTitle: videoModel.id,
+    );
+
+  }
   // --------------------------------------------------------------------------
   @override
   Widget build(BuildContext context) {
@@ -134,6 +146,7 @@ class _HomePageState extends State<HomePage> {
             videoModel: _videoModel,
             number: _n,
             onDeleteVideo: () => _onDeleteVideo(_videoModel),
+            onRedownloadVideo: () => _onRedownloadVideo(_videoModel),
           );
         },
       ),

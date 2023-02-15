@@ -7,6 +7,7 @@ class FileAndURLVideoPlayer extends StatefulWidget {
     this.url,
     this.controller,
     this.width,
+    this.autoPlay = false,
     Key key
   }) : super(key: key);
   // --------------------
@@ -14,6 +15,7 @@ class FileAndURLVideoPlayer extends StatefulWidget {
   final File file;
   final VideoPlayerController controller;
   final double width;
+  final bool autoPlay;
   /// --------------------------------------------------------------------------
   @override
   _FileAndURLVideoPlayerState createState() => _FileAndURLVideoPlayerState();
@@ -25,6 +27,7 @@ class FileAndURLVideoPlayer extends StatefulWidget {
     String url,
     File file,
     bool addListener = true,
+    bool autoPlay = false,
   }) {
     VideoPlayerController _output;
 
@@ -36,16 +39,14 @@ class FileAndURLVideoPlayer extends StatefulWidget {
       _output = VideoPlayerController.network(_link,
           videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true))
         ..initialize()
-        ..setVolume(1)
-        ..play();
+        ..setVolume(1);
     }
 
     if (file != null) {
       _output = VideoPlayerController.file(file,
           videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true))
         ..initialize()
-        ..setVolume(1)
-        ..play();
+        ..setVolume(1);
     }
 
     if (addListener == true) {
@@ -54,6 +55,13 @@ class FileAndURLVideoPlayer extends StatefulWidget {
             videoValue: videoValue,
             videoPlayerController: _output,
           ));
+    }
+
+    if (autoPlay == true){
+      _output.play();
+    }
+    else {
+      _output.pause();
     }
 
     return _output;
@@ -92,6 +100,8 @@ class _FileAndURLVideoPlayerState extends State<FileAndURLVideoPlayer> {
       file: widget.file,
       videoValue: _videoValue,
       mounted: mounted,
+      autoPlay: widget.autoPlay,
+      // addListener: true,
     );
 
   }
