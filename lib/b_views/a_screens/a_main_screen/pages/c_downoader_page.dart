@@ -112,6 +112,7 @@ class _DownloaderPageState extends State<DownloaderPage> {
     super.dispose();
   }
   // --------------------------------------------------------------------------
+  /// TESTED : WORKS PERFECT
   Future<void> _getCurrentURl() async {
     final String _url = await controller.currentUrl();
     UiProvider.proSetDownloaderURL(
@@ -119,31 +120,29 @@ class _DownloaderPageState extends State<DownloaderPage> {
         notify: true,
     );
   }
-  // --------------------------------------------------------------------------
-  ///
+  // --------------------
+  /// TESTED : WORKS PERFECT
   Future<void> _onComposeVideo() async {
     await _getCurrentURl();
     final String _url = UiProvider.proGetDownloaderURL(listen: false);
     final bool _isAtHomePage = _url == 'https://m.youtube.com/';
 
     if (_isAtHomePage == false) {
-      final String _title = await controller.getTitle();
       await VideoProtocols.composeVideoModel(
         url: _url,
-        title: _title,
       );
     }
 
   }
   // --------------------
-  ///
+  /// TESTED : WORKS PERFECT
   Future<void> _copyURL() async {
     await _getCurrentURl();
     final String _url = UiProvider.proGetDownloaderURL(listen: false);
     await TextClipBoard.copy(copy: _url);
   }
   // --------------------
-  ///
+  /// TESTED : WORKS PERFECT
   Future<void> _copyStreamLink() async {
 
     blog('Extracting link...');

@@ -523,7 +523,6 @@ class LabPage extends StatelessWidget {
           //   ),
           // ),
 
-
         ],
       );
     // --------------------

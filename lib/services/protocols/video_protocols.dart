@@ -15,6 +15,7 @@ import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:rest/rest.dart';
 import 'package:stringer/stringer.dart';
+import 'package:youtube_metadata/youtube_metadata.dart';
 
 class VideoProtocols {
   // --------------------------------------------------------------------------
@@ -54,7 +55,6 @@ class VideoProtocols {
   /// TESTED : WORKS PERFECT
   static Future<VideoModel> composeVideoModel({
     @required String url,
-    @required String title,
     int iTag = 18,
   }) async {
     VideoModel _videoModel;
@@ -64,17 +64,18 @@ class VideoProtocols {
     if (_isURLFormat == true) {
 
       /// DOWNLOAD VIDEO
-
       downloadYoutubeVideo(
         url: url,
         iTag: iTag,
       );
 
+      final MetaDataModel metaData = await YoutubeMetaData.getData(url);
+
       /// CREATE INITIAL VIDEO MODEL
       _videoModel = VideoModel(
         id: YoutubeURLProtocols.extractVideoID(url),
         url: url,
-        title: title,
+        title: metaData.title,
         captions: const [],
         createdAt: DateTime.now(),
       );
