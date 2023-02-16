@@ -85,7 +85,9 @@ class _LayoutState extends State<Layout> with TickerProviderStateMixin{
   @override
   Widget build(BuildContext context) {
 
-    final TabController _controller  = UiProvider.proGetTabController(listen: true);
+    final TabController _controller  = UiProvider.proGetTabController(
+      listen: true,
+    );
 
     return WillPopScope(
       key: const ValueKey<String>('Main_layout'),

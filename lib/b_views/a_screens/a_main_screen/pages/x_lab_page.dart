@@ -45,16 +45,34 @@ class LabPage extends StatelessWidget {
 
           const DotSeparator(),
 
-          /// GO TO MP4 PLAYER
-          LabButton(
-            text: 'Go to MP4 Player',
-            icon: Iconz.play,
-            worksPerfect: true,
-            onTap: () => Nav.goToNewScreen(
-                context: context, screen: const VideoPlayerScreen()),
+        /// GO TO MP4 PLAYER
+        LabButton(
+          text: 'Go to MP4 Player',
+          icon: Iconz.play,
+          worksPerfect: true,
+          onTap: () => Nav.goToNewScreen(
+              context: context,
+              screen: const VideoPlayerScreen(
+                url:  'https://rr3---sn-uxaxjvhxbt2u-j5pl6.googlevideo.com/videoplay'
+                      'back?expire=1676584357&ei=RVHuY-C1Boyr1waFmIToCw&ip=156.213.10'
+                      '6.139&id=o-AJ8QEaXC7B85O6cA9lXPOhHZpB46HH524SyQa8ToHd4l&itag=1'
+                      '8&source=youtube&requiressl=yes&mh=qE&mm=31%2C29&mn=sn-uxaxjvh'
+                      'xbt2u-j5pl6%2Csn-25ge7nsd&ms=au%2Crdu&mv=m&mvi=3&pl=18&initcwn'
+                      'dbps=797500&vprv=1&mime=video%2Fmp4&ns=Pr44Hz3gWErqAJjrl6vvm3IL'
+                      '&gir=yes&clen=3247990&ratebypass=yes&dur=81.269&lmt=167625433249'
+                      '6294&mt=1676562323&fvip=2&fexp=24007246&c=WEB&txp=5538434&n=ZjxiY'
+                      '7ZTPAlHhZI&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequi'
+                      'ressl%2Cvprv%2Cmime%2Cns%2Cgir%2Cclen%2Cratebypass%2Cdur%2Clmt&si'
+                      'g=AOq0QJ8wRQIhAMht-jvTeMtRLeG8iG3Y6HofKInkpZHnQ0ZwAm4nMY_jAiAy1wKm'
+                      'EGVML1lfOq2eisKdS_4QuzqorISfjXYBwlfIsw%3D%3D&lsparams=mh%2Cmm%2Cm'
+                      'n%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRQIgN7kZNCqgHvn'
+                      'a0ti2lNSTtaf6wz6QT37DNwkEXpkNUH4CIQCEVeoo0nmetAngrtAjtukC71zjCrAV'
+                      'IVnTkKhkI-QHNw%3D%3D',
+              )
           ),
+        ),
 
-          /// GO TO YOUTUBE PLAYER
+        /// GO TO YOUTUBE PLAYER
           LabButton(
             worksPerfect: true,
             text: 'Go to Youtube player',

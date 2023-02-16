@@ -3,9 +3,9 @@ part of super_video_player;
 class SuperVideoPlayer extends StatelessWidget {
   /// --------------------------------------------------------------------------
   const SuperVideoPlayer({
+    @required this.width,
     this.file,
     this.url,
-    this.width,
     this.autoPlay = false,
     Key key
   }) : super(key: key);

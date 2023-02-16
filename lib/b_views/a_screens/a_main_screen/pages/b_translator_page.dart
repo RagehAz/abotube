@@ -1,9 +1,13 @@
 import 'dart:io';
 
+import 'package:abotube/a_models/caption_model.dart';
 import 'package:abotube/a_models/translation_progress_model.dart';
 import 'package:abotube/a_models/video_model.dart';
 import 'package:abotube/b_views/x_components/buttons/progress_button.dart';
+import 'package:abotube/b_views/x_components/dialogs/language_selector_dialog.dart';
+import 'package:abotube/b_views/x_components/layout/scroller.dart';
 import 'package:abotube/b_views/x_components/super_video_player/super_video_player.dart';
+import 'package:abotube/services/protocols/transcription_protocols.dart';
 import 'package:abotube/services/protocols/video_protocols.dart';
 import 'package:abotube/services/providers/ui_provider.dart';
 import 'package:abotube/services/theme/abo_tube_colors.dart';
@@ -11,7 +15,10 @@ import 'package:bldrs_theme/bldrs_theme.dart';
 import 'package:bubbles/bubbles.dart';
 import 'package:filers/filers.dart';
 import 'package:flutter/material.dart';
+import 'package:mapper/mapper.dart';
+import 'package:stringer/stringer.dart';
 import 'package:super_box/super_box.dart';
+import 'package:super_text/super_text.dart';
 
 class TranslatorPage extends StatefulWidget {
   /// --------------------------------------------------------------------------
@@ -29,6 +36,9 @@ class _TranslatorPageState extends State<TranslatorPage> {
   // final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   // --------------------
   File _videoFile;
+  VideoModel _videoModel;
+  List<CaptionModel> _captions = [];
+  String _langCode;
   // -----------------------------------------------------------------------------
   /// --- LOADING
   final ValueNotifier<bool> _loading = ValueNotifier(false);
@@ -45,11 +55,15 @@ class _TranslatorPageState extends State<TranslatorPage> {
   // --------------------
   void _setProgress({
     @required TranslationProgressModel newModel,
+    Function executeThis,
   }){
 
     if (_progress != newModel){
       setState(() {
         _progress = newModel;
+        if (executeThis != null){
+          executeThis();
+        }
       });
     }
 
@@ -60,6 +74,7 @@ class _TranslatorPageState extends State<TranslatorPage> {
   @override
   void initState() {
     super.initState();
+    _videoModel = UiProvider.proGetCurrentDraft();
   }
   // --------------------
   bool _isInit = true;
@@ -69,7 +84,6 @@ class _TranslatorPageState extends State<TranslatorPage> {
 
       _triggerLoading(setTo: true).then((_) async {
 
-        final VideoModel _videoModel = UiProvider.proGetCurrentDraft();
         final File _file = await VideoProtocols.getVideoFileFromDownloads(
           videoID: _videoModel.id,
         );
@@ -113,32 +127,59 @@ class _TranslatorPageState extends State<TranslatorPage> {
    */
   // --------------------
   /// TESTED : WORKS PERFECT
-  Future<void> _processVideo() async {
+  Future<void> _translateVideo() async {
 
-    /// START LOADING
-    await _triggerLoading(setTo: true);
+    final bool _go = await _selectLanguage();
 
-    /// 1 - SEPARATE
-    await _separateVideoFromAudio();
+    if (_go == true){
 
-    /// 2 - GET TRANSCRIPT
-    await _getTranscript();
+      /// START LOADING
+      await _triggerLoading(setTo: true);
 
-    /// 3 - TRANSLATE
-    await _getTranslation();
+      /// 1 - SEPARATE
+      await _separateVideoFromAudio();
 
-    /// 4 - GENERATE SPEECH
-    await _getAiGeneratedSpeech();
+      /// 2 - GET TRANSCRIPT
+      await _getTranscript();
 
-    /// 5 - COMBINE
-    await _getCombinedVideo();
+      /// 3 - TRANSLATE
+      await _getTranslation();
 
-    /// END LOADING
-    await _triggerLoading(setTo: false);
+      /// 4 - GENERATE SPEECH
+      await _getAiGeneratedSpeech();
+
+      /// 5 - COMBINE
+      await _getCombinedVideo();
+
+      /// END LOADING
+      await _triggerLoading(setTo: false);
+
+    }
 
   }
   // --------------------
-  /// TASK: WRITE ME
+  /// TASK : TEST ME
+  Future<bool> _selectLanguage() async {
+
+    final String _lang = await showLanguageDialog();
+
+    if (_lang == null){
+      setState(() {
+        _langCode = null;
+      });
+      return false;
+    }
+
+    else {
+      setState(() {
+        _langCode = _lang;
+      });
+      return true;
+    }
+
+  }
+  // --------------------
+  /// TASK: WRITE MEEEEEEEEE
   Future<void> _separateVideoFromAudio() async {
 
     /// SET LOADING AND PROGRESS
@@ -161,7 +202,7 @@ class _TranslatorPageState extends State<TranslatorPage> {
     await _triggerLoading(setTo: false);
   }
   // --------------------
-  /// TASK : WRITE ME
+  /// TASK : TEST ME
   Future<void> _getTranscript() async {
 
     /// SET LOADING AND PROGRESS
@@ -171,19 +212,33 @@ class _TranslatorPageState extends State<TranslatorPage> {
       );
     });
 
-    /// DO MAGIC
-    await Future.delayed(const Duration(seconds: 1), (){});
+    final String _transcription = await YouTubeCaptionProtocols.readCheckSubTranscription(
+      videoID: _videoModel?.id,
+      langCode: _langCode,
+    );
 
     /// SET LOADING AND PROGRESS
-    _setProgress(
-        newModel: _progress.copyWith(
-        getTranscript: ProgressStatus.done,
-      )
-    );
+    if (_transcription == null) {
+      _setProgress(
+        newModel: _progress.copyWith(getTranscript: ProgressStatus.error),
+        executeThis: () {
+          _captions = [];
+        },
+      );
+    }
+
+    else {
+      _setProgress(
+        newModel: _progress.copyWith(getTranscript: ProgressStatus.done,),
+        executeThis: () {
+          _captions = <CaptionModel>[CaptionModel(text: _transcription, second: 0,),];
+        },
+      );
+    }
 
   }
   // --------------------
-  /// TASK : WRITE ME
+  /// TASK: WRITE MEEEEEEEEE
   Future<void> _getTranslation() async {
 
     /// SET LOADING AND PROGRESS
@@ -205,7 +260,7 @@ class _TranslatorPageState extends State<TranslatorPage> {
 
   }
   // --------------------
-  /// TASK : WRITE ME
+  /// TASK: WRITE MEEEEEEEEE
   Future<void> _getAiGeneratedSpeech() async {
 
     /// SET LOADING AND PROGRESS
@@ -227,7 +282,7 @@ class _TranslatorPageState extends State<TranslatorPage> {
 
   }
   // --------------------
-  /// TASK : WRITE ME
+  /// TASK: WRITE MEEEEEEEEE
   Future<void> _getCombinedVideo() async {
 
     /// SET LOADING AND PROGRESS
@@ -278,9 +333,9 @@ class _TranslatorPageState extends State<TranslatorPage> {
 
           /// VIDEO
           SuperVideoPlayer(
-            autoPlay: true,
             width: Bubble.bubbleWidth(context: context),
             file: _videoFile,
+            // autoPlay: false,
           ),
 
           Align(
@@ -294,14 +349,8 @@ class _TranslatorPageState extends State<TranslatorPage> {
               color: AboTubeTheme.youtubeColor,
               textColor: Colorz.white200,
               margins: 10,
-              onTap: _processVideo,
+              onTap: _translateVideo,
             ),
-          ),
-
-          /// SPACER
-          const SizedBox(
-            width: 10,
-            height: 50,
           ),
 
           /// 1- SEPARATED
@@ -339,6 +388,54 @@ class _TranslatorPageState extends State<TranslatorPage> {
             onTap: () => blog('combine : fuck you'),
           ),
 
+          /// CAPTIONS
+          Bubble(
+            bubbleHeaderVM: const BubbleHeaderVM(
+              headlineText: 'Captions',
+              // headlineHeight: 30,
+              font: BldrsThemeFonts.fontBldrsHeadlineFont,
+            ),
+            columnChildren: <Widget>[
+
+              if (Mapper.checkCanLoopList(_captions) == true)
+                Container(
+                  width: Bubble.clearWidth(context: context),
+                  height: 150,
+                  color: AboTubeTheme.greyLight,
+                  child: Scroller(
+                    child: ListView.builder(
+                        physics: const BouncingScrollPhysics(),
+                        itemCount: _captions.length,
+                        padding: EdgeInsets.zero,
+                        itemBuilder: (_, int index) {
+
+                          final CaptionModel _caption = _captions[index];
+
+                          return Container(
+                            width: Bubble.clearWidth(context: context),
+                            alignment: Alignment.topLeft,
+                            color: Colorz.bloodTest,
+                            child: SuperText(
+                              boxWidth: Bubble.clearWidth(context: context),
+                              text: _caption.text,
+                              centered: false,
+                              textHeight: 20,
+                              maxLines: 1000,
+                              textDirection: TextDirection.ltr,
+                              onTap: () async {
+                                await TextClipBoard.copy(copy: _caption.text);
+                              },
+                            ),
+                          );
+
+                        }),
+                  ),
+                ),
+
+            ],
+          ),
+
+          /// PUBLISH BUTTON
           const Align(
             alignment: Alignment.centerRight,
             child: SuperBox(
