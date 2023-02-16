@@ -21,12 +21,12 @@ class SuperVideoPlayer extends StatelessWidget {
     /// URL
     if (url != null){
 
-      final bool _isYoutubeLink = YoutubeURLProtocols.isValidYoutubeLink(url);
+      final bool _isYoutubeLink = VideoModel.checkIsValidYoutubeLink(url);
 
       /// YOUTUBE URL
       if (_isYoutubeLink == true){
         return YoutubeVideoPlayer(
-          videoID: YoutubeURLProtocols.extractVideoID(url),
+          videoID: VideoModel.extractVideoIDFromYoutubeURL(url),
           width: width,
           autoPlay: autoPlay,
         );

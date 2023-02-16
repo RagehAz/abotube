@@ -74,7 +74,7 @@ class _HomePageState extends State<HomePage> {
 
     await VideoProtocols.wipeVideo(videoID: videoModel.id);
 
-    final List<VideoModel> _updated = VideoModel.removeVideo(
+    final List<VideoModel> _updated = VideoModel.removeVideoFromVideos(
       videoID: videoModel.id,
       videos: _videos,
     );

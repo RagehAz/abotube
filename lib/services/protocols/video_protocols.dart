@@ -5,7 +5,6 @@ import 'dart:io';
 import 'package:abotube/a_models/video_model.dart';
 import 'package:abotube/services/helpers/former.dart';
 import 'package:abotube/services/ldb/video_ldb_ops.dart';
-import 'package:abotube/services/protocols/youtube_url_protocols.dart';
 import 'package:abotube/services/standards.dart';
 import 'package:external_path/external_path.dart';
 import 'package:filers/filers.dart';
@@ -73,7 +72,7 @@ class VideoProtocols {
 
       /// CREATE INITIAL VIDEO MODEL
       _videoModel = VideoModel(
-        id: YoutubeURLProtocols.extractVideoID(url),
+        id: VideoModel.extractVideoIDFromYoutubeURL(url),
         url: url,
         title: metaData.title,
         captions: const [],
@@ -103,7 +102,7 @@ class VideoProtocols {
   }) {
 
     final bool _isURLFormat = Formers.isURLFormat(url);
-    final String _videoID = YoutubeURLProtocols.extractVideoID(url);
+    final String _videoID = VideoModel.extractVideoIDFromYoutubeURL(url);
     blog('downloading video : _isURLFormat : $_isURLFormat : _videoID : $_videoID : url : $url');
 
     if (_isURLFormat == true){
@@ -168,7 +167,7 @@ class VideoProtocols {
   }
   // --------------------
   /// TASK : TEST ME
-  static Future<File> getVideoFileFromDownloads({
+  static Future<File> getDownloadedVideoFile({
     @required String videoID,
   }) async {
 

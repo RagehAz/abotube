@@ -1,9 +1,8 @@
 library super_video_player;
 // --------------------------------------------------------------------------
 import 'dart:io';
-
+import 'package:abotube/a_models/video_model.dart';
 import 'package:abotube/b_views/x_components/super_video_player/src/c_video_viewer.dart';
-import 'package:abotube/services/protocols/youtube_url_protocols.dart';
 import 'package:abotube/services/theme/abo_tube_colors.dart';
 import 'package:bldrs_theme/bldrs_theme.dart';
 import 'package:filers/filers.dart';

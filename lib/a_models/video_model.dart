@@ -40,7 +40,6 @@ class VideoModel {
       'isTranslated': isTranslated,
     };
   }
-
   // --------------------
   /// TESTED : WORKS PERFECT
   static VideoModel decipher({
@@ -97,7 +96,7 @@ class VideoModel {
   }
   // --------------------
   /// TESTED : WORKS PERFECT
-  static List<VideoModel> removeVideo({
+  static List<VideoModel> removeVideoFromVideos({
     @required List<VideoModel> videos,
     @required String videoID,
   }){
@@ -105,6 +104,27 @@ class VideoModel {
 
     if (Mapper.checkCanLoopList(videos) == true && videoID != null){
       _output.removeWhere((element) => element.id == videoID);
+    }
+
+    return _output;
+  }
+  // -----------------------------------------------------------------------------
+
+  /// GETTERS
+
+  // --------------------
+  /// AI TESTED
+  static String extractVideoIDFromYoutubeURL(String youtubeURL) {
+    String _output;
+
+    if (checkIsValidYoutubeLink(youtubeURL) == true) {
+
+      final youtubeLinkPattern = RegExp(
+          r'^(https?\:\/\/)?(www\.youtube\.com\/watch\?v=|m\.youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)');
+
+      final match = youtubeLinkPattern.firstMatch(youtubeURL);
+
+      _output = match.group(3);
     }
 
     return _output;
@@ -167,6 +187,23 @@ class VideoModel {
     }
 
     return '$_string ago';
+  }
+  // -----------------------------------------------------------------------------
+
+  /// CHECKERS
+
+  // --------------------
+  /// AI TESTED
+  static bool checkIsValidYoutubeVideoID(String videoID) {
+    final youtubeVideoIdPattern = RegExp(r'^[a-zA-Z0-9_-]+$');
+    return youtubeVideoIdPattern.hasMatch(videoID) && videoID.length <= 11;
+  }
+  // --------------------
+  /// AI TESTED
+  static bool checkIsValidYoutubeLink(String link) {
+    final youtubeLinkPattern = RegExp(
+        r'^(https?\:\/\/)?(www\.youtube\.com\/watch\?v=|m\.youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)');
+    return youtubeLinkPattern.hasMatch(link);
   }
   // -----------------------------------------------------------------------------
 

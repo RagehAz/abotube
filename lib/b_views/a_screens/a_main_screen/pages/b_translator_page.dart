@@ -7,7 +7,7 @@ import 'package:abotube/b_views/x_components/buttons/progress_button.dart';
 import 'package:abotube/b_views/x_components/dialogs/language_selector_dialog.dart';
 import 'package:abotube/b_views/x_components/layout/scroller.dart';
 import 'package:abotube/b_views/x_components/super_video_player/super_video_player.dart';
-import 'package:abotube/services/protocols/transcription_protocols.dart';
+import 'package:abotube/services/protocols/caption_protocols.dart';
 import 'package:abotube/services/protocols/video_protocols.dart';
 import 'package:abotube/services/providers/ui_provider.dart';
 import 'package:abotube/services/theme/abo_tube_colors.dart';
@@ -16,6 +16,7 @@ import 'package:bubbles/bubbles.dart';
 import 'package:filers/filers.dart';
 import 'package:flutter/material.dart';
 import 'package:mapper/mapper.dart';
+import 'package:numeric/numeric.dart';
 import 'package:stringer/stringer.dart';
 import 'package:super_box/super_box.dart';
 import 'package:super_text/super_text.dart';
@@ -84,7 +85,7 @@ class _TranslatorPageState extends State<TranslatorPage> {
 
       _triggerLoading(setTo: true).then((_) async {
 
-        final File _file = await VideoProtocols.getVideoFileFromDownloads(
+        final File _file = await VideoProtocols.getDownloadedVideoFile(
           videoID: _videoModel.id,
         );
 
@@ -228,10 +229,15 @@ class _TranslatorPageState extends State<TranslatorPage> {
     }
 
     else {
+
+      final List<CaptionModel> _captionModels = CaptionModel.convertStringToCaptions(
+          inputString: _transcription
+      );
+
       _setProgress(
         newModel: _progress.copyWith(getTranscript: ProgressStatus.done,),
         executeThis: () {
-          _captions = <CaptionModel>[CaptionModel(text: _transcription, second: 0,),];
+          _captions = _captionModels;
         },
       );
     }
@@ -338,6 +344,7 @@ class _TranslatorPageState extends State<TranslatorPage> {
             // autoPlay: false,
           ),
 
+          /// TRANSLATE BUTTON
           Align(
             alignment: Alignment.centerRight,
             child: SuperBox(
@@ -409,26 +416,13 @@ class _TranslatorPageState extends State<TranslatorPage> {
                         padding: EdgeInsets.zero,
                         itemBuilder: (_, int index) {
 
-                          final CaptionModel _caption = _captions[index];
-
-                          return Container(
-                            width: Bubble.clearWidth(context: context),
-                            alignment: Alignment.topLeft,
-                            color: Colorz.bloodTest,
-                            child: SuperText(
-                              boxWidth: Bubble.clearWidth(context: context),
-                              text: _caption.text,
-                              centered: false,
-                              textHeight: 20,
-                              maxLines: 1000,
-                              textDirection: TextDirection.ltr,
-                              onTap: () async {
-                                await TextClipBoard.copy(copy: _caption.text);
-                              },
-                            ),
+                          return CaptionLine(
+                            caption: _captions[index],
+                            numberOfCaptions: _captions.length,
                           );
 
-                        }),
+                        }
+                        ),
                   ),
                 ),
 
@@ -456,4 +450,69 @@ class _TranslatorPageState extends State<TranslatorPage> {
     // --------------------
   }
   // --------------------------------------------------------------------------
+}
+
+class CaptionLine extends StatelessWidget {
+  // -----------------------------------------------------------------------------
+  const CaptionLine({
+    @required this.caption,
+    @required this.numberOfCaptions,
+    Key key
+  }) : super(key: key);
+  // -----------------------------------------------------------------------------
+  final CaptionModel caption;
+  final int numberOfCaptions;
+  // -----------------------------------------------------------------------------
+  @override
+  Widget build(BuildContext context) {
+
+    final String _captionSecond = Numeric.formatNumberWithinDigits(
+        num: caption?.second,
+        digits: numberOfCaptions ?? 1,
+    );
+
+    final double _clearWidth = Bubble.clearWidth(context: context);
+    const double _secondWidth = 20;
+
+    return Container(
+      width: _clearWidth,
+      alignment: Alignment.topLeft,
+      color: Colorz.bloodTest,
+      child: Row(
+        children: <Widget>[
+
+          /// SECOND
+          SuperText(
+            boxWidth: _secondWidth,
+            text: _captionSecond,
+            centered: false,
+            textHeight: 20,
+            maxLines: 1000,
+            textDirection: TextDirection.ltr,
+            boxColor: Colorz.red255,
+            onTap: () async {
+              await TextClipBoard.copy(copy: caption?.text);
+            },
+          ),
+
+          /// TEXT
+          SuperText(
+            boxWidth: _clearWidth - _secondWidth,
+            text: caption?.text,
+            centered: false,
+            textHeight: 20,
+            maxLines: 1000,
+            textDirection: TextDirection.ltr,
+            boxColor: Colorz.black255,
+            onTap: () async {
+              await TextClipBoard.copy(copy: caption?.text);
+            },
+          ),
+
+        ],
+      ),
+    );
+
+  }
+  // -----------------------------------------------------------------------------
 }

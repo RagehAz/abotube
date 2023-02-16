@@ -39,7 +39,7 @@ class _YoutubeVideoPlayerState extends State<YoutubeVideoPlayer> {
   void initState() {
     super.initState();
 
-    final bool _isValidVideoID = YoutubeURLProtocols.isValidYoutubeVideoID(widget.videoID);
+    final bool _isValidVideoID = VideoModel.checkIsValidYoutubeVideoID(widget.videoID);
 
     if (_isValidVideoID == true){
       _controller = YoutubePlayerController(

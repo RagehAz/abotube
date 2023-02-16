@@ -376,7 +376,9 @@ void main() {
         CaptionModel(text: 'Hello, world!', second: 1),
       ];
 
-      final List<CaptionModel> actualOutput = CaptionModel.convertStringToCaptions(inputString);
+      final List<CaptionModel> actualOutput = CaptionModel.convertStringToCaptions(
+          inputString: inputString,
+      );
 
       expect(actualOutput, expectedOutput);
     });
@@ -388,7 +390,9 @@ void main() {
         CaptionModel(text: 'This is a test.', second: 2),
       ];
 
-      final List<CaptionModel> actualOutput = CaptionModel.convertStringToCaptions(inputString);
+      final List<CaptionModel> actualOutput = CaptionModel.convertStringToCaptions(
+        inputString: inputString,
+      );
 
       expect(actualOutput, expectedOutput);
     });
@@ -399,7 +403,9 @@ void main() {
         CaptionModel(text: 'This is a test.', second: 2),
       ];
 
-      final List<CaptionModel> actualOutput = CaptionModel.convertStringToCaptions(inputString);
+      final List<CaptionModel> actualOutput = CaptionModel.convertStringToCaptions(
+        inputString: inputString,
+      );
 
       expect(actualOutput, expectedOutput);
     });
@@ -411,7 +417,9 @@ void main() {
         CaptionModel(text: 'This is a test.', second: 2),
       ];
 
-      final List<CaptionModel> actualOutput = CaptionModel.convertStringToCaptions(inputString);
+      final List<CaptionModel> actualOutput = CaptionModel.convertStringToCaptions(
+        inputString: inputString,
+      );
 
       expect(actualOutput, expectedOutput);
     });
@@ -423,7 +431,9 @@ void main() {
         CaptionModel(text: 'This is a test.', second: 0),
       ];
 
-      final List<CaptionModel> actualOutput = CaptionModel.convertStringToCaptions(inputString);
+      final List<CaptionModel> actualOutput = CaptionModel.convertStringToCaptions(
+        inputString: inputString,
+      );
 
       expect(actualOutput, expectedOutput);
     });

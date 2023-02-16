@@ -84,33 +84,29 @@ class CaptionModel {
 
   // --------------------
   /// AI TESTED
-  static List<CaptionModel> convertStringToCaptions(String inputString) {
+  static List<CaptionModel> convertStringToCaptions({
+    @required String inputString,
+  }) {
     final List<CaptionModel> captions = [];
 
-    if (inputString != null){
-
+    if (inputString != null) {
       final List<String> lines = inputString.split('\n');
 
       int currentTimeInSeconds = 0;
 
       for (int i = 0; i < lines.length; i++) {
-
         final String line = lines[i].trim();
 
         if (checkIs_mm_i_ss_format(line)) {
           // If the line is in mm:ss format, convert it to seconds and set the current time.
           currentTimeInSeconds = convert_mm_i_ss_toSeconds(line);
-        }
-
-        else if (line.isNotEmpty) {
+        } else if (line.isNotEmpty) {
           // Otherwise, create a new caption model and add it to the list.
           captions.add(CaptionModel(
             text: line,
             second: currentTimeInSeconds,
           ));
-
         }
-
       }
     }
 
