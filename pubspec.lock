@@ -332,6 +332,14 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.0.5"
+  freezed_annotation:
+    dependency: transitive
+    description:
+      name: freezed_annotation
+      sha256: aeac15850ef1b38ee368d4c53ba9a847e900bb2c53a4db3f6881cbb3cb684338
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "2.2.0"
   google_sign_in:
     dependency: "direct main"
     description:
@@ -476,6 +484,14 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.6.5"
+  json_annotation:
+    dependency: transitive
+    description:
+      name: json_annotation
+      sha256: c33da08e136c3df0190bd5bbe51ae1df4a7d96e7954d1d7249fea2968a72d317
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "4.8.0"
   just_audio:
     dependency: "direct main"
     description:
@@ -741,10 +757,10 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: ed2437cf5d7895d7505a9a00d8c0485a84477edb
+      resolved-ref: "81539a89eb55d8c25aa6f71f898884b3a55a8075"
       url: "https://github.com/RagehAz/rest.git"
     source: git
-    version: "0.0.6"
+    version: "0.0.7"
   rxdart:
     dependency: transitive
     description:
@@ -1078,6 +1094,14 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "3.1.1"
+  youtube_explode_dart:
+    dependency: "direct main"
+    description:
+      name: youtube_explode_dart
+      sha256: "3e2eb05dedc072a6275e8a061c675d9a53b7c6123265f0aa4ee1e6d50644dbd2"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.12.3"
   youtube_metadata:
     dependency: "direct main"
     description:

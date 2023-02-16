@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
@@ -9,6 +10,7 @@ import 'package:abotube/b_views/x_components/buttons/lab_button.dart';
 import 'package:abotube/b_views/x_components/dialogs/language_selector_dialog.dart';
 import 'package:abotube/services/navigation/navigators.dart';
 import 'package:abotube/services/protocols/caption_protocols.dart';
+import 'package:abotube/services/protocols/exploder_protocols.dart';
 import 'package:abotube/services/protocols/google_translator.dart';
 import 'package:abotube/services/protocols/video_protocols.dart';
 import 'package:abotube/services/theme/abo_tube_colors.dart';
@@ -28,6 +30,7 @@ import 'package:layouts/layouts.dart';
 import 'package:mapper/mapper.dart';
 import 'package:rest/rest.dart';
 import 'package:text_to_speech/text_to_speech.dart';
+import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 /// ------------------------------------------------------
 class LabPage extends StatelessWidget {
   // --------------------------------------------------------------------------
@@ -461,6 +464,87 @@ class LabPage extends StatelessWidget {
           ),
 
           const DotSeparator(),
+
+          /// SEPARATE AUDIO FROM VIDEO
+          LabButton(
+            worksPerfect: false,
+            text: 'EXPLODE CAPTIONS + BLOG EVERYTHING',
+            icon: AboTubeTheme.abotube_logo,
+            onTap: () async {
+
+              final List<ClosedCaptionTrackInfo> trackInfos = await ExploderProtocols.readClosedCaptionTrackInfos(
+                  landCode: 'en',
+                  videoID: 'FMvppuS_ehg',
+              );
+
+              int index = 0;
+              for (final ClosedCaptionTrackInfo info in trackInfos){
+                blog('$index : BLOGGING ClosedCaptionTrackInfo ---> START');
+
+                ExploderProtocols.blogClosedCaptionTrackInfo(
+                    info: info,
+                );
+
+                final ClosedCaptionTrack track = await ExploderProtocols.readClosedCaptionTrack(
+                    info: info,
+                );
+
+                ExploderProtocols.blogClosedCaptionTrack(
+                  track: track,
+                );
+
+                final UnmodifiableListView<ClosedCaption> _captions = track.captions;
+                final int _lengthX = _captions.length > 3 ? 3 : _captions.length;
+                for (int i = 0; i < _lengthX; i++){
+
+                  ExploderProtocols.blogClosedCaption(
+                      closedCaption: _captions[index],
+                  );
+
+                  final List<ClosedCaptionPart> _parts = _captions[index].parts;
+                  final int _lengthY = _parts.length > 2 ? 2 : _parts.length;
+                  for (int x = 0; x < _lengthY; x++){
+                    ExploderProtocols.blogClosedCaptionPart(
+                      part: _parts[x],
+                    );
+                  }
+
+                }
+
+                blog('<--- DONE');
+                index++;
+              }
+
+            },
+          ),
+
+          /// GET MAP
+          LabButton(
+            worksPerfect: false,
+            text: 'Blog Exploded Captions map',
+            icon: AboTubeTheme.abotube_logo,
+            onTap: () async {
+
+              final List<ClosedCaptionTrackInfo> trackInfos = await ExploderProtocols.readClosedCaptionTrackInfos(
+                  landCode: 'en',
+                  videoID: 'FMvppuS_ehg',
+              );
+
+              blog('trackInfos are ${trackInfos.length} trackInfos');
+
+              // blog('_track.url.path : ${_track.url.path}');
+              // Rest.blogURI(uri: _track.url);
+
+              final http.Response _captionsMap = await Rest.get(
+                  rawLink: trackInfos.first.url.toString(),
+                  invoker: 'getting Captions of track',
+              );
+
+              blog('_captionsMap.body : ${_captionsMap.body}');
+
+
+            },
+          ),
 
           // /// TEXT FIELD
           // Form(

@@ -89,6 +89,7 @@ dependencies:
   animators:
     git:
       url: https://github.com/RagehAz/animators.git
+  youtube_explode_dart: ^1.12.3
 # --------------------------------------------------------------------------------
 dev_dependencies:
   flutter_test:
