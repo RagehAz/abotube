@@ -2,6 +2,7 @@ import 'package:abotube/a_models/video_model.dart';
 import 'package:abotube/b_views/x_components/cards/draft_video_card/draft_video_card.dart';
 import 'package:abotube/services/ldb/video_ldb_ops.dart';
 import 'package:abotube/services/protocols/video_protocols.dart';
+import 'package:abotube/services/providers/ui_provider.dart';
 import 'package:filers/filers.dart';
 import 'package:flutter/material.dart';
 import 'package:mapper/mapper.dart';
@@ -89,10 +90,26 @@ class _HomePageState extends State<HomePage> {
   /// TESTED : WORKS PERFECT
   Future<void> _onRedownloadVideo(VideoModel videoModel) async {
 
-    blog('a77a');
-
     VideoProtocols.downloadYoutubeVideo(
         url: videoModel.url,
+    );
+
+  }
+  // --------------------
+  ///
+  Future<void> _onTranslate(VideoModel videoModel) async {
+
+    final TabController _controller  = UiProvider.proGetTabController(listen: false);
+
+    UiProvider.proSetCurrentDraft(
+      videoModel: videoModel,
+      notify: true,
+    );
+
+    _controller.animateTo(
+      1,
+      duration: const Duration(milliseconds: 250),
+      curve: Curves.easeOut,
     );
 
   }
@@ -146,7 +163,9 @@ class _HomePageState extends State<HomePage> {
             number: _n,
             onDeleteVideo: () => _onDeleteVideo(_videoModel),
             onRedownloadVideo: () => _onRedownloadVideo(_videoModel),
+            onTranslate: () => _onTranslate(_videoModel),
           );
+
         },
       ),
     );

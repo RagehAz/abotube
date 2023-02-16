@@ -38,27 +38,19 @@ class Layout extends StatefulWidget {
 }
 
 class _LayoutState extends State<Layout> with TickerProviderStateMixin{
-
-  TabController _controller;
-
+  // -----------------------------------------------------------------------------
   @override
   void initState() {
     super.initState();
-
-    _controller = TabController(
-        length: AboTubeTabs.allTabs.length,
-        vsync: this,
+    UiProvider.proInitializeTabBarController(
+      vsync: this,
     );
-
-    _controller.addListener(() {
-
-      UiProvider.proSetCurrentTab(
-          tab: AboTubeTabs.getTabByIndex(index: _controller.index),
-          notify: true,
-      );
-
-    });
-
+  }
+  // --------------------
+  @override
+  void dispose() {
+    UiProvider.proDisposeTabBarController();
+    super.dispose();
   }
   // -----------------------------------------------------------------------------
 
@@ -92,6 +84,8 @@ class _LayoutState extends State<Layout> with TickerProviderStateMixin{
   // -----------------------------------------------------------------------------
   @override
   Widget build(BuildContext context) {
+
+    final TabController _controller  = UiProvider.proGetTabController(listen: true);
 
     return WillPopScope(
       key: const ValueKey<String>('Main_layout'),

@@ -1,11 +1,14 @@
 import 'dart:io';
 
 import 'package:abotube/a_models/translation_progress_model.dart';
+import 'package:abotube/a_models/video_model.dart';
 import 'package:abotube/b_views/x_components/buttons/progress_button.dart';
-import 'package:abotube/b_views/x_components/cards/video_card.dart';
+import 'package:abotube/b_views/x_components/super_video_player/super_video_player.dart';
 import 'package:abotube/services/protocols/video_protocols.dart';
+import 'package:abotube/services/providers/ui_provider.dart';
 import 'package:abotube/services/theme/abo_tube_colors.dart';
 import 'package:bldrs_theme/bldrs_theme.dart';
+import 'package:bubbles/bubbles.dart';
 import 'package:filers/filers.dart';
 import 'package:flutter/material.dart';
 import 'package:super_box/super_box.dart';
@@ -27,18 +30,15 @@ class _TranslatorPageState extends State<TranslatorPage> {
   // --------------------
   File _videoFile;
   // -----------------------------------------------------------------------------
-  bool _loading = false;
+  /// --- LOADING
+  final ValueNotifier<bool> _loading = ValueNotifier(false);
   // --------------------
-  void _setLoading({
-    @required bool setTo,
-  }){
-
-    if (_loading != setTo){
-      setState(() {
-        _loading = setTo;
-      });
-    }
-
+  Future<void> _triggerLoading({@required bool setTo}) async {
+    setNotifier(
+      notifier: _loading,
+      mounted: mounted,
+      value: setTo,
+    );
   }
   // -----------------------------------------------------------------------------
   TranslationProgressModel _progress = const TranslationProgressModel();
@@ -62,7 +62,6 @@ class _TranslatorPageState extends State<TranslatorPage> {
     super.initState();
   }
   // --------------------
-  /*
   bool _isInit = true;
   @override
   void didChangeDependencies() {
@@ -70,7 +69,14 @@ class _TranslatorPageState extends State<TranslatorPage> {
 
       _triggerLoading(setTo: true).then((_) async {
 
-        /// FUCK
+        final VideoModel _videoModel = UiProvider.proGetCurrentDraft();
+        final File _file = await VideoProtocols.getVideoFileFromDownloads(
+          videoID: _videoModel.id,
+        );
+
+        setState(() {
+          _videoFile = _file;
+        });
 
         await _triggerLoading(setTo: false);
       });
@@ -79,7 +85,6 @@ class _TranslatorPageState extends State<TranslatorPage> {
     }
     super.didChangeDependencies();
   }
-   */
   // --------------------
   @override
   void dispose() {
@@ -110,8 +115,8 @@ class _TranslatorPageState extends State<TranslatorPage> {
   /// TESTED : WORKS PERFECT
   Future<void> _processVideo() async {
 
-        /// START LOADING
-    _setLoading(setTo: true);
+    /// START LOADING
+    await _triggerLoading(setTo: true);
 
     /// 1 - SEPARATE
     await _separateVideoFromAudio();
@@ -129,7 +134,7 @@ class _TranslatorPageState extends State<TranslatorPage> {
     await _getCombinedVideo();
 
     /// END LOADING
-    _setLoading(setTo: false);
+    await _triggerLoading(setTo: false);
 
   }
   // --------------------
@@ -138,7 +143,6 @@ class _TranslatorPageState extends State<TranslatorPage> {
 
     /// SET LOADING AND PROGRESS
     setState(() {
-      _loading = true;
       _progress = _progress.copyWith(
         separating: ProgressStatus.processing,
       );
@@ -154,6 +158,7 @@ class _TranslatorPageState extends State<TranslatorPage> {
       )
     );
 
+    await _triggerLoading(setTo: false);
   }
   // --------------------
   /// TASK : WRITE ME
@@ -161,7 +166,6 @@ class _TranslatorPageState extends State<TranslatorPage> {
 
     /// SET LOADING AND PROGRESS
     setState(() {
-      _loading = true;
       _progress = _progress.copyWith(
         getTranscript: ProgressStatus.processing,
       );
@@ -184,7 +188,6 @@ class _TranslatorPageState extends State<TranslatorPage> {
 
     /// SET LOADING AND PROGRESS
     setState(() {
-      _loading = true;
       _progress = _progress.copyWith(
         translation: ProgressStatus.processing,
       );
@@ -207,7 +210,6 @@ class _TranslatorPageState extends State<TranslatorPage> {
 
     /// SET LOADING AND PROGRESS
     setState(() {
-      _loading = true;
       _progress = _progress.copyWith(
         voiceGenerated: ProgressStatus.processing,
       );
@@ -230,7 +232,6 @@ class _TranslatorPageState extends State<TranslatorPage> {
 
     /// SET LOADING AND PROGRESS
     setState(() {
-      _loading = true;
       _progress = _progress.copyWith(
         combined: ProgressStatus.processing,
       );
@@ -248,8 +249,9 @@ class _TranslatorPageState extends State<TranslatorPage> {
 
   }
   // --------------------
+  /*
   /// TESTED : WORKS PERFECT
-  Future<void> _onAddVideo() async {
+  Future<void> _onPickVideoFromGallery() async {
 
     setState(() {
       _videoFile = null;
@@ -264,6 +266,7 @@ class _TranslatorPageState extends State<TranslatorPage> {
     }
 
   }
+   */
   // --------------------------------------------------------------------------
   @override
   Widget build(BuildContext context) {
@@ -274,11 +277,10 @@ class _TranslatorPageState extends State<TranslatorPage> {
         children: <Widget>[
 
           /// VIDEO
-          VideoCard(
-            headline: 'New Video',
-            loading: _loading,
+          SuperVideoPlayer(
+            autoPlay: true,
+            width: Bubble.bubbleWidth(context: context),
             file: _videoFile,
-            onAddVideo: _onAddVideo
           ),
 
           Align(

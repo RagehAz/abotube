@@ -22,6 +22,7 @@ class DraftVideoCard extends StatefulWidget {
     @required this.number,
     @required this.onDeleteVideo,
     @required this.onRedownloadVideo,
+    @required this.onTranslate,
     Key key
   }) : super(key: key);
   // --------------------------------------------------------------------------
@@ -29,6 +30,7 @@ class DraftVideoCard extends StatefulWidget {
   final String number;
   final Function onDeleteVideo;
   final Function onRedownloadVideo;
+  final Function onTranslate;
   // --------------------------------------------------------------------------
   @override
   State<DraftVideoCard> createState() => _DraftVideoCardState();
@@ -122,6 +124,24 @@ class _DraftVideoCardState extends State<DraftVideoCard> {
         child: Column(
           children: <Widget>[
 
+            /// TRANSLATE
+            BottomDialog.wideButton(
+              context: context,
+              text: 'TRANSLATE',
+              icon: Iconz.language,
+              color: Colorz.white10,
+              isDisabled: _file == null,
+              onTap: () async {
+
+                await widget.onTranslate();
+                await Nav.goBack(context: context);
+
+              }
+            ),
+
+            /// SPACER
+            const SizedBox(height: 5),
+
             /// RE DOWNLOAD
             BottomDialog.wideButton(
               context: context,
@@ -146,10 +166,8 @@ class _DraftVideoCardState extends State<DraftVideoCard> {
               icon: Iconz.xSmall,
               color: AboTubeTheme.youtubeColor,
               onTap: () async {
-
                 await widget.onDeleteVideo();
                 await Nav.goBack(context: context);
-
               }
             ),
 
@@ -203,6 +221,11 @@ class _DraftVideoCardState extends State<DraftVideoCard> {
           // autoPlay: false,
         ),
 
+        const SizedBox(
+          width: 5,
+          height: 5,
+        ),
+
         /// TITLE
         VideoInfoLine(
           width: _clearWidth,
@@ -224,7 +247,14 @@ class _DraftVideoCardState extends State<DraftVideoCard> {
           text: _isDownloadedText,
         ),
 
-        /// IS DOWNLOADED
+        /// IS TRANSLATED
+        VideoInfoLine(
+          width: _clearWidth,
+          title: 'is Translated ?',
+          text: widget.videoModel?.isTranslated?? false ? 'YES' : 'NO',
+        ),
+
+        /// FILE PATH
         VideoInfoLine(
           width: _clearWidth,
           title: 'File path',

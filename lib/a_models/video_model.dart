@@ -13,6 +13,7 @@ class VideoModel {
     @required this.url,
     @required this.captions,
     @required this.createdAt,
+    @required this.isTranslated,
 });
   // -----------------------------------------------------------------------------
   final String id;
@@ -20,6 +21,7 @@ class VideoModel {
   final String url;
   final List<CaptionModel> captions;
   final DateTime createdAt;
+  final bool isTranslated;
   // -----------------------------------------------------------------------------
 
   /// CYPHERS
@@ -35,6 +37,7 @@ class VideoModel {
       'url': url,
       'captions': CaptionModel.cipherCaptions(captions),
       'createdAt': Timers.cipherTime(time: createdAt, toJSON: toJSON),
+      'isTranslated': isTranslated,
     };
   }
 
@@ -58,6 +61,7 @@ class VideoModel {
           time: map['createdAt'],
           fromJSON: fromJSON,
         ),
+        isTranslated: map['isTranslated'],
       );
     }
 

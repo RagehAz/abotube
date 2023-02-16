@@ -78,6 +78,7 @@ class VideoProtocols {
         title: metaData.title,
         captions: const [],
         createdAt: DateTime.now(),
+        isTranslated: false,
       );
 
       /// INSERT VIDEO MODEL INTO LDB
@@ -165,6 +166,25 @@ class VideoProtocols {
 
     return _output;
   }
+  // --------------------
+  /// TASK : TEST ME
+  static Future<File> getVideoFileFromDownloads({
+    @required String videoID,
+  }) async {
+
+    final String _path = await getDownloadedVideoPath(
+      videoID: videoID,
+    );
+
+    if (_path == null){
+      return null;
+    }
+
+    else {
+      return File(_path);
+    }
+
+  }
   // --------------------------------------------------------------------------
 
   /// RENOVATE
@@ -176,7 +196,7 @@ class VideoProtocols {
   /// WIPE
 
   // --------------------
-  /// TASK : TEST ME
+  /// TESTED : WORKS PERFECT
   static Future<void> wipeVideo({
     @required String videoID,
   }) async {
@@ -193,7 +213,7 @@ class VideoProtocols {
 
   }
   // --------------------
-  /// TASK : TEST ME
+  /// TESTED : WORKS PERFECT
   static Future<void> deleteVideoFileFromDeviceDownloads({
     @required String videoID,
   }) async {
