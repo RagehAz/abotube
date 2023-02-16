@@ -202,7 +202,7 @@ class _TranslatorPageState extends State<TranslatorPage> {
       );
     });
 
-    final String _transcription = await YouTubeCaptionProtocols.readCheckSubTranscription(
+    final String _transcription = await YouTubeCaptionProtocols.readCaptionsByGoogleAPI(
       videoID: _videoModel?.id,
       langCode: _langCode,
     );
@@ -299,7 +299,7 @@ class _TranslatorPageState extends State<TranslatorPage> {
 
   }
   // --------------------
-  /// TESTED : WORKS PERECT
+  /// TESTED : WORKS PERFECT
   Future<void> _onReset() async {
 
     _setProgress(

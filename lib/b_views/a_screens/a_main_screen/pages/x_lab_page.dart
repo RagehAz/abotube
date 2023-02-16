@@ -18,7 +18,6 @@ import 'package:extension_google_sign_in_as_googleapis_auth/extension_google_sig
 import 'package:filers/filers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_youtube_downloader/flutter_youtube_downloader.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/texttospeech/v1.dart' as tts;
 import 'package:googleapis/youtube/v3.dart' as yt;
@@ -45,34 +44,34 @@ class LabPage extends StatelessWidget {
 
           const DotSeparator(),
 
-        /// GO TO MP4 PLAYER
-        LabButton(
-          text: 'Go to MP4 Player',
-          icon: Iconz.play,
-          worksPerfect: true,
-          onTap: () => Nav.goToNewScreen(
-              context: context,
-              screen: const VideoPlayerScreen(
-                url:  'https://rr3---sn-uxaxjvhxbt2u-j5pl6.googlevideo.com/videoplay'
-                      'back?expire=1676584357&ei=RVHuY-C1Boyr1waFmIToCw&ip=156.213.10'
-                      '6.139&id=o-AJ8QEaXC7B85O6cA9lXPOhHZpB46HH524SyQa8ToHd4l&itag=1'
-                      '8&source=youtube&requiressl=yes&mh=qE&mm=31%2C29&mn=sn-uxaxjvh'
-                      'xbt2u-j5pl6%2Csn-25ge7nsd&ms=au%2Crdu&mv=m&mvi=3&pl=18&initcwn'
-                      'dbps=797500&vprv=1&mime=video%2Fmp4&ns=Pr44Hz3gWErqAJjrl6vvm3IL'
-                      '&gir=yes&clen=3247990&ratebypass=yes&dur=81.269&lmt=167625433249'
-                      '6294&mt=1676562323&fvip=2&fexp=24007246&c=WEB&txp=5538434&n=ZjxiY'
-                      '7ZTPAlHhZI&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequi'
-                      'ressl%2Cvprv%2Cmime%2Cns%2Cgir%2Cclen%2Cratebypass%2Cdur%2Clmt&si'
-                      'g=AOq0QJ8wRQIhAMht-jvTeMtRLeG8iG3Y6HofKInkpZHnQ0ZwAm4nMY_jAiAy1wKm'
-                      'EGVML1lfOq2eisKdS_4QuzqorISfjXYBwlfIsw%3D%3D&lsparams=mh%2Cmm%2Cm'
-                      'n%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRQIgN7kZNCqgHvn'
-                      'a0ti2lNSTtaf6wz6QT37DNwkEXpkNUH4CIQCEVeoo0nmetAngrtAjtukC71zjCrAV'
-                      'IVnTkKhkI-QHNw%3D%3D',
-              )
+          /// GO TO MP4 PLAYER
+          LabButton(
+            text: 'Go to MP4 Player',
+            icon: Iconz.play,
+            worksPerfect: true,
+            onTap: () => Nav.goToNewScreen(
+                context: context,
+                screen: const VideoPlayerScreen(
+                  url:  'https://rr3---sn-uxaxjvhxbt2u-j5pl6.googlevideo.com/videoplay'
+                        'back?expire=1676584357&ei=RVHuY-C1Boyr1waFmIToCw&ip=156.213.10'
+                        '6.139&id=o-AJ8QEaXC7B85O6cA9lXPOhHZpB46HH524SyQa8ToHd4l&itag=1'
+                        '8&source=youtube&requiressl=yes&mh=qE&mm=31%2C29&mn=sn-uxaxjvh'
+                        'xbt2u-j5pl6%2Csn-25ge7nsd&ms=au%2Crdu&mv=m&mvi=3&pl=18&initcwn'
+                        'dbps=797500&vprv=1&mime=video%2Fmp4&ns=Pr44Hz3gWErqAJjrl6vvm3IL'
+                        '&gir=yes&clen=3247990&ratebypass=yes&dur=81.269&lmt=167625433249'
+                        '6294&mt=1676562323&fvip=2&fexp=24007246&c=WEB&txp=5538434&n=ZjxiY'
+                        '7ZTPAlHhZI&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequi'
+                        'ressl%2Cvprv%2Cmime%2Cns%2Cgir%2Cclen%2Cratebypass%2Cdur%2Clmt&si'
+                        'g=AOq0QJ8wRQIhAMht-jvTeMtRLeG8iG3Y6HofKInkpZHnQ0ZwAm4nMY_jAiAy1wKm'
+                        'EGVML1lfOq2eisKdS_4QuzqorISfjXYBwlfIsw%3D%3D&lsparams=mh%2Cmm%2Cm'
+                        'n%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRQIgN7kZNCqgHvn'
+                        'a0ti2lNSTtaf6wz6QT37DNwkEXpkNUH4CIQCEVeoo0nmetAngrtAjtukC71zjCrAV'
+                        'IVnTkKhkI-QHNw%3D%3D',
+                )
+            ),
           ),
-        ),
 
-        /// GO TO YOUTUBE PLAYER
+          /// GO TO YOUTUBE PLAYER
           LabButton(
             worksPerfect: true,
             text: 'Go to Youtube player',
@@ -84,6 +83,29 @@ class LabPage extends StatelessWidget {
               ),
             ),
           ),
+
+          /// PICK VIDEO FROM GALLERY
+          LabButton(
+            worksPerfect: true,
+            text: 'Pick video from Gallery',
+            icon: Iconz.fingerTap,
+            onTap: () async {
+
+              final File _file = await VideoProtocols.pickGalleryVideo();
+
+              if (_file != null) {
+
+                await Nav.goToNewScreen(
+                  context: context,
+                  screen: VideoPlayerScreen(
+                    file: _file,
+                  ),
+                );
+              }
+
+              },
+          ),
+
 
           const DotSeparator(),
 
@@ -279,7 +301,7 @@ class LabPage extends StatelessWidget {
 
               final String _videoID = VideoModel.extractVideoIDFromYoutubeURL(link);
 
-              final String _transcription = await YouTubeCaptionProtocols.readCheckSubTranscription(
+              final String _transcription = await YouTubeCaptionProtocols.readCaptionsByCheckSub(
                 videoID: _videoID,
                 langCode: 'ar',
               );
@@ -400,73 +422,7 @@ class LabPage extends StatelessWidget {
 
           const DotSeparator(),
 
-          /// EXTRACT YOUTUBE VIDEO
-          LabButton(
-            worksPerfect: true,
-            text: 'EXTRACT youtube Video and open viewer',
-            icon: Iconz.comYoutube,
-            onTap: () async {
-              // ignore: constant_identifier_names
-              const String youTube_link = 'https://www.youtube.com/watch?v=WrK_Vnl3S-0';
-              String link;
-
-              try {
-                link = await FlutterYoutubeDownloader.extractYoutubeLink(
-                    youTube_link, 18);
-
-                if (link != null) {
-                  await Nav.goToNewScreen(
-                    context: context,
-                    screen: VideoPlayerScreen(
-                      url: link,
-                    ),
-                  );
-                }
-              } on PlatformException {
-                link = 'Failed to Extract Youtube Video Link.';
-              }
-
-              blog('link : $link');
-            },
-          ),
-
-          /// DOWNLOAD YOUTUBE VIDEO
-          LabButton(
-            worksPerfect: true,
-            text: 'Download youtube Video to device',
-            icon: Iconz.arrowDown,
-            onTap: () async {
-              VideoProtocols.downloadYoutubeVideo(
-                url: 'https://m.youtube.com/watch?v=dAHqcEnPIXw',
-              );
-            },
-          ),
-
-          const DotSeparator(),
-
-          /// PICK VIDEO FROM GALLERY
-          LabButton(
-            worksPerfect: true,
-            text: 'Pick video from Gallery',
-            icon: Iconz.fingerTap,
-            onTap: () async {
-
-              final File _file = await VideoProtocols.pickGalleryVideo();
-
-              if (_file != null) {
-
-                await Nav.goToNewScreen(
-                  context: context,
-                  screen: VideoPlayerScreen(
-                    file: _file,
-                  ),
-                );
-              }
-
-              },
-          ),
-
-          /// PICK VIDEO FROM GALLERY
+          /// SEPARATE AUDIO FROM VIDEO
           LabButton(
             worksPerfect: false,
             text: 'Separate Video from audio',
@@ -505,19 +461,6 @@ class LabPage extends StatelessWidget {
           ),
 
           const DotSeparator(),
-
-          /// CHECK FILE EXISTS IN DOWNLOADS
-          LabButton(
-            worksPerfect: false,
-            text: 'Check gallery file exists',
-            icon: Iconz.info,
-            onTap: () async {
-              final bool  exists = await VideoProtocols.checkVideoIsDownloaded(
-                videoID: null,
-              );
-              blog('exists : $exists');
-              },
-          ),
 
           // /// TEXT FIELD
           // Form(

@@ -1,10 +1,13 @@
 // ignore_for_file: non_constant_identifier_names
 import 'dart:convert';
 
+import 'package:abotube/services/standards.dart';
 import 'package:filers/filers.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:rest/rest.dart';
+import 'package:googleapis_auth/auth_io.dart';
+import 'package:googleapis/youtube/v3.dart';
 
 class YouTubeCaptionProtocols {
   // -----------------------------------------------------------------------------
@@ -13,17 +16,60 @@ class YouTubeCaptionProtocols {
 
   // -----------------------------------------------------------------------------
 
-  /// TEXT CONVERTERS
+  /// GOOGLE API CAPTIONS
 
   // --------------------
   /// TESTED : WORKS PERFECT
-  static Future<String> readCheckSubTranscription({
+  static Future<String> readCaptionsByGoogleAPI({
     @required String videoID,
     @required String langCode,
   }) async {
     String _output;
 
-    blog('readTranscription : START : videoID : $videoID : langCode : $langCode');
+    blog('readCaptionsByGoogleAPI : START : videoID : $videoID : langCode : $langCode');
+
+    if (videoID != null && langCode != null && langCode.length == 2){
+
+      /// Authenticate with the API using the provided API key.
+      final http.Client client = clientViaApiKey(
+        Standards.youtubeDataAPIAndroidKey,
+        // baseClient:
+      );
+
+      final youtube = YouTubeApi(client);
+
+      /// Make a request to the API to get the captions for the video.
+      final captions = await youtube.captions.download(
+        videoID,
+        tlang: langCode,
+        // onBehalfOf:,
+        // onBehalfOfContentOwner: ,
+        // downloadOptions: ,
+        // tfmt: ,
+      );
+
+      /// Decode the captions from the response and return the result.
+      _output = captions.stream.toString();
+
+    }
+
+    blog('readCaptionsByGoogleAPI : END');
+
+    return _output;
+  }
+  // -----------------------------------------------------------------------------
+
+  /// CHECK SUB CAPTIONS
+
+  // --------------------
+  /// TESTED : WORKS PERFECT
+  static Future<String> readCaptionsByCheckSub({
+    @required String videoID,
+    @required String langCode,
+  }) async {
+    String _output;
+
+    blog('readCaptionsByCheckSub : START : videoID : $videoID : langCode : $langCode');
 
     if (videoID != null && langCode != null && langCode.length == 2){
 
@@ -64,7 +110,7 @@ class YouTubeCaptionProtocols {
 
     }
 
-    blog('readTranscription : END');
+    blog('readCaptionsByCheckSub : END');
 
     return _output;
   }
