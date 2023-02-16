@@ -49,7 +49,7 @@ class _HomePageState extends State<HomePage> {
         final List<VideoModel> _stored = await VideoLDBOps.readAll();
 
         setState(() {
-          _videos = _stored;
+          _videos = _stored.reversed.toList();
         });
 
         await _triggerLoading(setTo: false);
@@ -93,7 +93,6 @@ class _HomePageState extends State<HomePage> {
 
     VideoProtocols.downloadYoutubeVideo(
         url: videoModel.url,
-        videoTitle: videoModel.id,
     );
 
   }

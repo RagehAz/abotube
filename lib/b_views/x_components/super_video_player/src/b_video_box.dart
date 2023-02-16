@@ -32,6 +32,13 @@ class VideoBox extends StatelessWidget {
     return _output;
   }
   // --------------------------------------------------------------------------
+    /// TESTED : WORKS PERFECT
+  static BorderRadius getCorners({
+    @required double width,
+  }) {
+    return BorderRadius.circular(width * 0.03);
+  }
+  // --------------------------------------------------------------------------
   @override
   Widget build(BuildContext context) {
 
@@ -41,7 +48,9 @@ class VideoBox extends StatelessWidget {
       force169: true,
     );
 
-    final BorderRadius _borders = BorderRadius.circular(width * 0.03);
+    final BorderRadius _borders = getCorners(
+      width: width,
+    );
 
     return Container(
       width: width,

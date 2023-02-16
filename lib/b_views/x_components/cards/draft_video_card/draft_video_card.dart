@@ -200,6 +200,7 @@ class _DraftVideoCardState extends State<DraftVideoCard> {
           url: _url,
           file: _file,
           width: _clearWidth,
+          // autoPlay: false,
         ),
 
         /// TITLE
@@ -221,6 +222,13 @@ class _DraftVideoCardState extends State<DraftVideoCard> {
           width: _clearWidth,
           title: 'is Downloaded ?',
           text: _isDownloadedText,
+        ),
+
+        /// IS DOWNLOADED
+        VideoInfoLine(
+          width: _clearWidth,
+          title: 'File path',
+          text: _file?.path,
         ),
 
         /// CAPTIONS

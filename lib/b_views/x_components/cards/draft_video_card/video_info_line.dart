@@ -38,7 +38,7 @@ class VideoInfoLine extends StatelessWidget {
 
           /// TEXT
           SuperText(
-            text: text,
+            text: text ?? '...',
             boxWidth: width,
             textHeight: 20,
             boxColor: Colorz.black255,

@@ -420,7 +420,6 @@ class LabPage extends StatelessWidget {
             onTap: () async {
               VideoProtocols.downloadYoutubeVideo(
                 url: 'https://m.youtube.com/watch?v=dAHqcEnPIXw',
-                videoTitle: 'test video',
               );
             },
           ),

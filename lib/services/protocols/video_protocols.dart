@@ -67,7 +67,6 @@ class VideoProtocols {
 
       downloadYoutubeVideo(
         url: url,
-        videoTitle: title,
         iTag: iTag,
       );
 
@@ -75,7 +74,7 @@ class VideoProtocols {
       _videoModel = VideoModel(
         id: YoutubeURLProtocols.extractVideoID(url),
         url: url,
-        title: VideoModel.fixVideoTitle(title),
+        title: title,
         captions: const [],
         createdAt: DateTime.now(),
       );
@@ -98,7 +97,6 @@ class VideoProtocols {
   /// TESTED : WORKS PERFECT
   static void downloadYoutubeVideo({
     @required String url,
-    @required String videoTitle,
     int iTag = 18, // for clearer use 22 : u may use these : (22, 137, 18);
   }) {
 
@@ -138,7 +136,7 @@ class VideoProtocols {
       final String gallery = await ExternalPath.getExternalStoragePublicDirectory(
         ExternalPath.DIRECTORY_DOWNLOADS,
       );
-      final String _path = '$gallery/$videoID.mp4';
+      final String _path = '$gallery/${videoID}mp4.mp4';
       final bool _exists = await File(_path).exists();
       blog('_path : $_path : _exists : $_exists');
       if (_exists == true){
@@ -161,7 +159,7 @@ class VideoProtocols {
         ExternalPath.DIRECTORY_DOWNLOADS,
       );
 
-      _output = '$gallery/$videoID.mp4';
+      _output = '$gallery/${videoID}mp4.mp4';
     }
 
     return _output;

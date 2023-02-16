@@ -1069,6 +1069,14 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "3.1.1"
+  youtube_metadata:
+    dependency: "direct main"
+    description:
+      name: youtube_metadata
+      sha256: f2ad59fb586ecddc8524692ca3f31ad7890ecbe064560adbfc2c9c2d071a5c93
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.0.1"
   youtube_player_flutter:
     dependency: "direct main"
     description:

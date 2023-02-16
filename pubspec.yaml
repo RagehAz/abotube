@@ -84,6 +84,7 @@ dependencies:
   space_time:
     git:
       url: https://github.com/RagehAz/space_time.git
+  youtube_metadata: ^1.0.1
 # --------------------------------------------------------------------------------
 dev_dependencies:
   flutter_test:
