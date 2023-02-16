@@ -17,6 +17,15 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.0.13"
+  animators:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "98e86abcf2c52a5f649f98eefbeb0baf567437f2"
+      url: "https://github.com/RagehAz/animators.git"
+    source: git
+    version: "0.0.1"
   archive:
     dependency: transitive
     description:
@@ -749,10 +758,10 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "3c956a386799f28539fef7f45056ccbf12acb66b"
+      resolved-ref: f643654a54ccb984d54910c22b49e0d3e2984b56
       url: "https://github.com/RagehAz/scale.git"
     source: git
-    version: "0.0.6"
+    version: "0.0.8"
   sembast:
     dependency: transitive
     description:

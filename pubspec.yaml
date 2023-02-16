@@ -33,6 +33,7 @@ dependencies:
   flutter_native_splash: ^2.2.9
   path_provider: ^2.0.12
   external_path: ^1.0.3
+  youtube_metadata: ^1.0.1
   # ---------------------------
   # MY WIDGETS
   super_image:
@@ -84,7 +85,9 @@ dependencies:
   space_time:
     git:
       url: https://github.com/RagehAz/space_time.git
-  youtube_metadata: ^1.0.1
+  animators:
+    git:
+      url: https://github.com/RagehAz/animators.git
 # --------------------------------------------------------------------------------
 dev_dependencies:
   flutter_test:

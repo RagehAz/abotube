@@ -21,7 +21,7 @@ class YouTubeCaptionProtocols {
     @required String videoID,
     @required String langCode,
   }) async {
-    String _output = '';
+    String _output;
 
     blog('readTranscription : START : videoID : $videoID : langCode : $langCode');
 
