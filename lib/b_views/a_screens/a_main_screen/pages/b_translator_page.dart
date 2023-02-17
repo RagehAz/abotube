@@ -16,7 +16,6 @@ import 'package:bubbles/bubbles.dart';
 import 'package:filers/filers.dart';
 import 'package:flutter/material.dart';
 import 'package:mapper/mapper.dart';
-import 'package:numeric/numeric.dart';
 import 'package:stringer/stringer.dart';
 import 'package:super_box/super_box.dart';
 import 'package:super_text/super_text.dart';
@@ -219,7 +218,7 @@ class _TranslatorPageState extends State<TranslatorPage> {
 
     else {
 
-      final List<CaptionModel> _captionModels = CaptionModel.convertStringToCaptions(
+      final List<CaptionModel> _captionModels = CaptionModel.convertCheckSubStringToCaptions(
           inputString: _transcription
       );
 
@@ -527,10 +526,7 @@ class CaptionLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final String _captionSecond = Numeric.formatNumberWithinDigits(
-        num: caption?.second,
-        digits: numberOfCaptions ?? 1,
-    );
+    final String _captionSecond = caption?.start?.toString();
 
     final double _clearWidth = Bubble.clearWidth(context: context);
     const double _secondWidth = 50;

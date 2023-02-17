@@ -3,18 +3,18 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
 
-  group('cipherCaptions', () {
+  group('cipherCheckSubCaptions(captions)', () {
 
     test('empty list should return empty map', () {
-      final result = CaptionModel.cipherCaptions([]);
+      final result = CaptionModel.cipherCheckSubCaptions([]);
       expect(result, {});
     });
 
     test('captions with null seconds should throw an assertion error', () {
       const captions = [
-        CaptionModel(second: 1, text: 'first caption'),
-        CaptionModel(second: null, text: 'second caption'),
-        CaptionModel(second: 3, text: 'third caption'),
+        CaptionModel(start: 1, text: 'first caption', duration: null),
+        CaptionModel(start: null, text: 'second caption', duration: null),
+        CaptionModel(start: 3, text: 'third caption', duration: null),
       ];
 
       const Map<String, dynamic> result = {
@@ -22,17 +22,17 @@ void main() {
         '3': 'third caption',
       };
 
-      expect(CaptionModel.cipherCaptions(captions), result);
+      expect(CaptionModel.cipherCheckSubCaptions(captions), result);
     });
 
     test('unique captions should be keyed by their seconds', () {
       const captions = [
-        CaptionModel(second: 1, text: 'first caption'),
-        CaptionModel(second: 2, text: 'second caption'),
-        CaptionModel(second: 3, text: 'third caption'),
+        CaptionModel(start: 1, text: 'first caption', duration: null),
+        CaptionModel(start: 2, text: 'second caption', duration: null),
+        CaptionModel(start: 3, text: 'third caption', duration: null),
       ];
 
-      final result = CaptionModel.cipherCaptions(captions);
+      final result = CaptionModel.cipherCheckSubCaptions(captions);
       expect(result.length, 3);
       expect(result['1'], 'first caption');
       expect(result['2'], 'second caption');
@@ -41,12 +41,12 @@ void main() {
 
     test('captions with duplicate seconds should only include the last caption', () {
       const captions = [
-        CaptionModel(second: 1, text: 'first caption'),
-        CaptionModel(second: 2, text: 'second caption'),
-        CaptionModel(second: 1, text: 'duplicate caption'),
+        CaptionModel(start: 1, text: 'first caption', duration: null),
+        CaptionModel(start: 2, text: 'second caption', duration: null),
+        CaptionModel(start: 1, text: 'duplicate caption', duration: null),
       ];
 
-      final result = CaptionModel.cipherCaptions(captions);
+      final result = CaptionModel.cipherCheckSubCaptions(captions);
       expect(result.length, 2);
       expect(result['1'], 'first caption');
       expect(result['2'], 'second caption');
@@ -54,10 +54,10 @@ void main() {
 
     test('captions with special characters should be included in the map', () {
       const captions = [
-        CaptionModel(second: 1, text: 'caption with [brackets]'),
-        CaptionModel(second: 2, text: 'caption with "quotes"'),
+        CaptionModel(start: 1, text: 'caption with [brackets]', duration: null),
+        CaptionModel(start: 2, text: 'caption with "quotes"', duration: null),
       ];
-      final result = CaptionModel.cipherCaptions(captions);
+      final result = CaptionModel.cipherCheckSubCaptions(captions);
       expect(result.length, 2);
       expect(result['1'], 'caption with [brackets]');
       expect(result['2'], 'caption with "quotes"');
@@ -65,19 +65,20 @@ void main() {
 
   });
 
-  group('decipherCaptions', () {
+  group('decipherChecksubCaptions(map)', () {
 
     test('empty map should return empty list', () {
-    final result = CaptionModel.decipherCaptions({});
+    final result = CaptionModel.decipherChecksubCaptions({});
     expect(result, []);
   });
 
     test('map with null value should return empty list', () {
-      final result = CaptionModel.decipherCaptions({'1': null});
+      final result = CaptionModel.decipherChecksubCaptions({'1': null});
       expect(result, [
         const CaptionModel(
-          second: 1,
+          start: 1,
           text: null,
+          duration: null,
         ),
       ]);
     });
@@ -89,33 +90,34 @@ void main() {
       };
 
       const CaptionModel _cap1 = CaptionModel(
-          second: 1,
-          text: 'first caption',
+        start: 1,
+        text: 'first caption',
+        duration: null,
       );
 
-      expect(CaptionModel.decipherCaptions(map), [_cap1]);
+      expect(CaptionModel.decipherChecksubCaptions(map), [_cap1]);
 
     });
 
     test('unique captions should be sorted by their seconds', () {
       final map = {'2': 'second caption', '1': 'first caption', '3': 'third caption'};
-      final result = CaptionModel.decipherCaptions(map);
+      final result = CaptionModel.decipherChecksubCaptions(map);
       expect(result.length, 3);
-      expect(result[0].second, 1);
+      expect(result[0].start, 1);
       expect(result[0].text, 'first caption');
-      expect(result[1].second, 2);
+      expect(result[1].start, 2);
       expect(result[1].text, 'second caption');
-      expect(result[2].second, 3);
+      expect(result[2].start, 3);
       expect(result[2].text, 'third caption');
     });
 
     test('captions with special characters should be included in the list', () {
       final map = {'1': 'caption with [brackets]', '2': 'caption with "quotes"'};
-      final result = CaptionModel.decipherCaptions(map);
+      final result = CaptionModel.decipherChecksubCaptions(map);
       expect(result.length, 2);
-      expect(result[0].second, 1);
+      expect(result[0].start, 1);
       expect(result[0].text, 'caption with [brackets]');
-      expect(result[1].second, 2);
+      expect(result[1].start, 2);
       expect(result[1].text, 'caption with "quotes"');
     });
 
@@ -131,10 +133,10 @@ void main() {
     });
 
     test('different-sized lists should not be identical', () {
-      const captions1 = [CaptionModel(text: 'first', second: 1)];
+      const captions1 = [CaptionModel(text: 'first', start: 1, duration: null)];
       const captions2 = [
-        CaptionModel(text: 'first', second: 1),
-        CaptionModel(text: 'second', second: 2),
+        CaptionModel(text: 'first', start: 1, duration: null),
+        CaptionModel(text: 'second', start: 2, duration: null),
       ];
       final result = CaptionModel.checkCaptionsListsAreIdentical(
         captions1: captions1,
@@ -145,12 +147,12 @@ void main() {
 
     test('same lists with different order should be identical', () {
       const captions1 = [
-        CaptionModel(text: 'first', second: 1),
-        CaptionModel(text: 'second', second: 2),
+        CaptionModel(text: 'first', start: 1, duration: null),
+        CaptionModel(text: 'second', start: 2, duration: null),
       ];
       const captions2 = [
-        CaptionModel(text: 'second', second: 2),
-        CaptionModel(text: 'first', second: 1),
+        CaptionModel(text: 'second', start: 2, duration: null),
+        CaptionModel(text: 'first', start: 1, duration: null),
       ];
       final result = CaptionModel.checkCaptionsListsAreIdentical(
         captions1: captions1,
@@ -161,12 +163,12 @@ void main() {
 
     test('lists with different captions should not be identical', () {
       const captions1 = [
-        CaptionModel(text: 'first', second: 1),
-        CaptionModel(text: 'second', second: 2),
+        CaptionModel(text: 'first', start: 1, duration: null),
+        CaptionModel(text: 'second', start: 2, duration: null),
       ];
       const captions2 = [
-        CaptionModel(text: 'first', second: 1),
-        CaptionModel(text: 'different', second: 2),
+        CaptionModel(text: 'first', start: 1, duration: null),
+        CaptionModel(text: 'different', start: 2, duration: null),
       ];
       final result = CaptionModel.checkCaptionsListsAreIdentical(
         captions1: captions1,
@@ -177,12 +179,12 @@ void main() {
 
     test('identical lists with null value should be identical', () {
       const captions1 = [
-        CaptionModel(text: 'first', second: 1),
-        CaptionModel(text: null, second: 2)
+        CaptionModel(text: 'first', start: 1, duration: null),
+        CaptionModel(text: null, start: 2, duration: null),
       ];
       const captions2 = [
-        CaptionModel(text: 'first', second: 1),
-        CaptionModel(text: null, second: 2)
+        CaptionModel(text: 'first', start: 1, duration: null),
+        CaptionModel(text: null, start: 2, duration: null),
       ];
       final result = CaptionModel.checkCaptionsListsAreIdentical(
         captions1: captions1,
@@ -199,21 +201,21 @@ void main() {
     });
 
     test('Returns the same list for a single item list', () {
-      const input = [CaptionModel(second: 0, text: 'test')];
+      const input = [CaptionModel(start: 0, text: 'test', duration: null)];
       final output = CaptionModel.sortCaptionsBySecond(input);
       expect(output, equals(input));
     });
 
     test('Sorts the list by second', () {
       const input = [
-        CaptionModel(second: 1, text: 'test1'),
-        CaptionModel(second: 3, text: 'test3'),
-        CaptionModel(second: 2, text: 'test2')
+        CaptionModel(start: 1, text: 'test1', duration: null),
+        CaptionModel(start: 3, text: 'test3', duration: null),
+        CaptionModel(start: 2, text: 'test2', duration: null),
       ];
       const expectedOutput = [
-        CaptionModel(second: 1, text: 'test1'),
-        CaptionModel(second: 2, text: 'test2'),
-        CaptionModel(second: 3, text: 'test3')
+        CaptionModel(start: 1, text: 'test1', duration: null),
+        CaptionModel(start: 2, text: 'test2', duration: null),
+        CaptionModel(start: 3, text: 'test3', duration: null),
       ];
       final output = CaptionModel.sortCaptionsBySecond(input);
       expect(output, equals(expectedOutput));
@@ -221,9 +223,9 @@ void main() {
 
     test('Does not modify the original list', () {
       const input = [
-        CaptionModel(second: 1, text: 'test1'),
-        CaptionModel(second: 3, text: 'test3'),
-        CaptionModel(second: 2, text: 'test2')
+        CaptionModel(start: 1, text: 'test1', duration: null),
+        CaptionModel(start: 3, text: 'test3', duration: null),
+        CaptionModel(start: 2, text: 'test2', duration: null),
       ];
       final originalInput = List<CaptionModel>.from(input);
       CaptionModel.sortCaptionsBySecond(input);
@@ -239,20 +241,20 @@ void main() {
     });
 
     test('Returns the same list for a single item list without null second', () {
-      const input = [CaptionModel(second: 0, text: 'test')];
+      const input = [CaptionModel(start: 0, text: 'test', duration: null)];
       final output = CaptionModel.cleanNullSeconds(input);
       expect(output, equals(input));
     });
 
     test('Removes items with null seconds', () {
       const input = [
-        CaptionModel(second: 1, text: 'test1'),
-        CaptionModel(second: null, text: 'test2'),
-        CaptionModel(second: 3, text: 'test3')
+        CaptionModel(start: 1, text: 'test1', duration: null),
+        CaptionModel(start: null, text: 'test2', duration: null),
+        CaptionModel(start: 3, text: 'test3', duration: null),
       ];
       const expectedOutput = [
-        CaptionModel(second: 1, text: 'test1'),
-        CaptionModel(second: 3, text: 'test3')
+        CaptionModel(start: 1, text: 'test1', duration: null),
+        CaptionModel(start: 3, text: 'test3', duration: null),
       ];
       final output = CaptionModel.cleanNullSeconds(input);
       expect(output, equals(expectedOutput));
@@ -260,9 +262,9 @@ void main() {
 
     test('Does not modify the original list', () {
       const input = [
-        CaptionModel(second: 1, text: 'test1'),
-        CaptionModel(second: null, text: 'test2'),
-        CaptionModel(second: 3, text: 'test3')
+        CaptionModel(start: 1, text: 'test1', duration: null),
+        CaptionModel(start: null, text: 'test2', duration: null),
+        CaptionModel(start: 3, text: 'test3', duration: null),
       ];
       final originalInput = List<CaptionModel>.from(input);
       CaptionModel.cleanNullSeconds(input);
@@ -373,10 +375,10 @@ void main() {
     test('single line caption', () {
       const String inputString = '0:01\nHello, world!';
       const List<CaptionModel> expectedOutput = [
-        CaptionModel(text: 'Hello, world!', second: 1),
+        CaptionModel(text: 'Hello, world!', start: 1, duration: null),
       ];
 
-      final List<CaptionModel> actualOutput = CaptionModel.convertStringToCaptions(
+      final List<CaptionModel> actualOutput = CaptionModel.convertCheckSubStringToCaptions(
           inputString: inputString,
       );
 
@@ -386,11 +388,11 @@ void main() {
     test('multiple line captions', () {
       const String inputString = '0:01\nHello, world!\n0:02\nThis is a test.';
       const List<CaptionModel> expectedOutput = [
-        CaptionModel(text: 'Hello, world!', second: 1),
-        CaptionModel(text: 'This is a test.', second: 2),
+        CaptionModel(text: 'Hello, world!', start: 1, duration: null),
+        CaptionModel(text: 'This is a test.', start: 2, duration: null),
       ];
 
-      final List<CaptionModel> actualOutput = CaptionModel.convertStringToCaptions(
+      final List<CaptionModel> actualOutput = CaptionModel.convertCheckSubStringToCaptions(
         inputString: inputString,
       );
 
@@ -400,10 +402,10 @@ void main() {
     test('empty line captions', () {
       const String inputString = '0:01\n\n0:02\nThis is a test.';
       const List<CaptionModel> expectedOutput = [
-        CaptionModel(text: 'This is a test.', second: 2),
+        CaptionModel(text: 'This is a test.', start: 2, duration: null),
       ];
 
-      final List<CaptionModel> actualOutput = CaptionModel.convertStringToCaptions(
+      final List<CaptionModel> actualOutput = CaptionModel.convertCheckSubStringToCaptions(
         inputString: inputString,
       );
 
@@ -413,11 +415,11 @@ void main() {
     test('mixed line captions', () {
       const String inputString = '0:01\nHello, world!\n\n0:02\nThis is a test.\n0:03\n';
       const List<CaptionModel> expectedOutput = [
-        CaptionModel(text: 'Hello, world!', second: 1),
-        CaptionModel(text: 'This is a test.', second: 2),
+        CaptionModel(text: 'Hello, world!', start: 1, duration: null),
+        CaptionModel(text: 'This is a test.', start: 2, duration: null),
       ];
 
-      final List<CaptionModel> actualOutput = CaptionModel.convertStringToCaptions(
+      final List<CaptionModel> actualOutput = CaptionModel.convertCheckSubStringToCaptions(
         inputString: inputString,
       );
 
@@ -427,11 +429,11 @@ void main() {
     test('invalid format caption', () {
       const String inputString = '0:01\nHello, world!\n0:0\nThis is a test.';
       const List<CaptionModel> expectedOutput = [
-        CaptionModel(text: 'Hello, world!', second: 1),
-        CaptionModel(text: 'This is a test.', second: 0),
+        CaptionModel(text: 'Hello, world!', start: 1, duration:  null),
+        CaptionModel(text: 'This is a test.', start: 0, duration:  null),
       ];
 
-      final List<CaptionModel> actualOutput = CaptionModel.convertStringToCaptions(
+      final List<CaptionModel> actualOutput = CaptionModel.convertCheckSubStringToCaptions(
         inputString: inputString,
       );
 

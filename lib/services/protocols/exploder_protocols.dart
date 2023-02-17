@@ -1,9 +1,12 @@
-
-
+import 'package:abotube/a_models/caption_model.dart';
 import 'package:filers/filers.dart';
 import 'package:flutter/material.dart';
 import 'package:mapper/mapper.dart';
+import 'package:rest/rest.dart';
+import 'package:stringer/stringer.dart';
+import 'package:xml/xml.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
+import 'package:http/http.dart' as http;
 
 class ExploderProtocols {
   // --------------------
@@ -83,9 +86,89 @@ class ExploderProtocols {
 
     return _track;
   }
+  // --------------------
+  /// TESTED : WORKS PERFECT
+  static Future<List<Map<String, dynamic>>> readCaptionsTrack({
+    @required List<ClosedCaptionTrackInfo> infos,
+  }) async {
+    List<Map<String, dynamic>> _output = [];
+
+    if (Mapper.checkCanLoopList(infos) == true){
+
+      final http.Response _response = await Rest.get(
+        rawLink: infos.first.url.toString(),
+        invoker: 'readCaptionsTrack',
+      );
+
+      final List<Map<String, dynamic>> _maps = ExploderProtocols.mapExploderTrackXML(
+        xmlString: _response?.body,
+      );
+
+      if (Mapper.checkCanLoopList(_maps) == true){
+        _output = _maps;
+      }
+
+    }
+
+    return _output;
+  }
+  // --------------------
+  ///
+  static Future<List<CaptionModel>> readVideoCaptions({
+    @required String videoID,
+    @required String langCode,
+  }) async {
+
+    final List<ClosedCaptionTrackInfo> trackInfos = await ExploderProtocols.readClosedCaptionTrackInfos(
+      landCode: langCode,
+      videoID: videoID,
+    );
+
+    final List<Map<String, dynamic>> _maps = await ExploderProtocols.readCaptionsTrack(
+      infos: trackInfos,
+    );
+
+    return CaptionModel.decipherCaptions(
+      maps: _maps,
+    );
+  }
+  // -----------------------------------------------------------------------------
+
+  /// MAPPING
+
+  // --------------------
+  /// TESTED : WORKS PERFECT
+  static List<Map<String, dynamic>> mapExploderTrackXML({
+    @required String xmlString,
+  }) {
+    List<Map<String, dynamic>> _output = [];
+
+    if (TextCheck.isEmpty(xmlString) == false) {
+
+      tryAndCatch(
+          functions: (){
+
+          final XmlDocument document = XmlDocument.parse(xmlString);
+
+          _output = document
+              .findAllElements('text')
+              .map((node) => {
+                    'start': node.getAttribute('start'),
+                    'dur': node.getAttribute('dur'),
+                    'text': node.text,
+                  }).toList();
+
+        },
+      );
+
+    }
+
+    return _output;
+  }
   // -----------------------------------------------------------------------------
 
   /// BLOGGING
+
   // --------------------
   /// TESTED : WORKS PERFECT
   static void blogClosedCaptionTrackInfo({

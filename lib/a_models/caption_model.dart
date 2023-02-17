@@ -10,18 +10,104 @@ class CaptionModel {
   // -----------------------------------------------------------------------------
   const CaptionModel({
     @required this.text,
-    @required this.second,
+    @required this.start,
+    @required this.duration,
   });
   // --------------------
   final String text;
-  final int second;
+  final double start;
+  final double duration;
   // -----------------------------------------------------------------------------
 
-  /// CYPHERS
+  /// DEFAULT CYPHERS
 
   // --------------------
+  ///
+  static Map<String, dynamic> cipherCaption({
+    @required CaptionModel caption,
+  }){
+    Map<String, dynamic> _output;
+
+    if (caption != null){
+
+      _output = {
+        'text': caption.text,
+        'start': caption.start,
+        'duration': caption.duration,
+      };
+
+    }
+
+    return _output;
+  }
+  // --------------------
+  ///
+  static CaptionModel decipherCaption({
+    @required Map<String, dynamic> map,
+  }){
+    CaptionModel _output;
+
+    if (map != null){
+
+      _output = CaptionModel(
+        text: map['text'],
+        start: map['start'],
+        duration: map['duration'],
+      );
+
+    }
+
+    return _output;
+  }
+  // --------------------
+  ///
+  static List<Map<String, dynamic>> cipherCaptions({
+    @required List<CaptionModel> captions,
+  }) {
+    final List<Map<String, dynamic>> _output = [];
+
+    if (Mapper.checkCanLoopList(captions) == true){
+
+      for (final CaptionModel caption in captions){
+
+        final Map<String, dynamic> _map = cipherCaption(
+            caption: caption
+        );
+
+        _output.add(_map);
+
+      }
+
+    }
+
+    return _output;
+  }
+  // --------------------
+  ///
+  static List<CaptionModel> decipherCaptions({
+    @required List<Map<String, dynamic>> maps,
+  }) {
+    final List<CaptionModel> _output = <CaptionModel>[];
+
+    if (Mapper.checkCanLoopList(_output) == true) {
+      for (final Map<String, dynamic> map in maps) {
+        final CaptionModel _caption = decipherCaption(
+          map: map,
+        );
+        _output.add(_caption);
+      }
+    }
+
+    return _output;
+  }
+  // -----------------------------------------------------------------------------
+
+  /// CHECKSUB CYPHERS
+
+  // --------------------
+  ///
   /// AI TESTED
-  static Map<String, dynamic> cipherCaptions(List<CaptionModel> captions){
+  static Map<String, dynamic> cipherCheckSubCaptions(List<CaptionModel> captions){
     Map<String, dynamic> _output = {};
 
     if (Mapper.checkCanLoopList(captions) == true){
@@ -30,11 +116,11 @@ class CaptionModel {
 
       for (final CaptionModel caption in sortCaptionsBySecond(_caps)){
 
-        assert(caption.second != null, 'second can not be null');
+        assert(caption.start != null, 'second can not be null');
 
         _output = Mapper.insertPairInMap(
           map: _output,
-          key: caption.second.toString(),
+          key: caption.start.toString(),
           value: caption.text,
           // overrideExisting: false,
         );
@@ -47,7 +133,7 @@ class CaptionModel {
   }
   // --------------------
   /// AI TESTED
-  static List<CaptionModel> decipherCaptions(Map<String, dynamic> map){
+  static List<CaptionModel> decipherChecksubCaptions(Map<String, dynamic> map){
     final List<CaptionModel> _output = <CaptionModel>[];
 
     if (map != null) {
@@ -58,13 +144,14 @@ class CaptionModel {
 
         for (final String key in _keys) {
 
-          final int _second = Numeric.transformStringToInt(key);
+          final double _second = Numeric.transformStringToDouble(key);
 
           if (_second != null){
 
             final CaptionModel _caption = CaptionModel(
-              second: _second,
+              start: _second,
               text: map[key],
+              duration: null,
             );
 
             _output.add(_caption);
@@ -84,7 +171,7 @@ class CaptionModel {
 
   // --------------------
   /// AI TESTED
-  static List<CaptionModel> convertStringToCaptions({
+  static List<CaptionModel> convertCheckSubStringToCaptions({
     @required String inputString,
   }) {
     final List<CaptionModel> captions = [];
@@ -97,14 +184,15 @@ class CaptionModel {
       for (int i = 0; i < lines.length; i++) {
         final String line = lines[i].trim();
 
-        if (checkIs_mm_i_ss_format(line)) {
+        if (checkIs_mm_i_ss_format(line) == true) {
           // If the line is in mm:ss format, convert it to seconds and set the current time.
           currentTimeInSeconds = convert_mm_i_ss_toSeconds(line);
         } else if (line.isNotEmpty) {
           // Otherwise, create a new caption model and add it to the list.
           captions.add(CaptionModel(
             text: line,
-            second: currentTimeInSeconds,
+            start: currentTimeInSeconds.toDouble(),
+            duration: null,
           ));
         }
       }
@@ -142,7 +230,7 @@ class CaptionModel {
 
       final List<CaptionModel> _captions = List<CaptionModel>.from(captions);
 
-      _captions.sort((CaptionModel a, CaptionModel b) => a.second.compareTo(b.second));
+      _captions.sort((CaptionModel a, CaptionModel b) => a.start.compareTo(b.start));
 
       _output.addAll(_captions);
 
@@ -158,7 +246,7 @@ class CaptionModel {
     if (Mapper.checkCanLoopList(captions) == true){
 
       for (final CaptionModel caption in captions){
-        if (caption.second != null){
+        if (caption.start != null){
           _output.add(caption);
         }
       }
@@ -291,8 +379,8 @@ class CaptionModel {
 
       for (final CaptionModel caption in captions){
 
-        final String _timeStamp = convertSecondsTo_mm_i_ss(caption.second);
-        blog('   -> Caption : $_timeStamp : ${caption.text}');
+        // final String _timeStamp = convertSecondsTo_mm_i_ss(caption.start);
+        blog('   -> Caption : ${caption.start} : ${caption.text}');
 
       }
 
@@ -320,7 +408,7 @@ class CaptionModel {
     else if (model1 != null && model2 != null) {
 
       if (
-          model1.second == model2.second
+          model1.start == model2.start
           &&
           model1.text == model2.text
       ) {
@@ -338,9 +426,9 @@ class CaptionModel {
     @required List<CaptionModel> captions2,
   }){
 
-    return Mapper.checkMapsAreIdentical(
-        map1: cipherCaptions(captions1),
-        map2: cipherCaptions(captions2)
+    return Mapper.checkMapsListsAreIdentical(
+        maps1: cipherCaptions(captions: captions1),
+        maps2: cipherCaptions(captions: captions2),
     );
 
   }
@@ -374,7 +462,7 @@ class CaptionModel {
   // --------------------
   @override
   int get hashCode =>
-      second.hashCode^
+      start.hashCode^
       text.hashCode;
   // -----------------------------------------------------------------------------
 }

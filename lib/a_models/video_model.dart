@@ -35,7 +35,7 @@ class VideoModel {
       'id': id,
       'title': title,
       'url': url,
-      'captions': CaptionModel.cipherCaptions(captions),
+      'captions': CaptionModel.cipherCaptions(captions: captions),
       'createdAt': Timers.cipherTime(time: createdAt, toJSON: toJSON),
       'isTranslated': isTranslated,
     };
@@ -55,7 +55,7 @@ class VideoModel {
         id: map['id'],
         title: map['title'],
         url: map['url'],
-        captions: CaptionModel.decipherCaptions(map['captions']),
+        captions: CaptionModel.decipherCaptions(maps: map['captions']),
         createdAt: Timers.decipherTime(
           time: map['createdAt'],
           fromJSON: fromJSON,
