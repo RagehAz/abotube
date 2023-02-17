@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:abotube/a_models/caption_model.dart';
 import 'package:abotube/a_models/video_model.dart';
 import 'package:abotube/b_views/a_screens/x_url_video_player_screen.dart';
 import 'package:abotube/b_views/a_screens/x_youtube_player_screen.dart';
@@ -448,25 +449,19 @@ class LabPage extends StatelessWidget {
             },
         ),
 
-        /// GET MAP
+        /// READ VIDEO CAPTION MODELS
         LabButton(
           worksPerfect: true,
-          text: 'Blog Exploded Captions map',
+          text: 'READ VIDEO CAPTION MODELS BY EXPLODER',
           icon: AboTubeTheme.abotube_logo,
           onTap: () async {
 
-            final List<ClosedCaptionTrackInfo> trackInfos = await ExploderProtocols.readClosedCaptionTrackInfos(
-              landCode: 'en',
+            final List<CaptionModel> _caps = await ExploderProtocols.readVideoCaptions(
               videoID: 'FMvppuS_ehg',
+              langCode: 'en',
             );
 
-            final List<Map<String, dynamic>> _maps = await ExploderProtocols.readCaptionsTrack(
-              infos: trackInfos,
-            );
-
-            blog('GOT : ${_maps.length} maps in all tracks');
-
-            Mapper.blogMaps(_maps);
+            CaptionModel.blogCaptions(_caps);
 
             },
         ),

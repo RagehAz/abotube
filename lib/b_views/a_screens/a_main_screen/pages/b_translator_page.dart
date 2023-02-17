@@ -7,6 +7,7 @@ import 'package:abotube/b_views/x_components/buttons/progress_button.dart';
 import 'package:abotube/b_views/x_components/dialogs/language_selector_dialog.dart';
 import 'package:abotube/b_views/x_components/super_video_player/super_video_player.dart';
 import 'package:abotube/services/protocols/caption_protocols.dart';
+import 'package:abotube/services/protocols/exploder_protocols.dart';
 import 'package:abotube/services/protocols/video_protocols.dart';
 import 'package:abotube/services/providers/ui_provider.dart';
 import 'package:abotube/services/theme/abo_tube_colors.dart';
@@ -16,6 +17,7 @@ import 'package:bubbles/bubbles.dart';
 import 'package:filers/filers.dart';
 import 'package:flutter/material.dart';
 import 'package:mapper/mapper.dart';
+import 'package:scale/scale.dart';
 import 'package:stringer/stringer.dart';
 import 'package:super_box/super_box.dart';
 import 'package:super_text/super_text.dart';
@@ -39,7 +41,9 @@ class _TranslatorPageState extends State<TranslatorPage> {
   File _translatedVideoFile;
   VideoModel _videoModel;
   List<CaptionModel> _captions = [];
-  String _langCode = 'en';
+  List<CaptionModel> _translatedCaptions = [];
+  String _fromLang = 'en';
+  String _toLang = 'ar';
   // -----------------------------------------------------------------------------
   /// --- LOADING
   final ValueNotifier<bool> _loading = ValueNotifier(false);
@@ -86,7 +90,7 @@ class _TranslatorPageState extends State<TranslatorPage> {
       _triggerLoading(setTo: true).then((_) async {
 
         final File _file = await VideoProtocols.getDownloadedVideoFile(
-          videoID: _videoModel.id,
+          videoID: _videoModel?.id,
         );
 
         setState(() {
@@ -108,25 +112,6 @@ class _TranslatorPageState extends State<TranslatorPage> {
     _scrollController.dispose();
     super.dispose();
   }
-  // --------------------
-  /*
-  /// TESTED : WORKS PERFECT
-  Future<void> _onPaste() async {
-
-    /// PASTE TEXT
-    final String value = await TextClipBoard.paste();
-    _textController.text = value;
-
-    final bool _isValid = Formers.validateForm(_formKey);
-
-    if (_isValid == true){
-
-      await _processVideo();
-
-    }
-
-  }
-   */
   // --------------------
   /// TESTED : WORKS PERFECT
   Future<void> _translateVideo() async {
@@ -155,16 +140,132 @@ class _TranslatorPageState extends State<TranslatorPage> {
 
   }
   // --------------------
-  /// TASK : TEST ME
-  Future<void> _selectLanguage() async {
+  /// TESTED : WORKS PERFECT
+  Future<void> _selectFromLang() async {
 
     final String _lang = await showLanguageDialog();
 
     if (_lang != null){
       setState(() {
-        _langCode = _lang;
+        _fromLang = _lang;
       });
     }
+
+  }
+  // --------------------
+  /// TESTED : WORKS PERFECT
+  Future<void> _selectToLang() async {
+
+    final String _lang = await showLanguageDialog();
+
+    if (_lang != null){
+      setState(() {
+        _toLang = _lang;
+      });
+    }
+
+  }
+  // --------------------
+  /// TESTED : WORKS PERFECT
+  Future<void> _getTranscript() async {
+
+    /// SET LOADING AND PROGRESS
+    setState(() {
+      _progress = _progress.copyWith(
+        getTranscript: ProgressStatus.processing,
+      );
+    });
+
+    final List<CaptionModel> _caps = await ExploderProtocols.readVideoCaptions(
+        videoID: _videoModel?.id,
+        langCode: _fromLang,
+    );
+
+    blog('got this fucking number of captions here in trans page : ${_caps.length}');
+
+    /// SET LOADING AND PROGRESS
+    if (Mapper.checkCanLoopList(_caps) == false) {
+      _setProgress(
+        newModel: _progress.copyWith(getTranscript: ProgressStatus.error),
+        executeThis: () {
+          _captions = [];
+        },
+      );
+    }
+
+    else {
+
+      _setProgress(
+        newModel: _progress.copyWith(getTranscript: ProgressStatus.done,),
+        executeThis: () {
+          _captions = _caps;
+        },
+      );
+    }
+
+  }
+  // --------------------
+  /// TASK: WRITE MEEEEEEEEE
+  Future<void> _getTranslation() async {
+
+    /// SET LOADING AND PROGRESS
+    setState(() {
+      _progress = _progress.copyWith(
+        translation: ProgressStatus.processing,
+      );
+    });
+
+    final List<CaptionModel> _translated = await YouTubeCaptionProtocols.googleTranslateEachCaptionSeparately(
+        originalCaptions: _captions,
+        toLang: _toLang,
+        fromLang: _fromLang
+    );
+
+    if (Mapper.checkCanLoopList(_translated) == true){
+
+      /// SET LOADING AND PROGRESS
+      _setProgress(
+          newModel: _progress.copyWith(
+            translation: ProgressStatus.done,
+          ),
+        executeThis: (){
+            _translatedCaptions = _translated;
+        }
+      );
+
+
+    }
+    else {
+      /// SET LOADING AND PROGRESS
+      _setProgress(
+          newModel: _progress.copyWith(
+            translation: ProgressStatus.error,
+          )
+      );
+    }
+
+
+  }
+  // --------------------
+  /// TASK: WRITE MEEEEEEEEE
+  Future<void> _getAiGeneratedSpeech() async {
+
+    /// SET LOADING AND PROGRESS
+    setState(() {
+      _progress = _progress.copyWith(
+        voiceGenerated: ProgressStatus.processing,
+      );
+    });
+
+    /// DO MAGIC
+    await Future.delayed(const Duration(milliseconds: 200), (){});
+
+    /// SET LOADING AND PROGRESS
+    _setProgress(
+        newModel: _progress.copyWith(
+        voiceGenerated: ProgressStatus.done,
+      )
+    );
 
   }
   // --------------------
@@ -189,91 +290,6 @@ class _TranslatorPageState extends State<TranslatorPage> {
     );
 
     await _triggerLoading(setTo: false);
-  }
-  // --------------------
-  /// TASK : TEST ME
-  Future<void> _getTranscript() async {
-
-    /// SET LOADING AND PROGRESS
-    setState(() {
-      _progress = _progress.copyWith(
-        getTranscript: ProgressStatus.processing,
-      );
-    });
-
-    final String _transcription = await YouTubeCaptionProtocols.readCaptionsByGoogleAPI(
-      videoID: _videoModel?.id,
-      langCode: _langCode,
-    );
-
-    /// SET LOADING AND PROGRESS
-    if (_transcription == null) {
-      _setProgress(
-        newModel: _progress.copyWith(getTranscript: ProgressStatus.error),
-        executeThis: () {
-          _captions = [];
-        },
-      );
-    }
-
-    else {
-
-      final List<CaptionModel> _captionModels = CaptionModel.convertCheckSubStringToCaptions(
-          inputString: _transcription
-      );
-
-      _setProgress(
-        newModel: _progress.copyWith(getTranscript: ProgressStatus.done,),
-        executeThis: () {
-          _captions = _captionModels;
-        },
-      );
-    }
-
-  }
-  // --------------------
-  /// TASK: WRITE MEEEEEEEEE
-  Future<void> _getTranslation() async {
-
-    /// SET LOADING AND PROGRESS
-    setState(() {
-      _progress = _progress.copyWith(
-        translation: ProgressStatus.processing,
-      );
-    });
-
-    /// DO MAGIC
-    await Future.delayed(const Duration(milliseconds: 200), (){});
-
-    /// SET LOADING AND PROGRESS
-    _setProgress(
-        newModel: _progress.copyWith(
-        translation: ProgressStatus.done,
-      )
-    );
-
-  }
-  // --------------------
-  /// TASK: WRITE MEEEEEEEEE
-  Future<void> _getAiGeneratedSpeech() async {
-
-    /// SET LOADING AND PROGRESS
-    setState(() {
-      _progress = _progress.copyWith(
-        voiceGenerated: ProgressStatus.processing,
-      );
-    });
-
-    /// DO MAGIC
-    await Future.delayed(const Duration(milliseconds: 200), (){});
-
-    /// SET LOADING AND PROGRESS
-    _setProgress(
-        newModel: _progress.copyWith(
-        voiceGenerated: ProgressStatus.done,
-      )
-    );
-
   }
   // --------------------
   /// TASK: WRITE MEEEEEEEEE
@@ -326,6 +342,25 @@ class _TranslatorPageState extends State<TranslatorPage> {
   // --------------------
   /*
   /// TESTED : WORKS PERFECT
+  Future<void> _onPaste() async {
+
+    /// PASTE TEXT
+    final String value = await TextClipBoard.paste();
+    _textController.text = value;
+
+    final bool _isValid = Formers.validateForm(_formKey);
+
+    if (_isValid == true){
+
+      await _processVideo();
+
+    }
+
+  }
+   */
+  // --------------------
+  /*
+  /// TESTED : WORKS PERFECT
   Future<void> _onPickVideoFromGallery() async {
 
     setState(() {
@@ -360,55 +395,71 @@ class _TranslatorPageState extends State<TranslatorPage> {
           ),
 
           /// TRANSLATION BUTTONS
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
+          Align(
+            child: Container(
+              width: Bubble.bubbleWidth(context: context),
+              alignment: Alignment.center,
+              margin: const EdgeInsets.symmetric(vertical: 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
 
-              /// LANGUAGE BUTTON
-              SuperBox(
-              height: 50,
-              width: 50,
-              textItalic: true,
-              text: _langCode,
-              textScaleFactor: 0.8,
-              textFont: BldrsThemeFonts.fontBldrsHeadlineFont,
-              color: AboTubeTheme.youtubeColor,
-              textColor: Colorz.white200,
-              onTap: _selectLanguage,
+                  /// FROM LANG
+                  SuperBox(
+                  height: 50,
+                  textItalic: true,
+                  text: 'From : $_fromLang',
+                  textScaleFactor: 0.8,
+                  textFont: BldrsThemeFonts.fontBldrsHeadlineFont,
+                  color: AboTubeTheme.greyLight,
+                  textColor: Colorz.white200,
+                  onTap: _selectFromLang,
+                ),
+
+                  const SizedBox(width: 5),
+
+                  /// FROM LANG
+                  SuperBox(
+                  height: 50,
+                  textItalic: true,
+                  text: 'To : $_toLang',
+                  textScaleFactor: 0.8,
+                  textFont: BldrsThemeFonts.fontBldrsHeadlineFont,
+                  color: AboTubeTheme.greyMid,
+                  textColor: Colorz.white200,
+                  onTap: _selectToLang,
+                ),
+
+                  /// EXPANDER
+                  const Expander(),
+
+                  /// TRANSLATE BUTTON
+                  SuperBox(
+                    height: 50,
+                    width: 150,
+                    textItalic: true,
+                    text: 'Translate',
+                    textFont: BldrsThemeFonts.fontBldrsHeadlineFont,
+                    color: Colorz.green255,
+                    textColor: Colorz.white200,
+                    isDisabled: _videoFile == null,
+                    onTap: _translateVideo,
+                  ),
+
+
+                ],
+              ),
             ),
-
-              /// TRANSLATE BUTTON
-              SuperBox(
-              height: 50,
-              width: 150,
-              textItalic: true,
-              text: 'Translate',
-              textFont: BldrsThemeFonts.fontBldrsHeadlineFont,
-              color: AboTubeTheme.youtubeColor,
-              textColor: Colorz.white200,
-              margins: 10,
-              onTap: _translateVideo,
-            ),
-
-
-            ],
           ),
 
           /// 2- GOT TRANSCRIPT
           ProgressButton(
-            text: 'Got transcript : $_langCode',
+            text: 'Got transcript : $_fromLang',
             status: _progress.getTranscript,
             onTap: () => blog('transcript : fuck you'),
           ),
 
-          /// 3- Translation Done
-          ProgressButton(
-            text: 'Translation Done',
-            status: _progress.translation,
-            onTap: () => blog('translation : fuck you'),
-          ),
-
-          /// CAPTIONS
+          /// ORIGINAL CAPTIONS
           Bubble(
             bubbleHeaderVM: getAboTubeBubbleHeader(
               headline: 'Captions',
@@ -439,6 +490,45 @@ class _TranslatorPageState extends State<TranslatorPage> {
             ],
           ),
 
+          /// 3- Translation Done
+          ProgressButton(
+            text: 'Translation Done',
+            status: _progress.translation,
+            onTap: () => blog('translation : fuck you'),
+          ),
+
+          /// TRANSLATED CAPTIONS
+          Bubble(
+            bubbleHeaderVM: getAboTubeBubbleHeader(
+              headline: 'Translation',
+            ),
+            columnChildren: <Widget>[
+
+                Container(
+                  width: Bubble.clearWidth(context: context),
+                  height: 150,
+                  color: AboTubeTheme.greyLight,
+                  child: Mapper.checkCanLoopList(_translatedCaptions) == false ? const SizedBox() :
+                  Scroller(
+                    child: ListView.builder(
+                        physics: const BouncingScrollPhysics(),
+                        itemCount: _translatedCaptions.length,
+                        padding: EdgeInsets.zero,
+                        itemBuilder: (_, int index) {
+
+                          return CaptionLine(
+                            caption: _translatedCaptions[index],
+                            numberOfCaptions: _translatedCaptions.length,
+                          );
+
+                        }
+                        ),
+                  ),
+                ),
+
+            ],
+          ),
+
           /// 4 - Speech Generated
           ProgressButton(
             text: 'Ai Speech Audio generated',
@@ -446,6 +536,7 @@ class _TranslatorPageState extends State<TranslatorPage> {
             onTap: () => blog('speech : fuck you'),
           ),
 
+          /// SPEECH BUBBLE
           Bubble(
             bubbleHeaderVM: getAboTubeBubbleHeader(
               headline: 'Speech',

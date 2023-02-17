@@ -1,13 +1,17 @@
 // ignore_for_file: non_constant_identifier_names
 import 'dart:convert';
 
+import 'package:abotube/a_models/caption_model.dart';
+import 'package:abotube/services/protocols/google_translator.dart';
 import 'package:abotube/services/standards.dart';
 import 'package:filers/filers.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:mapper/mapper.dart';
 import 'package:rest/rest.dart';
 import 'package:googleapis_auth/auth_io.dart';
 import 'package:googleapis/youtube/v3.dart';
+import 'package:stringer/stringer.dart';
 
 class YouTubeCaptionProtocols {
   // -----------------------------------------------------------------------------
@@ -111,6 +115,75 @@ class YouTubeCaptionProtocols {
     }
 
     blog('readCaptionsByCheckSub : END');
+
+    return _output;
+  }
+  // -----------------------------------------------------------------------------
+
+  /// GOOGLE TRANSLATE CAPTIONS
+
+  // --------------------
+  ///
+  static Future<List<CaptionModel>> googleTranslateEachCaptionSeparately({
+    @required List<CaptionModel> originalCaptions,
+    @required String toLang,
+    @required String fromLang,
+  }) async {
+    final List<CaptionModel> _output = <CaptionModel>[];
+
+    if (
+    Mapper.checkCanLoopList(originalCaptions) == true
+    &&
+    TextCheck.isEmpty(toLang) == false
+    &&
+    TextCheck.isEmpty(fromLang) == false
+    ){
+
+      await Future.wait(<Future>[
+
+        ...List.generate(originalCaptions.length, (index){
+
+          return _googleTranslateACaption(
+            caption: originalCaptions[index],
+            from: fromLang,
+            to: toLang,
+          ).then((translatedCaption){
+            _output.add(translatedCaption);
+          });
+
+        }),
+
+      ]);
+
+    }
+
+    return CaptionModel.sortCaptionsBySecond(_output);
+  }
+  // --------------------
+  ///
+  static Future<CaptionModel> _googleTranslateACaption({
+    @required CaptionModel caption,
+    @required String from,
+    @required String to,
+  }) async {
+    CaptionModel _output;
+
+    if (caption != null){
+
+      final String _translation = await GoogleTranslate.translate(
+          input: caption.text,
+          from: from,
+          to: to,
+      );
+
+        _output = CaptionModel(
+          text: _translation,
+          start: caption.start,
+          duration: caption.duration
+      );
+
+
+    }
 
     return _output;
   }

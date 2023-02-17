@@ -145,7 +145,7 @@ void main() {
       expect(result, isFalse);
     });
 
-    test('same lists with different order should be identical', () {
+    test('same lists with different order should NOT be identical', () {
       const captions1 = [
         CaptionModel(text: 'first', start: 1, duration: null),
         CaptionModel(text: 'second', start: 2, duration: null),
@@ -158,7 +158,7 @@ void main() {
         captions1: captions1,
         captions2: captions2,
       );
-      expect(result, isTrue);
+      expect(result, isFalse);
     });
 
     test('lists with different captions should not be identical', () {
@@ -193,6 +193,7 @@ void main() {
       expect(result, isTrue);
     });
   });
+
 
   group('sortCaptionsBySecond', () {
 

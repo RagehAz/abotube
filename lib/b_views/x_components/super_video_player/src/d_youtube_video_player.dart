@@ -67,9 +67,11 @@ class _YoutubeVideoPlayerState extends State<YoutubeVideoPlayer> {
 
         if (widget.autoPlay == false){
           final String _cover = await getYouTubeVideoCoverImage(widget.videoID);
-          setState(() {
-            _coverURL = _cover;
-          });
+          if (mounted == true){
+            setState(() {
+              _coverURL = _cover;
+            });
+          }
         }
 
         await _triggerLoading(setTo: false);

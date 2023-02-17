@@ -32,8 +32,8 @@ class CaptionModel {
 
       _output = {
         'text': caption.text,
-        'start': caption.start,
-        'duration': caption.duration,
+        'start': caption.start.toString(),
+        'duration': caption.duration.toString(),
       };
 
     }
@@ -41,7 +41,7 @@ class CaptionModel {
     return _output;
   }
   // --------------------
-  ///
+  /// TESTED : WORKS PERFECT
   static CaptionModel decipherCaption({
     @required Map<String, dynamic> map,
   }){
@@ -51,8 +51,8 @@ class CaptionModel {
 
       _output = CaptionModel(
         text: map['text'],
-        start: map['start'],
-        duration: map['duration'],
+        start: Numeric.transformStringToDouble(map['start']),
+        duration: Numeric.transformStringToDouble(map['duration']),
       );
 
     }
@@ -85,11 +85,11 @@ class CaptionModel {
   // --------------------
   ///
   static List<CaptionModel> decipherCaptions({
-    @required List<Map<String, dynamic>> maps,
+    @required List<dynamic> maps,
   }) {
     final List<CaptionModel> _output = <CaptionModel>[];
 
-    if (Mapper.checkCanLoopList(_output) == true) {
+    if (Mapper.checkCanLoopList(maps) == true) {
       for (final Map<String, dynamic> map in maps) {
         final CaptionModel _caption = decipherCaption(
           map: map,
@@ -120,7 +120,7 @@ class CaptionModel {
 
         _output = Mapper.insertPairInMap(
           map: _output,
-          key: caption.start.toString(),
+          key: caption.start.toInt().toString(),
           value: caption.text,
           // overrideExisting: false,
         );
@@ -377,10 +377,16 @@ class CaptionModel {
 
       blog('CAPTIONS BLOG : ${captions.length} captions =>>> ');
 
-      for (final CaptionModel caption in captions){
+      for (int i = 0; i < captions.length; i++){
 
+        final String _number = Numeric.formatIndexDigits(
+            index: i,
+            listLength: captions.length,
+        );
+
+        final CaptionModel caption = captions[i];
         // final String _timeStamp = convertSecondsTo_mm_i_ss(caption.start);
-        blog('   -> Caption : ${caption.start} : ${caption.text}');
+        blog('   $_number -> Caption : ${caption.start} : ${caption.text}');
 
       }
 
