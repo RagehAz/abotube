@@ -10,9 +10,12 @@ import 'package:abotube/b_views/a_screens/x_youtube_player_screen.dart';
 import 'package:abotube/b_views/x_components/buttons/lab_button.dart';
 import 'package:abotube/b_views/x_components/dialogs/language_selector_dialog.dart';
 import 'package:abotube/services/navigation/navigators.dart';
+import 'package:abotube/services/protocols/audio_protocols.dart';
 import 'package:abotube/services/protocols/caption_protocols.dart';
 import 'package:abotube/services/protocols/exploder_protocols.dart';
+import 'package:abotube/services/protocols/google_auth_protocols.dart';
 import 'package:abotube/services/protocols/google_translator.dart';
+import 'package:abotube/services/protocols/google_voices_map.dart';
 import 'package:abotube/services/protocols/video_protocols.dart';
 import 'package:abotube/services/theme/abo_tube_colors.dart';
 import 'package:bldrs_theme/bldrs_theme.dart';
@@ -24,20 +27,18 @@ import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/texttospeech/v1.dart' as tts;
 import 'package:googleapis/youtube/v3.dart' as yt;
+import 'package:googleapis_auth/googleapis_auth.dart' as gapis;
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:layouts/layouts.dart';
 import 'package:mapper/mapper.dart';
 import 'package:rest/rest.dart';
-import 'package:text_to_speech/text_to_speech.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
+
 /// ------------------------------------------------------
 class LabPage extends StatelessWidget {
   // --------------------------------------------------------------------------
-  const LabPage({
-    Key key
-  }) : super(key: key);
+  const LabPage({Key key}) : super(key: key);
   // --------------------------------------------------------------------------
   @override
   Widget build(BuildContext context) {
@@ -45,7 +46,6 @@ class LabPage extends StatelessWidget {
     return FloatingList(
       // padding: const EdgeInsets.only(top: Ratioz.stratosphere, bottom: Ratioz.horizon),
       columnChildren: <Widget>[
-
         const DotSeparator(),
 
         /// GO TO MP4 PLAYER
@@ -56,7 +56,7 @@ class LabPage extends StatelessWidget {
           onTap: () => Nav.goToNewScreen(
               context: context,
               screen: const VideoPlayerScreen(
-                url:  'https://rr3---sn-uxaxjvhxbt2u-j5pl6.googlevideo.com/videoplay'
+                url: 'https://rr3---sn-uxaxjvhxbt2u-j5pl6.googlevideo.com/videoplay'
                     'back?expire=1676584357&ei=RVHuY-C1Boyr1waFmIToCw&ip=156.213.10'
                     '6.139&id=o-AJ8QEaXC7B85O6cA9lXPOhHZpB46HH524SyQa8ToHd4l&itag=1'
                     '8&source=youtube&requiressl=yes&mh=qE&mm=31%2C29&mn=sn-uxaxjvh'
@@ -71,8 +71,7 @@ class LabPage extends StatelessWidget {
                     'n%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRQIgN7kZNCqgHvn'
                     'a0ti2lNSTtaf6wz6QT37DNwkEXpkNUH4CIQCEVeoo0nmetAngrtAjtukC71zjCrAV'
                     'IVnTkKhkI-QHNw%3D%3D',
-              )
-          ),
+              )),
         ),
 
         /// GO TO YOUTUBE PLAYER
@@ -94,7 +93,6 @@ class LabPage extends StatelessWidget {
           text: 'Pick video from Gallery',
           icon: Iconz.fingerTap,
           onTap: () async {
-
             final File _file = await VideoProtocols.pickGalleryVideo();
 
             if (_file != null) {
@@ -105,8 +103,7 @@ class LabPage extends StatelessWidget {
                 ),
               );
             }
-
-            },
+          },
         ),
 
         const DotSeparator(),
@@ -125,19 +122,23 @@ class LabPage extends StatelessWidget {
                 yt.YouTubeApi.youtubepartnerScope
               ],
             );
+
             /// SIGN IN
             await _googleSignIn.signIn();
+
             /// GET AUTH CLIENT
             /*
                          import 'package:googleapis_auth/googleapis_auth.dart' as gapis;
                          gapis.AuthClient
                       */
             final client = await _googleSignIn.authenticatedClient();
+
             /// GET YOUTUBE API BY CLIENT
             final yt.YouTubeApi ytApi = yt.YouTubeApi(client);
+
             /// GET CAPTIONS
             final yt.CaptionListResponse captionListResponse =
-            await ytApi.captions.list(['id', 'snippet'], 'QRS8MkLhQmM');
+                await ytApi.captions.list(['id', 'snippet'], 'QRS8MkLhQmM');
             blog(captionListResponse.items.first.snippet);
             // {etag: Nw8zsyeakXPebhD7p_lco001UFY, id: AUieDaZJvCxYN_YF11eqr6XSB3OMpoQa7E9sTBliDb_p6472IBA, kind: youtube#caption}
             /// DOWNLOAD CAPTION
@@ -145,31 +146,31 @@ class LabPage extends StatelessWidget {
               captionListResponse.items.first.id,
             );
             blog(caption);
-            },
+          },
         ),
 
         /// SIGN IN BY GOOGLE
         LabButton(
-                    worksPerfect: false,
-                    text: 'Sign in by google',
-                    icon: Iconz.comGooglePlay,
-                    onTap: () async {
-                      /// INITIALIZE GOOGLE SIGN IN
-                      final GoogleSignIn _googleSignIn = GoogleSignIn(
-                        scopes: [
-                          'email',
-                          yt.YouTubeApi.youtubeForceSslScope,
-                          yt.YouTubeApi.youtubepartnerScope
-                        ],
-                      );
+          worksPerfect: false,
+          text: 'Sign in by google',
+          icon: Iconz.comGooglePlay,
+          onTap: () async {
+            /// INITIALIZE GOOGLE SIGN IN
+            final GoogleSignIn _googleSignIn = GoogleSignIn(
+              scopes: [
+                'email',
+                yt.YouTubeApi.youtubeForceSslScope,
+                yt.YouTubeApi.youtubepartnerScope
+              ],
+            );
 
-                      try {
-                        await _googleSignIn.signIn();
-                      } on Exception catch (error) {
-                        blog(error);
-                      }
-                    },
-                  ),
+            try {
+              await _googleSignIn.signIn();
+            } on Exception catch (error) {
+              blog(error);
+            }
+          },
+        ),
 
         const DotSeparator(),
 
@@ -181,8 +182,10 @@ class LabPage extends StatelessWidget {
           onTap: () async {
             const String _videoID = 'mqaODYJ702s';
             const String apiKey = 'AIzaSyA32TxS3tQeMZGPEf8y9pvgrLo5rGpz0fs';
-            String _url = 'https://www.googleapis.com/youtube/v3/captions?part=snippet&videoId=$_videoID&key=$apiKey';
-            _url = 'https://www.googleapis.com/youtube/v3/captions?videoId=$_videoID&part=snippet&key=$apiKey';
+            String _url =
+                'https://www.googleapis.com/youtube/v3/captions?part=snippet&videoId=$_videoID&key=$apiKey';
+            _url =
+                'https://www.googleapis.com/youtube/v3/captions?videoId=$_videoID&part=snippet&key=$apiKey';
             final http.Response _response = await Rest.get(
               rawLink: _url,
               invoker: 'getTranscriptAndTimestamps',
@@ -226,7 +229,7 @@ class LabPage extends StatelessWidget {
               blog('could not get transcription');
               return null;
             }
-            },
+          },
         ),
 
         /// GET VIDEO INFO API
@@ -240,7 +243,7 @@ class LabPage extends StatelessWidget {
             final RegExp regExp = RegExp(
               r'#(?<=v=)[a-zA-Z0-9-]+(?=&)|(?<=v\/)'
               '[^&\n]+(?=\\?)|(?<=v=)[^&\n]+|(?<=youtu.be\\/)'
-                  '[^&\n]+#',
+              '[^&\n]+#',
             );
             final match = regExp.firstMatch(videoUrl);
             final videoId = match.group(0);
@@ -252,17 +255,15 @@ class LabPage extends StatelessWidget {
             final responseBody = response.body;
             final videoInfoArray = Uri.splitQueryString(responseBody).cast<String, dynamic>();
             if (videoInfoArray.containsKey('caption_tracks')) {
-              final List<String> tracks =
-              videoInfoArray['caption_tracks'].split(',');
+              final List<String> tracks = videoInfoArray['caption_tracks'].split(',');
               final List<Map<String, dynamic>> trackInfo = [];
               for (final track in tracks) {
-                trackInfo
-                    .add(Uri.splitQueryString(track).cast<String, dynamic>());
+                trackInfo.add(Uri.splitQueryString(track).cast<String, dynamic>());
               }
               return {'track_info': trackInfo};
             }
             return {};
-            },
+          },
         ),
 
         /// CHECK SUB DOWNLOADER
@@ -280,7 +281,7 @@ class LabPage extends StatelessWidget {
               langCode: 'ar',
             );
             log('GOT. TRANSCRIPTION : $_transcription');
-            },
+          },
         ),
 
         const DotSeparator(),
@@ -288,30 +289,29 @@ class LabPage extends StatelessWidget {
         /// PLAY GENERATE VOICE
         LabButton(
           worksPerfect: true,
-          text: 'Play Generated Voice',
+          text: 'Play Text to Speech voice',
           icon: Iconz.advertise,
           onTap: () async {
+
             final String _to = await showLanguageDialog();
+
             if (_to != null) {
-              final TextToSpeech tts = TextToSpeech();
-              const text = 'What is up mother fuckers';
+              const text = 'How are you my friend ?';
               const String _from = 'en';
               final String _translation = await GoogleTranslate.translate(
                 input: text,
                 from: _from,
                 to: _to,
               );
-              // final String _lang = tts.getDisplayLanguageByCode(langCode)
-              await tts.setLanguage(_to);
-              // final languages = await tts.getLanguages();
-              // blog('languages : $languages');
-              if (_translation != null) {
-                await tts.speak(_translation);
-              } else {
-                blog('is null,,, can not play');
-              }
+
+              await AudioProtocols.playTextByTextToSpeech(
+                  text: _translation,
+                  langCode: _to
+              );
+
             }
-            },
+
+          },
         ),
 
         /// TTS GOOGLE APIS
@@ -320,55 +320,79 @@ class LabPage extends StatelessWidget {
           text: 'Get Audio by google API',
           icon: Iconz.comGooglePlay,
           onTap: () async {
-            final  _googleSignIn = GoogleSignIn(
-              // clientId: '1003450512869-0he8njpnhm9lklo2ba7jp4dl109dmms8.apps.googleusercontent.com',
-              scopes: [
-                'email',
-                tts.TexttospeechApi.cloudPlatformScope
-              ],
+
+            final gapis.AuthClient client = await GoogleAuthProtocols.signIn(
+              scopes: ['email', tts.TexttospeechApi.cloudPlatformScope],
             );
-            await _googleSignIn.signIn();
-            final client = await _googleSignIn.authenticatedClient();
-            blog('client is : ${client.credentials}');
-            final input = tts.SynthesisInput(
-              // ssml:
-              text: ''' ماذا تفعل ايها الصعلوك يا خول يا كلب الكلاب''',
+
+            if (client != null) {
+
+              blog('client is : ${client?.credentials}');
+
+              final input = tts.SynthesisInput(
+                // ssml:
+                text: ''' ماذا تفعل ايها الصعلوك يا خول يا كلب الكلاب''',
+              );
+
+              ///  REFERENCE : https://cloud.google.com/text-to-speech/docs/voices
+              final parameters = tts.VoiceSelectionParams(
+                languageCode: 'ar-XA',
+                name: 'ar-XA-Wavenet-B', // 'ar-XA-Wavenet-A'
+                // customVoice: ,
+                // ssmlGender: ,
+              );
+              final config = tts.AudioConfig(
+                audioEncoding: 'MP3',
+                // effectsProfileId: ,
+                // pitch: ,
+                // sampleRateHertz: ,
+                // speakingRate: ,
+                // volumeGainDb: ,
+              );
+              final request = tts.SynthesizeSpeechRequest(
+                input: input,
+                audioConfig: config,
+                voice: parameters,
+              );
+              Mapper.blogMap(
+                request.toJson(),
+                invoker: 'the request',
+              );
+
+              final response = await tts.TexttospeechApi(client).text.synthesize(request);
+              final List<int> output = response.audioContentAsBytes;
+              final File _file = await Filers.createNewEmptyFile(fileName: 'testFile');
+              final Uint8List _uint8List = Floaters.getBytesFromInts(output);
+              await Filers.writeUint8ListOnFile(file: _file, uint8list: _uint8List);
+
+              await AudioProtocols.playFile(
+                filePath: _file.path,
+              );
+            }
+
+          },
+        ),
+
+        /// GET GOOGLE VOICES
+        LabButton(
+          worksPerfect: true,
+          text: 'Get Google Voices',
+          icon: Iconz.comGooglePlay,
+          onTap: () async {
+
+            final http.Response _response = await Rest.get(
+              rawLink: 'https://texttospeech.googleapis.com/v1/voices',
+              invoker: 'Get Google Voices',
             );
-            ///  REFERENCE : https://cloud.google.com/text-to-speech/docs/voices
-            final parameters = tts.VoiceSelectionParams(
-              languageCode: 'ar-XA',
-              name: 'ar-XA-Wavenet-B', // 'ar-XA-Wavenet-A'
-              // customVoice: ,
-              // ssmlGender: ,
-            );
-            final config = tts.AudioConfig(
-              audioEncoding: 'MP3',
-              // effectsProfileId: ,
-              // pitch: ,
-              // sampleRateHertz: ,
-              // speakingRate: ,
-              // volumeGainDb: ,
-            );
-            final request = tts.SynthesizeSpeechRequest(
-              input: input,
-              audioConfig: config,
-              voice: parameters,
-            );
-            Mapper.blogMap(
-              request.toJson(),
-              invoker: 'the request',
-            );
-            final response = await tts.TexttospeechApi(client).text.synthesize(request);
-            final List<int> output = response.audioContentAsBytes;
-            final File _file = await Filers.createNewEmptyFile(fileName:'testFile');
-            final Uint8List _uint8List = Floaters.getBytesFromInts(output);
-            await Filers.writeUint8ListOnFile(file: _file, uint8list: _uint8List);
-            blog('the output is : $output');
-            final AudioPlayer player = AudioPlayer();
-            await player.setFilePath(_file.path);
-            // await player.setAudioSource(ByteSourceThing(output));
-            await player.play();
-            },
+
+            Rest.blogResponse(response: _response);
+
+            if (_response != null){
+
+
+            }
+
+          },
         ),
 
         const DotSeparator(),
@@ -380,6 +404,7 @@ class LabPage extends StatelessWidget {
           icon: AboTubeTheme.abotube_logo,
           onTap: () async {
             final ImagePicker _picker = ImagePicker();
+
             /// TASK : NEED TO BE SINGLETON
             final XFile image = await _picker.pickVideo(
               source: ImageSource.gallery,
@@ -402,7 +427,7 @@ class LabPage extends StatelessWidget {
                 videoPath: videoFilePath,
               );
             }
-            },
+          },
         ),
 
         const DotSeparator(),
@@ -413,12 +438,13 @@ class LabPage extends StatelessWidget {
           text: 'EXPLODE CAPTIONS + BLOG EVERYTHING',
           icon: AboTubeTheme.abotube_logo,
           onTap: () async {
-            final List<ClosedCaptionTrackInfo> trackInfos = await ExploderProtocols.readClosedCaptionTrackInfos(
+            final List<ClosedCaptionTrackInfo> trackInfos =
+                await ExploderProtocols.readClosedCaptionTrackInfos(
               landCode: 'en',
               videoID: 'FMvppuS_ehg',
             );
             int index = 0;
-            for (final ClosedCaptionTrackInfo info in trackInfos){
+            for (final ClosedCaptionTrackInfo info in trackInfos) {
               blog('$index : BLOGGING ClosedCaptionTrackInfo ---> START');
               ExploderProtocols.blogClosedCaptionTrackInfo(
                 info: info,
@@ -431,13 +457,13 @@ class LabPage extends StatelessWidget {
               );
               final UnmodifiableListView<ClosedCaption> _captions = track.captions;
               final int _lengthX = _captions.length > 3 ? 3 : _captions.length;
-              for (int i = 0; i < _lengthX; i++){
+              for (int i = 0; i < _lengthX; i++) {
                 ExploderProtocols.blogClosedCaption(
                   closedCaption: _captions[index],
                 );
                 final List<ClosedCaptionPart> _parts = _captions[index].parts;
                 final int _lengthY = _parts.length > 2 ? 2 : _parts.length;
-                for (int x = 0; x < _lengthY; x++){
+                for (int x = 0; x < _lengthY; x++) {
                   ExploderProtocols.blogClosedCaptionPart(
                     part: _parts[x],
                   );
@@ -446,7 +472,7 @@ class LabPage extends StatelessWidget {
               blog('<--- DONE');
               index++;
             }
-            },
+          },
         ),
 
         /// READ VIDEO CAPTION MODELS
@@ -455,15 +481,13 @@ class LabPage extends StatelessWidget {
           text: 'READ VIDEO CAPTION MODELS BY EXPLODER',
           icon: AboTubeTheme.abotube_logo,
           onTap: () async {
-
             final List<CaptionModel> _caps = await ExploderProtocols.readVideoCaptions(
               videoID: 'FMvppuS_ehg',
               langCode: 'en',
             );
 
             CaptionModel.blogCaptions(_caps);
-
-            },
+          },
         ),
 
         // /// TEXT FIELD
@@ -488,15 +512,32 @@ class LabPage extends StatelessWidget {
         //   ),
         // ),
 
+        const DotSeparator(),
+        const DotSeparator(),
 
-                  const DotSeparator(),
+        /// READ VIDEO CAPTION MODELS
+        LabButton(
+          worksPerfect: true,
+          text: 'Google Voices Map',
+          icon: Iconz.bxDesignsOff,
+          onTap: () async {
 
-                ],
-              );
+            Mapper.blogMap(googleVoices);
+
+          },
+        ),
+
+        const DotSeparator(),
+        const DotSeparator(),
+
+
+      ],
+    );
     // --------------------
   }
-  // --------------------------------------------------------------------------
+// --------------------------------------------------------------------------
 }
+
 /// ------------------------------------------------------
 Future<void> extractAudioAndSaveVideo({
   @required File videoFile,
@@ -535,6 +576,7 @@ Future<void> extractAudioAndSaveVideo({
   //   blog('Failed to extract audio');
   // }
 }
+
 /// ------------------------------------------------------
 // Future<void> thing() async {
 //   final FlutterFFmpeg _flutterFFmpeg = FlutterFFmpeg();
@@ -566,4 +608,5 @@ class ByteSourceThing extends StreamAudioSource {
   }
 }
  */
+
 /// ------------------------------------------------------

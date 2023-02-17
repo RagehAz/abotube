@@ -9,15 +9,23 @@
       "client_info": {
         "mobilesdk_app_id": "1:1003450512869:android:741e7225e69d7d96ffeb0c",
         "android_client_info": {
-          "package_name": "com.abotube.app"
+          "package_name": "com.example.video_translator"
         }
       },
       "oauth_client": [
         {
+          "client_id": "1003450512869-jo8bn5q4k9hbbco4dmtqn4mejr0spm6i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.video_translator",
+            "certificate_hash": "07e1f27c44635e1816db88ef036a932ee3555e33"
+          }
+        },
+        {
           "client_id": "1003450512869-oc5a3v7ah0bn5katucfe24nf4focpfdg.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.abotube.app",
+            "package_name": "com.example.video_translator",
             "certificate_hash": "ff31392d15538539835b6d1c1a9e5a758eeb619d"
           }
         },

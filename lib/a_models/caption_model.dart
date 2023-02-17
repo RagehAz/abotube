@@ -105,7 +105,6 @@ class CaptionModel {
   /// CHECKSUB CYPHERS
 
   // --------------------
-  ///
   /// AI TESTED
   static Map<String, dynamic> cipherCheckSubCaptions(List<CaptionModel> captions){
     Map<String, dynamic> _output = {};
