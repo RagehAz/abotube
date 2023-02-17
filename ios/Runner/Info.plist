@@ -6,7 +6,7 @@
 		<!-- APP IDs -->
 		<!--===============================================-->
 		<key>CFBundleIdentifier</key>
-		<string>com.abotube.app</string>
+		<string>com.example.video_translator</string>
 		<!--===============================================-->
 		<key>CFBundleName</key>
 		<string>AboTube</string>
@@ -56,21 +56,18 @@
 		<!--===============================================-->
 		<!-- URL TYPES -->
 		<!--===============================================-->
-		<!--     <key>CFBundleURLTypes</key>                         -->
-		<!--     <array>                                             -->
-		<!--     	<dict>                                           -->
-		<!--     		<key>CFBundleTypeRole</key>                  -->
-		<!--     		<string>Editor</string>                      -->
-		<!--     		<key>CFBundleURLName</key>                   -->
-		<!--     		<string>com.abotube</string>                 -->
-		<!--     		<key>CFBundleURLSchemes</key>                -->
-		<!--     		<array>                                      -->
-		<!--     			<string>com.abotube</string>             -->
-		<!--     		</array>                                     -->
-		<!--     	</dict>                                          -->
-		<!--     	<dict/>                                          -->
-		<!--     </array>                                            -->
-		<!--===============================================-->
+        <key>CFBundleURLTypes</key>
+        <array>
+            <dict>
+                <key>CFBundleTypeRole</key>
+                <string>Editor</string>
+                <key>CFBundleURLSchemes</key>
+                <array>
+                    <string>com.googleusercontent.apps.1003450512869-0he8njpnhm9lklo2ba7jp4dl109dmms8</string>
+                </array>
+            </dict>
+        </array>
+        <!--===============================================-->
 		<!-- NOTIFICATIONS -->
 		<!--===============================================-->
 		<key>FIRMessagingAutoRegisterEnabledflag</key>

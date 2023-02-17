@@ -155,8 +155,8 @@ class LabPage extends StatelessWidget {
           text: 'Sign in by google',
           icon: Iconz.comGooglePlay,
           onTap: () async {
-            /// INITIALIZE GOOGLE SIGN IN
-            final GoogleSignIn _googleSignIn = GoogleSignIn(
+
+            await GoogleAuthProtocols.signIn(
               scopes: [
                 'email',
                 yt.YouTubeApi.youtubeForceSslScope,
@@ -164,11 +164,6 @@ class LabPage extends StatelessWidget {
               ],
             );
 
-            try {
-              await _googleSignIn.signIn();
-            } on Exception catch (error) {
-              blog(error);
-            }
           },
         ),
 
@@ -286,7 +281,7 @@ class LabPage extends StatelessWidget {
 
         const DotSeparator(),
 
-        /// PLAY GENERATE VOICE
+        /// Play Text to Speech voice
         LabButton(
           worksPerfect: true,
           text: 'Play Text to Speech voice',
@@ -314,11 +309,11 @@ class LabPage extends StatelessWidget {
           },
         ),
 
-        /// TTS GOOGLE APIS
+        /// Get Audio by google API
         LabButton(
           worksPerfect: true,
           text: 'Get Audio by google API',
-          icon: Iconz.comGooglePlay,
+          icon: Iconz.comGooglePlus,
           onTap: () async {
 
             final gapis.AuthClient client = await GoogleAuthProtocols.signIn(
@@ -341,6 +336,7 @@ class LabPage extends StatelessWidget {
                 // customVoice: ,
                 // ssmlGender: ,
               );
+
               final config = tts.AudioConfig(
                 audioEncoding: 'MP3',
                 // effectsProfileId: ,
@@ -349,11 +345,13 @@ class LabPage extends StatelessWidget {
                 // speakingRate: ,
                 // volumeGainDb: ,
               );
+
               final request = tts.SynthesizeSpeechRequest(
                 input: input,
                 audioConfig: config,
                 voice: parameters,
               );
+
               Mapper.blogMap(
                 request.toJson(),
                 invoker: 'the request',

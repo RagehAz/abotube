@@ -49,11 +49,7 @@ class _HomePageState extends State<HomePage> {
 
       _triggerLoading(setTo: true).then((_) async {
 
-        final List<VideoModel> _stored = await VideoLDBOps.readAll();
-
-        setState(() {
-          _videos = _stored.reversed.toList();
-        });
+        await _readLDB();
 
         await _triggerLoading(setTo: false);
       });
@@ -115,42 +111,56 @@ class _HomePageState extends State<HomePage> {
     );
 
   }
+  // --------------------
+  /// TESTED : WORKS PERFECT
+  Future<void> _readLDB() async {
+
+    await _triggerLoading(setTo: true);
+
+    final List<VideoModel> _stored = await VideoLDBOps.readAll();
+
+    setState(() {
+      _videos = _stored.reversed.toList();
+    });
+
+    await _triggerLoading(setTo: false);
+  }
   // --------------------------------------------------------------------------
   @override
   Widget build(BuildContext context) {
 
-    return ValueListenableBuilder(
-      valueListenable: _loading,
-      builder: (_, bool isLoading, Widget child) {
+    return PullToRefresh(
+      indicatorColor: AboTubeTheme.youtubeColor,
+      fadeOnBuild: true,
+      onRefresh: () async {
+        await _readLDB();
+      },
+      child: ValueListenableBuilder(
+        valueListenable: _loading,
+        builder: (_, bool isLoading, Widget child) {
 
-        if (isLoading == true) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-
-        else {
-
-          if (Mapper.checkCanLoopList(_videos) == false) {
+          if (isLoading == true) {
             return const Center(
-              child: SuperText(
-                text: 'No Videos Found',
-              ),
+              child: CircularProgressIndicator(),
             );
           }
 
           else {
-            return child;
+
+            if (Mapper.checkCanLoopList(_videos) == false) {
+              return const Center(
+                child: SuperText(
+                  text: 'No Videos Found',
+                ),
+              );
+            }
+
+            else {
+              return child;
+            }
+
           }
 
-        }
-
-      },
-      child: PullToRefresh(
-        indicatorColor: AboTubeTheme.youtubeColor,
-        fadeOnBuild: true,
-        onRefresh: (){
-          setState(() {});
         },
         child: ListView.builder(
           physics: const BouncingScrollPhysics(),

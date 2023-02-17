@@ -84,6 +84,7 @@ class GoogleVoice {
   // -----------------------------------------------------------------------------
 }
 
+///  REFERENCE : https://cloud.google.com/text-to-speech/docs/voices
 final Map<String, dynamic> googleVoices = {
   'af-ZA-Standard-A': {
     'language': 'Afrikaans (South Africa)',

@@ -1,4 +1,5 @@
 import 'package:extension_google_sign_in_as_googleapis_auth/extension_google_sign_in_as_googleapis_auth.dart';
+import 'package:filers/filers.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis_auth/googleapis_auth.dart' as gapis;
 
@@ -25,7 +26,9 @@ class GoogleAuthProtocols {
     List<String> scopes,
     // String clientID,
   }) async {
-    final _googleSignIn = GoogleSignIn(
+    gapis.AuthClient client;
+
+    final GoogleSignIn _googleSignIn = GoogleSignIn(
       scopes: scopes,
       // clientId: clientID,
       // forceCodeForRefreshToken: ,
@@ -34,9 +37,16 @@ class GoogleAuthProtocols {
       // signInOption: ,
     );
 
-    await _googleSignIn.signIn();
+    await tryAndCatch(
+      invoker: 'googleSignIn',
+        functions: () async {
 
-    final gapis.AuthClient client = await _googleSignIn.authenticatedClient();
+          await _googleSignIn.signIn();
+
+          client = await _googleSignIn.authenticatedClient();
+
+        },
+    );
 
     return client;
   }
