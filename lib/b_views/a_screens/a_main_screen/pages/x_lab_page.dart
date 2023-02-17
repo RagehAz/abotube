@@ -23,7 +23,6 @@ import 'package:bubbles/bubbles.dart';
 import 'package:extension_google_sign_in_as_googleapis_auth/extension_google_sign_in_as_googleapis_auth.dart';
 import 'package:filers/filers.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/texttospeech/v1.dart' as tts;
 import 'package:googleapis/youtube/v3.dart' as yt;
@@ -320,52 +319,20 @@ class LabPage extends StatelessWidget {
               scopes: ['email', tts.TexttospeechApi.cloudPlatformScope],
             );
 
-            if (client != null) {
+            final File _voiceFile = await AudioProtocols.createVoiceFile(
+                videoID: 'x',
+                text: '  ماذا تفعل ايها الصعلوك يا عرص يا كلب الكلاب يا ايها الزفت يا حمار',
+                googleLangCode: 'ar-XA',
+                voiceID: 'ar-XA-Wavenet-B',
+                client: client
+            );
 
-              blog('client is : ${client?.credentials}');
-
-              final input = tts.SynthesisInput(
-                // ssml:
-                text: ''' ماذا تفعل ايها الصعلوك يا خول يا كلب الكلاب''',
-              );
-
-              ///  REFERENCE : https://cloud.google.com/text-to-speech/docs/voices
-              final parameters = tts.VoiceSelectionParams(
-                languageCode: 'ar-XA',
-                name: 'ar-XA-Wavenet-B', // 'ar-XA-Wavenet-A'
-                // customVoice: ,
-                // ssmlGender: ,
-              );
-
-              final config = tts.AudioConfig(
-                audioEncoding: 'MP3',
-                // effectsProfileId: ,
-                // pitch: ,
-                // sampleRateHertz: ,
-                // speakingRate: ,
-                // volumeGainDb: ,
-              );
-
-              final request = tts.SynthesizeSpeechRequest(
-                input: input,
-                audioConfig: config,
-                voice: parameters,
-              );
-
-              Mapper.blogMap(
-                request.toJson(),
-                invoker: 'the request',
-              );
-
-              final response = await tts.TexttospeechApi(client).text.synthesize(request);
-              final List<int> output = response.audioContentAsBytes;
-              final File _file = await Filers.createNewEmptyFile(fileName: 'testFile');
-              final Uint8List _uint8List = Floaters.getBytesFromInts(output);
-              await Filers.writeUint8ListOnFile(file: _file, uint8list: _uint8List);
+            if (_voiceFile != null) {
 
               await AudioProtocols.playFile(
-                filePath: _file.path,
+                filePath: _voiceFile.path,
               );
+
             }
 
           },

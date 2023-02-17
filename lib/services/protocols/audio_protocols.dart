@@ -139,21 +139,27 @@ class AudioProtocols {
           .text
           .synthesize(_request);
 
-      final List<int> output = response.audioContentAsBytes;
+      final List<int> _ints = response.audioContentAsBytes;
 
-      final String _path = generateTranslatedVoiceFileName(
+      final String _fileName = generateTranslatedVoiceFileName(
         videoID: videoID,
         googleLangCode: googleLangCode,
         voiceID: voiceID,
       );
 
-      if (_path != null) {
-        _output = File(_path);
-        final Uint8List _uint8List = Floaters.getBytesFromInts(output);
+      if (_fileName != null) {
+
+        _output = await Filers.createNewEmptyFile(
+          fileName: _fileName,
+          // useTemporaryDirectory: true,
+        );
+
+        final Uint8List _uint8List = Floaters.getBytesFromInts(_ints);
         await Filers.writeUint8ListOnFile(
           file: _output,
           uint8list: _uint8List,
         );
+
       }
 
     }
@@ -174,6 +180,7 @@ class AudioProtocols {
         TextCheck.isEmpty(googleLangCode) == false
     ) {
       _output = '${videoID}_${voiceID}_$googleLangCode';
+
     }
 
     return _output;

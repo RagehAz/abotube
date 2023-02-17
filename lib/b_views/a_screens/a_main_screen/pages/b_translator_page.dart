@@ -9,6 +9,7 @@ import 'package:abotube/b_views/x_components/super_video_player/super_video_play
 import 'package:abotube/services/protocols/audio_protocols.dart';
 import 'package:abotube/services/protocols/caption_protocols.dart';
 import 'package:abotube/services/protocols/exploder_protocols.dart';
+import 'package:abotube/services/protocols/google_auth_protocols.dart';
 import 'package:abotube/services/protocols/google_voices_map.dart';
 import 'package:abotube/services/protocols/video_protocols.dart';
 import 'package:abotube/services/providers/ui_provider.dart';
@@ -18,11 +19,13 @@ import 'package:bldrs_theme/bldrs_theme.dart';
 import 'package:bubbles/bubbles.dart';
 import 'package:filers/filers.dart';
 import 'package:flutter/material.dart';
+import 'package:googleapis/texttospeech/v1.dart';
 import 'package:mapper/mapper.dart';
 import 'package:scale/scale.dart';
 import 'package:stringer/stringer.dart';
 import 'package:super_box/super_box.dart';
 import 'package:super_text/super_text.dart';
+import 'package:googleapis_auth/googleapis_auth.dart' as gapis;
 
 class TranslatorPage extends StatefulWidget {
   /// --------------------------------------------------------------------------
@@ -266,7 +269,7 @@ class _TranslatorPageState extends State<TranslatorPage> {
 
   }
   // --------------------
-  /// TASK : TEST ME
+  /// TESTED : WORKS PERFECT
   Future<void> _onPlayVoice() async {
 
     if (_translatedVoiceFile != null){
@@ -279,7 +282,7 @@ class _TranslatorPageState extends State<TranslatorPage> {
 
   }
   // --------------------
-  /// TASK: WRITE MEEEEEEEEE
+  /// TASK : TEST ME
   Future<void> _getAiGeneratedSpeech() async {
 
     /// SET LOADING AND PROGRESS
@@ -291,32 +294,46 @@ class _TranslatorPageState extends State<TranslatorPage> {
 
     File _newVoiceFile;
 
-   if (_selectedVoiceID != null){
+    if (_selectedVoiceID != null){
 
-   }
+      final gapis.AuthClient client = await GoogleAuthProtocols.signIn(
+        scopes: ['email', TexttospeechApi.cloudPlatformScope],
+      );
 
-   if (_newVoiceFile == null){
+      _newVoiceFile = await AudioProtocols.createVoiceFile(
+          videoID: _videoModel.id,
+          text: CaptionModel.combineCaptionsIntoString(
+            captions: _translatedCaptions,
+          ),
+          googleLangCode: GoogleVoice.getGoogleLangCodeFromVoiceID(_selectedVoiceID),
+          voiceID: _selectedVoiceID,
+          client: client
+      );
 
-     /// SET LOADING AND PROGRESS
-    _setProgress(
+    }
+
+    if (_newVoiceFile == null){
+
+      /// SET LOADING AND PROGRESS
+      _setProgress(
+          newModel: _progress.copyWith(
+            voiceGenerated: ProgressStatus.error,
+          )
+      );
+
+    }
+
+    else {
+      _setProgress(
         newModel: _progress.copyWith(
-        voiceGenerated: ProgressStatus.error,
-      )
-    );
-
-   }
-
-   else {
-    _setProgress(
-        newModel: _progress.copyWith(
-        voiceGenerated: ProgressStatus.done,
-      ),
-      executeThis: (){
+          voiceGenerated: ProgressStatus.done,
+        ),
+        executeThis: (){
           _translatedVoiceFile = _newVoiceFile;
-      },
-    );
+          },
+      );
 
-   }
+    }
 
 
   }
@@ -596,7 +613,7 @@ class _TranslatorPageState extends State<TranslatorPage> {
             columnChildren: <Widget>[
 
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
 
                   /// VOICE
@@ -606,6 +623,16 @@ class _TranslatorPageState extends State<TranslatorPage> {
                     textScaleFactor: 0.7,
                     onTap: _onChangeVoice,
                   ),
+
+                  /// REGENERATE
+                  SuperBox(
+                    height: 50,
+                    text: 'ReGen',
+                    textScaleFactor: 0.7,
+                    onTap: _getAiGeneratedSpeech,
+                  ),
+
+                  const Expander(),
 
                   /// PLAY
                   SuperBox(

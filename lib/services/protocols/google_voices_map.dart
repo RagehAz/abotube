@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:abotube/b_views/x_components/dialogs/bottom_dialog.dart';
 import 'package:abotube/services/helpers/helper_methods.dart';
 import 'package:abotube/services/navigation/navigators.dart';
@@ -32,6 +34,20 @@ class GoogleVoice {
 
       }
 
+    }
+
+    return _output;
+  }
+  // --------------------
+  ///
+  static String getGoogleLangCodeFromVoiceID(String voiceID){
+    String _output;
+
+    if (TextCheck.isEmpty(voiceID) == false){
+      // LOOKS LIKE THIS : oo_XX_Xxxxx_X
+      final String oo_XX_Xxxxx = TextMod.removeTextAfterLastSpecialCharacter(voiceID, '-');
+      final String oo_XX = TextMod.removeTextAfterLastSpecialCharacter(oo_XX_Xxxxx, '-');
+      _output = oo_XX;
     }
 
     return _output;
