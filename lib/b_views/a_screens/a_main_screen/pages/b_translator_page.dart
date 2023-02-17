@@ -212,7 +212,7 @@ class _TranslatorPageState extends State<TranslatorPage> {
 
   }
   // --------------------
-  /// TASK: WRITE MEEEEEEEEE
+  /// TESTED : WORKS PERFECT
   Future<void> _getTranslation() async {
 
     /// SET LOADING AND PROGRESS
@@ -222,11 +222,21 @@ class _TranslatorPageState extends State<TranslatorPage> {
       );
     });
 
-    final List<CaptionModel> _translated = await YouTubeCaptionProtocols.googleTranslateEachCaptionSeparately(
+    // final String _translation =
+    final List<CaptionModel> _translated = await YouTubeCaptionProtocols
+        .googleTranslateEachCaptionSeparately(
         originalCaptions: _captions,
         toLang: _toLang,
         fromLang: _fromLang
     );
+
+    // final List<CaptionModel> _translated = [
+    //   CaptionModel(
+    //     start: 0,
+    //     text: _translation,
+    //     duration: null,
+    //   ),
+    // ];
 
     if (Mapper.checkCanLoopList(_translated) == true){
 
@@ -259,6 +269,7 @@ class _TranslatorPageState extends State<TranslatorPage> {
 
     final String _voice = await GoogleVoice.showVoiceDialog(
       langCode: _toLang,
+      selectedCode: _selectedVoiceID,
     );
 
     if (_voice != null){
@@ -282,7 +293,7 @@ class _TranslatorPageState extends State<TranslatorPage> {
 
   }
   // --------------------
-  /// TASK : TEST ME
+  /// TESTED : WORKS PERFECT
   Future<void> _getAiGeneratedSpeech() async {
 
     /// SET LOADING AND PROGRESS
@@ -588,6 +599,24 @@ class _TranslatorPageState extends State<TranslatorPage> {
                           return CaptionLine(
                             caption: _translatedCaptions[index],
                             numberOfCaptions: _translatedCaptions.length,
+                            onTap: (String text) async {
+
+                                final gapis.AuthClient client = await GoogleAuthProtocols.signIn(
+                                  scopes: ['email', TexttospeechApi.cloudPlatformScope],
+                                );
+
+                                final File _newVoiceFile = await AudioProtocols.createVoiceFile(
+                                    videoID: _videoModel.id,
+                                    text: text,
+                                    googleLangCode: GoogleVoice.getGoogleLangCodeFromVoiceID(_selectedVoiceID),
+                                    voiceID: _selectedVoiceID,
+                                    client: client
+                                );
+
+                                await AudioProtocols.playFile(
+                                  filePath: _newVoiceFile?.path,
+                                );
+                              },
                           );
 
                         }
@@ -613,7 +642,6 @@ class _TranslatorPageState extends State<TranslatorPage> {
             columnChildren: <Widget>[
 
               Row(
-                mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
 
                   /// VOICE
@@ -713,11 +741,13 @@ class CaptionLine extends StatelessWidget {
   const CaptionLine({
     @required this.caption,
     @required this.numberOfCaptions,
+    this.onTap,
     Key key
   }) : super(key: key);
   // -----------------------------------------------------------------------------
   final CaptionModel caption;
   final int numberOfCaptions;
+  final Function onTap;
   // -----------------------------------------------------------------------------
   @override
   Widget build(BuildContext context) {
@@ -759,7 +789,13 @@ class CaptionLine extends StatelessWidget {
             textDirection: TextDirection.ltr,
             boxColor: Colorz.black255,
             onTap: () async {
-              await TextClipBoard.copy(copy: caption?.text);
+
+              // await TextClipBoard.copy(copy: caption?.text);
+
+              if (onTap != null){
+                await onTap(caption?.text);
+              }
+
             },
           ),
 

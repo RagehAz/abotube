@@ -135,33 +135,37 @@ class AudioProtocols {
         invoker: 'the _request',
       );
 
-      final SynthesizeSpeechResponse response = await TexttospeechApi(client)
-          .text
-          .synthesize(_request);
+      await tryAndCatch(
+        invoker: 'createVoiceFile',
+        functions: () async {
 
-      final List<int> _ints = response.audioContentAsBytes;
+          final SynthesizeSpeechResponse response =
+              await TexttospeechApi(client).text.synthesize(_request);
 
-      final String _fileName = generateTranslatedVoiceFileName(
-        videoID: videoID,
-        googleLangCode: googleLangCode,
-        voiceID: voiceID,
+          final List<int> _ints = response.audioContentAsBytes;
+
+          final String _fileName = generateTranslatedVoiceFileName(
+            videoID: videoID,
+            googleLangCode: googleLangCode,
+            voiceID: voiceID,
+          );
+
+          if (_fileName != null) {
+
+            _output = await Filers.createNewEmptyFile(
+              fileName: _fileName,
+              // useTemporaryDirectory: true,
+            );
+
+            final Uint8List _uint8List = Floaters.getBytesFromInts(_ints);
+            await Filers.writeUint8ListOnFile(
+              file: _output,
+              uint8list: _uint8List,
+            );
+
+          }
+        },
       );
-
-      if (_fileName != null) {
-
-        _output = await Filers.createNewEmptyFile(
-          fileName: _fileName,
-          // useTemporaryDirectory: true,
-        );
-
-        final Uint8List _uint8List = Floaters.getBytesFromInts(_ints);
-        await Filers.writeUint8ListOnFile(
-          file: _output,
-          uint8list: _uint8List,
-        );
-
-      }
-
     }
 
     return _output;

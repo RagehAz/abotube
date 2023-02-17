@@ -378,7 +378,7 @@ class CaptionModel {
 
       for (final CaptionModel _caption in captions){
 
-        final String _text = _caption.text.trim();
+        final String _text = _caption?.text?.trim();
         _output = '$_output$_text ';
 
       }

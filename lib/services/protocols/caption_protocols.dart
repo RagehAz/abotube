@@ -161,6 +161,38 @@ class YouTubeCaptionProtocols {
   }
   // --------------------
   ///
+  static Future<String> googleTranslateCaptionAtOnce({
+    @required List<CaptionModel> originalCaptions,
+    @required String toLang,
+    @required String fromLang,
+  }) async {
+    String _output;
+
+    if (
+    Mapper.checkCanLoopList(originalCaptions) == true
+    &&
+    TextCheck.isEmpty(toLang) == false
+    &&
+    TextCheck.isEmpty(fromLang) == false
+    ){
+
+      final String _paragraph = CaptionModel.combineCaptionsIntoString(
+          captions: originalCaptions,
+      );
+
+      _output = await GoogleTranslate.translate(
+        input: _paragraph,
+        from: fromLang,
+        to: toLang,
+      );
+
+
+    }
+
+    return _output;
+  }
+  // --------------------
+  ///
   static Future<CaptionModel> _googleTranslateACaption({
     @required CaptionModel caption,
     @required String from,

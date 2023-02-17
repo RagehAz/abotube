@@ -3,6 +3,7 @@
 import 'package:abotube/b_views/x_components/dialogs/bottom_dialog.dart';
 import 'package:abotube/services/helpers/helper_methods.dart';
 import 'package:abotube/services/navigation/navigators.dart';
+import 'package:bldrs_theme/bldrs_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:stringer/stringer.dart';
 
@@ -60,6 +61,7 @@ class GoogleVoice {
   /// TESTED : WORKS PERFECT
   static Future<String> showVoiceDialog({
     @required String langCode,
+    @required String selectedCode,
   }) async {
     String _output;
 
@@ -87,6 +89,7 @@ class GoogleVoice {
               context: context,
               height: 50,
               text: '$_voiceID : $_gender : $_longLangCode',
+              color: selectedCode ==_voiceID ? Colorz.red255 : Colorz.nothing,
               onTap: () async {
                 _output = _voiceID;
                 await Nav.goBack(context: context);
