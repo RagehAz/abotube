@@ -1,3 +1,89 @@
+import 'package:abotube/b_views/x_components/dialogs/bottom_dialog.dart';
+import 'package:abotube/services/helpers/helper_methods.dart';
+import 'package:abotube/services/navigation/navigators.dart';
+import 'package:flutter/material.dart';
+import 'package:stringer/stringer.dart';
+
+class GoogleVoice {
+  // --------------------------------------------------------------------------
+
+  const GoogleVoice();
+
+  // -----------------------------------------------------------------------------
+
+  /// GETTERS
+  // --------------------
+  /// TESTED : WORKS PERFECT
+  static List<String> getVoicesByLangCode({
+    @required String langCode,
+  }){
+    final List<String> _output = [];
+
+    if (langCode?.length == 2){
+
+      final List<String> _keys = googleVoices.keys.toList();
+
+      for (final String key in _keys){
+
+        final String _part = TextMod.removeTextAfterFirstSpecialCharacter(key, '-');
+        if (_part == langCode){
+          _output.add(key);
+        }
+
+      }
+
+    }
+
+    return _output;
+  }
+  // -----------------------------------------------------------------------------
+
+  /// VOICES DIALOG
+
+  // --------------------
+  /// TESTED : WORKS PERFECT
+  static Future<String> showVoiceDialog({
+    @required String langCode,
+  }) async {
+    String _output;
+
+    final BuildContext context = getContext();
+    // final TextToSpeech tts = TextToSpeech();
+    List<String> _voices = getVoicesByLangCode(
+      langCode: langCode,
+    );
+
+    _voices = Stringer.sortAlphabetically(_voices);
+
+    await BottomDialog.showButtonsBottomDialog(
+      context: context,
+      draggable: true,
+      numberOfWidgets: _voices.length,
+      buttonHeight: 50,
+      title: 'Voices',
+      builder: (BuildContext xxx) {
+        return List.generate(_voices.length, (index) {
+          final String _voiceID = _voices[index];
+          final String _gender = googleVoices[_voiceID]['gender'] == 'MALE' ? 'M' : 'F';
+          final String _longLangCode = googleVoices[_voiceID]['language'];
+
+          return BottomDialog.wideButton(
+              context: context,
+              height: 50,
+              text: '$_voiceID : $_gender : $_longLangCode',
+              onTap: () async {
+                _output = _voiceID;
+                await Nav.goBack(context: context);
+              });
+        });
+      },
+    );
+
+    return _output;
+  }
+  // -----------------------------------------------------------------------------
+}
+
 final Map<String, dynamic> googleVoices = {
   'af-ZA-Standard-A': {
     'language': 'Afrikaans (South Africa)',

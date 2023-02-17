@@ -6,8 +6,10 @@ import 'package:abotube/a_models/video_model.dart';
 import 'package:abotube/b_views/x_components/buttons/progress_button.dart';
 import 'package:abotube/b_views/x_components/dialogs/language_selector_dialog.dart';
 import 'package:abotube/b_views/x_components/super_video_player/super_video_player.dart';
+import 'package:abotube/services/protocols/audio_protocols.dart';
 import 'package:abotube/services/protocols/caption_protocols.dart';
 import 'package:abotube/services/protocols/exploder_protocols.dart';
+import 'package:abotube/services/protocols/google_voices_map.dart';
 import 'package:abotube/services/protocols/video_protocols.dart';
 import 'package:abotube/services/providers/ui_provider.dart';
 import 'package:abotube/services/theme/abo_tube_colors.dart';
@@ -44,6 +46,8 @@ class _TranslatorPageState extends State<TranslatorPage> {
   List<CaptionModel> _translatedCaptions = [];
   String _fromLang = 'en';
   String _toLang = 'ar';
+  String _selectedVoiceID;
+  File _translatedVoiceFile;
   // -----------------------------------------------------------------------------
   /// --- LOADING
   final ValueNotifier<bool> _loading = ValueNotifier(false);
@@ -247,6 +251,34 @@ class _TranslatorPageState extends State<TranslatorPage> {
 
   }
   // --------------------
+  /// TESTED : WORKS PERFECT
+  Future<void> _onChangeVoice() async {
+
+    final String _voice = await GoogleVoice.showVoiceDialog(
+      langCode: _toLang,
+    );
+
+    if (_voice != null){
+      setState(() {
+        _selectedVoiceID = _voice;
+      });
+    }
+
+  }
+  // --------------------
+  /// TASK : TEST ME
+  Future<void> _onPlayVoice() async {
+
+    if (_translatedVoiceFile != null){
+
+      await AudioProtocols.playFile(
+          filePath: _translatedVoiceFile.path,
+      );
+
+    }
+
+  }
+  // --------------------
   /// TASK: WRITE MEEEEEEEEE
   Future<void> _getAiGeneratedSpeech() async {
 
@@ -257,15 +289,35 @@ class _TranslatorPageState extends State<TranslatorPage> {
       );
     });
 
-    /// DO MAGIC
-    await Future.delayed(const Duration(milliseconds: 200), (){});
+    File _newVoiceFile;
 
-    /// SET LOADING AND PROGRESS
+   if (_selectedVoiceID != null){
+
+   }
+
+   if (_newVoiceFile == null){
+
+     /// SET LOADING AND PROGRESS
+    _setProgress(
+        newModel: _progress.copyWith(
+        voiceGenerated: ProgressStatus.error,
+      )
+    );
+
+   }
+
+   else {
     _setProgress(
         newModel: _progress.copyWith(
         voiceGenerated: ProgressStatus.done,
-      )
+      ),
+      executeThis: (){
+          _translatedVoiceFile = _newVoiceFile;
+      },
     );
+
+   }
+
 
   }
   // --------------------
@@ -541,7 +593,33 @@ class _TranslatorPageState extends State<TranslatorPage> {
             bubbleHeaderVM: getAboTubeBubbleHeader(
               headline: 'Speech',
             ),
-            columnChildren: const [],
+            columnChildren: <Widget>[
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+
+                  /// VOICE
+                  SuperBox(
+                    height: 50,
+                    text: 'Voice : $_selectedVoiceID',
+                    textScaleFactor: 0.7,
+                    onTap: _onChangeVoice,
+                  ),
+
+                  /// PLAY
+                  SuperBox(
+                    height: 50,
+                    icon: Iconz.play,
+                    iconSizeFactor: 0.7,
+                    isDisabled: _translatedVoiceFile == null,
+                    onTap: _onPlayVoice,
+                  ),
+
+                ],
+              ),
+
+            ],
           ),
 
           /// 1- SEPARATED

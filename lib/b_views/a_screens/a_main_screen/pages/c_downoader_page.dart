@@ -114,11 +114,17 @@ class _DownloaderPageState extends State<DownloaderPage> {
   // --------------------------------------------------------------------------
   /// TESTED : WORKS PERFECT
   Future<void> _getCurrentURl() async {
-    final String _url = await controller.currentUrl();
-    UiProvider.proSetDownloaderURL(
+    String _url;
+    if (mounted == true && controller != null) {
+      _url = await controller?.currentUrl();
+    }
+
+    if (_url != null && mounted == true) {
+      UiProvider.proSetDownloaderURL(
         url: _url,
         notify: true,
-    );
+      );
+    }
   }
   // --------------------
   /// TESTED : WORKS PERFECT

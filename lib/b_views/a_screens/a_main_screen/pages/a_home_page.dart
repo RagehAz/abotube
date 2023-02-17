@@ -3,8 +3,10 @@ import 'package:abotube/b_views/x_components/cards/draft_video_card/draft_video_
 import 'package:abotube/services/ldb/video_ldb_ops.dart';
 import 'package:abotube/services/protocols/video_protocols.dart';
 import 'package:abotube/services/providers/ui_provider.dart';
+import 'package:abotube/services/theme/abo_tube_colors.dart';
 import 'package:filers/filers.dart';
 import 'package:flutter/material.dart';
+import 'package:layouts/layouts.dart';
 import 'package:mapper/mapper.dart';
 import 'package:numeric/numeric.dart';
 import 'package:super_text/super_text.dart';
@@ -144,29 +146,36 @@ class _HomePageState extends State<HomePage> {
         }
 
       },
-      child: ListView.builder(
-        physics: const BouncingScrollPhysics(),
-        itemCount: _videos.length,
-        padding: const EdgeInsets.symmetric(vertical: 20),
-        itemBuilder: (_, int index) {
-
-          final int _num = index + 1;
-          final String _n = Numeric.formatIndexDigits(
-            index: _num,
-            listLength: _videos.length,
-          );
-
-          final VideoModel _videoModel = _videos[index];
-
-          return DraftVideoCard(
-            videoModel: _videoModel,
-            number: _n,
-            onDeleteVideo: () => _onDeleteVideo(_videoModel),
-            onRedownloadVideo: () => _onRedownloadVideo(_videoModel),
-            onTranslate: () => _onTranslate(_videoModel),
-          );
-
+      child: PullToRefresh(
+        indicatorColor: AboTubeTheme.youtubeColor,
+        fadeOnBuild: true,
+        onRefresh: (){
+          setState(() {});
         },
+        child: ListView.builder(
+          physics: const BouncingScrollPhysics(),
+          itemCount: _videos.length,
+          padding: const EdgeInsets.only(top: 20, bottom: 200),
+          itemBuilder: (_, int index) {
+
+            final int _num = index + 1;
+            final String _n = Numeric.formatIndexDigits(
+              index: _num,
+              listLength: _videos.length,
+            );
+
+            final VideoModel _videoModel = _videos[index];
+
+            return DraftVideoCard(
+              videoModel: _videoModel,
+              number: _n,
+              onDeleteVideo: () => _onDeleteVideo(_videoModel),
+              onRedownloadVideo: () => _onRedownloadVideo(_videoModel),
+              onTranslate: () => _onTranslate(_videoModel),
+            );
+
+          },
+        ),
       ),
     );
   }
