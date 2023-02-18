@@ -3,9 +3,11 @@ import 'dart:io';
 import 'package:abotube/a_models/caption_model.dart';
 import 'package:abotube/a_models/translation_progress_model.dart';
 import 'package:abotube/a_models/video_model.dart';
+import 'package:abotube/b_views/a_screens/a_main_screen/translation_manager_screen.dart';
 import 'package:abotube/b_views/x_components/buttons/progress_button.dart';
 import 'package:abotube/b_views/x_components/dialogs/language_selector_dialog.dart';
 import 'package:abotube/b_views/x_components/super_video_player/super_video_player.dart';
+import 'package:abotube/services/navigation/navigators.dart';
 import 'package:abotube/services/protocols/audio_protocols.dart';
 import 'package:abotube/services/protocols/caption_protocols.dart';
 import 'package:abotube/services/protocols/exploder_protocols.dart';
@@ -540,37 +542,52 @@ class _TranslatorPageState extends State<TranslatorPage> {
           ),
 
           /// ORIGINAL CAPTIONS
-          Bubble(
-            bubbleHeaderVM: getAboTubeBubbleHeader(
-              headline: 'Captions',
-            ),
-            columnChildren: <Widget>[
+        Bubble(
+          bubbleHeaderVM: BubbleHeaderVM(
+            headlineText: 'Captions',
+            headlineColor: Colorz.white200,
+            // headlineHeight: 30,
+            font: BldrsThemeFonts.fontBldrsHeadlineFont,
+            hasMoreButton: true,
+            onMoreButtonTap: () async {
 
-                Container(
-                  width: Bubble.clearWidth(context: context),
-                  height: 150,
-                  color: AboTubeTheme.greyLight,
-                  child: Mapper.checkCanLoopList(_captions) == false ? const SizedBox() : Scroller(
-                    child: ListView.builder(
-                        physics: const BouncingScrollPhysics(),
-                        itemCount: _captions.length,
-                        padding: EdgeInsets.zero,
-                        itemBuilder: (_, int index) {
+              if (Mapper.checkCanLoopList(_captions) == true){
 
-                          return CaptionLine(
-                            caption: _captions[index],
-                            numberOfCaptions: _captions.length,
-                          );
-
-                        }
-                        ),
+                await Nav.goToNewScreen(
+                  context: context,
+                  screen: TranslationManagerScreen(
+                    captions: _captions,
                   ),
-                ),
+                );
 
-            ],
-          ),
+              }
 
-          /// 3- Translation Done
+            }
+            ),
+          columnChildren: <Widget>[
+            Container(
+              width: Bubble.clearWidth(context: context),
+              height: 150,
+              color: AboTubeTheme.greyLight,
+              child: Mapper.checkCanLoopList(_captions) == false
+                  ? const SizedBox()
+                  : Scroller(
+                      child: ListView.builder(
+                          physics: const BouncingScrollPhysics(),
+                          itemCount: _captions.length,
+                          padding: EdgeInsets.zero,
+                          itemBuilder: (_, int index) {
+                            return CaptionLine(
+                              caption: _captions[index],
+                              numberOfCaptions: _captions.length,
+                            );
+                          }),
+                    ),
+            ),
+          ],
+        ),
+
+        /// 3- Translation Done
           ProgressButton(
             text: 'Translation Done',
             status: _progress.translation,
@@ -755,7 +772,7 @@ class CaptionLine extends StatelessWidget {
     final String _captionSecond = caption?.start?.toString();
 
     final double _clearWidth = Bubble.clearWidth(context: context);
-    const double _secondWidth = 50;
+    const double _secondWidth = 60;
 
     return Container(
       width: _clearWidth,

@@ -46,6 +46,11 @@ class VideoInfoLine extends StatelessWidget {
             textDirection: TextDirection.ltr,
             margins: const EdgeInsets.only(bottom: 5),
             maxLines: 2,
+            onTap: () async {
+
+
+
+            },
           ),
         ],
       ),

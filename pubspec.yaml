@@ -15,6 +15,7 @@ dependencies:
     sdk: flutter
   # ---------------------------
   # flutter packages
+  another_flushbar: ^1.10.26
   extension_google_sign_in_as_googleapis_auth: ^2.0.7
   firebase_core: ^2.4.1
   flutter_youtube_downloader: ^0.0.5
