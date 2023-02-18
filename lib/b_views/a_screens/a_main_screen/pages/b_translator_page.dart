@@ -318,7 +318,6 @@ class _TranslatorPageState extends State<TranslatorPage> {
           text: CaptionModel.combineCaptionsIntoString(
             captions: _translatedCaptions,
           ),
-          googleLangCode: GoogleVoice.getGoogleLangCodeFromVoiceID(_selectedVoiceID),
           voiceID: _selectedVoiceID,
           client: client
       );
@@ -625,7 +624,6 @@ class _TranslatorPageState extends State<TranslatorPage> {
                                 final File _newVoiceFile = await AudioProtocols.createVoiceFile(
                                     videoID: _videoModel.id,
                                     text: text,
-                                    googleLangCode: GoogleVoice.getGoogleLangCodeFromVoiceID(_selectedVoiceID),
                                     voiceID: _selectedVoiceID,
                                     client: client
                                 );

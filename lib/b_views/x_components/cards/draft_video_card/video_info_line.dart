@@ -9,12 +9,14 @@ class VideoInfoLine extends StatelessWidget {
     @required this.title,
     @required this.text,
     @required this.width,
+    this.onTap,
     Key key
   }) : super(key: key);
   // --------------------------------------------------------------------------
   final String title;
   final String text;
   final double width;
+  final Function onTap;
   // --------------------------------------------------------------------------
   @override
   Widget build(BuildContext context) {
@@ -48,7 +50,9 @@ class VideoInfoLine extends StatelessWidget {
             maxLines: 2,
             onTap: () async {
 
-
+              if (onTap != null){
+                await onTap();
+              }
 
             },
           ),

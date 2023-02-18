@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:abotube/services/protocols/google_voices_map.dart';
 import 'package:filers/filers.dart';
 import 'package:flutter/material.dart';
 import 'package:googleapis/texttospeech/v1.dart';
@@ -64,6 +65,14 @@ class AudioProtocols {
     }
 
   }
+  // --------------------
+  /// TESTED : WORKS PERFECT
+  static Future<void> stopPlaying() async {
+
+    final AudioPlayer _audioPlayer = getAudioPlayer();
+    await _audioPlayer.stop();
+
+  }
   // -----------------------------------------------------------------------------
 
   /// PLAY TEXT TO SPEECH
@@ -89,7 +98,6 @@ class AudioProtocols {
   static Future<File> createVoiceFile({
     @required String videoID,
     @required String text,
-    @required String googleLangCode,
     @required String voiceID,
     @required gapis.AuthClient client,
   }) async {
@@ -97,8 +105,6 @@ class AudioProtocols {
 
     if (
     TextCheck.isEmpty(text) == false
-    &&
-    TextCheck.isEmpty(googleLangCode) == false
     &&
     TextCheck.isEmpty(voiceID) == false
     &&
@@ -108,6 +114,8 @@ class AudioProtocols {
     ){
 
       blog('client is : ${client?.credentials}');
+
+      final String _langCode = GoogleVoice.getGoogleLangCodeFromVoiceID(voiceID);
 
       final SynthesizeSpeechRequest _request = SynthesizeSpeechRequest(
         input: SynthesisInput(
@@ -125,7 +133,7 @@ class AudioProtocols {
         voice: VoiceSelectionParams(
           // customVoice: ,
           // ssmlGender: ,
-          languageCode: googleLangCode,
+          languageCode: _langCode,
           name: voiceID,
         ),
       );
@@ -146,7 +154,6 @@ class AudioProtocols {
 
           final String _fileName = generateTranslatedVoiceFileName(
             videoID: videoID,
-            googleLangCode: googleLangCode,
             voiceID: voiceID,
           );
 
@@ -175,15 +182,16 @@ class AudioProtocols {
   static String generateTranslatedVoiceFileName({
     @required String videoID,
     @required String voiceID,
-    @required String googleLangCode,
   }) {
     String _output;
 
     if (TextCheck.isEmpty(videoID) == false &&
-        TextCheck.isEmpty(voiceID) == false &&
-        TextCheck.isEmpty(googleLangCode) == false
+        TextCheck.isEmpty(voiceID) == false
     ) {
-      _output = '${videoID}_${voiceID}_$googleLangCode';
+
+      final String _langCode = GoogleVoice.getGoogleLangCodeFromVoiceID(voiceID);
+
+      _output = '${videoID}_${voiceID}_$_langCode';
 
     }
 

@@ -5,6 +5,7 @@ import 'dart:io';
 
 import 'package:abotube/a_models/caption_model.dart';
 import 'package:abotube/a_models/video_model.dart';
+import 'package:abotube/b_views/a_screens/x_speech_screen.dart';
 import 'package:abotube/b_views/a_screens/x_url_video_player_screen.dart';
 import 'package:abotube/b_views/a_screens/x_youtube_player_screen.dart';
 import 'package:abotube/b_views/x_components/buttons/lab_button.dart';
@@ -322,7 +323,6 @@ class LabPage extends StatelessWidget {
             final File _voiceFile = await AudioProtocols.createVoiceFile(
                 videoID: 'x',
                 text: '  ماذا تفعل ايها الصعلوك يا عرص يا كلب الكلاب يا ايها الزفت يا حمار',
-                googleLangCode: 'ar-XA',
                 voiceID: 'ar-XA-Wavenet-B',
                 client: client
             );
@@ -495,6 +495,17 @@ class LabPage extends StatelessWidget {
         const DotSeparator(),
         const DotSeparator(),
 
+        /// READ VIDEO CAPTION MODELS
+        LabButton(
+          worksPerfect: true,
+          text: 'Go to speech screen',
+          icon: Iconz.bz,
+          onTap: () async {
+
+            await Nav.goToNewScreen(context: context, screen: const SpeechScreen());
+
+          },
+        ),
 
       ],
     );
