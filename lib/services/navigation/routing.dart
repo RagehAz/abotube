@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:abotube/b_views/a_screens/a_main_screen/pages/b_translator_page.dart';
 import 'package:abotube/b_views/a_screens/a_main_screen/pages/x_lab_page.dart';
 import 'package:abotube/b_views/a_screens/a_main_screen/pages/c_downoader_page.dart';
-import 'package:abotube/services/navigation/navigators.dart';
 import 'package:abotube/b_views/a_screens/a_main_screen/pages/a_home_page.dart';
+import 'package:layouts/layouts.dart';
 
 class Routing {
   // -----------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 import 'package:abotube/b_views/x_components/dialogs/bottom_dialog.dart';
 import 'package:abotube/services/helpers/helper_methods.dart';
-import 'package:abotube/services/navigation/navigators.dart';
 import 'package:flutter/material.dart';
+import 'package:layouts/layouts.dart';
 import 'package:stringer/stringer.dart';
 
 Future<String> showLanguageDialog() async {

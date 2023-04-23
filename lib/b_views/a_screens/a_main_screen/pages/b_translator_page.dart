@@ -7,7 +7,6 @@ import 'package:abotube/b_views/a_screens/a_main_screen/translation_manager_scre
 import 'package:abotube/b_views/x_components/buttons/progress_button.dart';
 import 'package:abotube/b_views/x_components/dialogs/language_selector_dialog.dart';
 import 'package:abotube/b_views/x_components/super_video_player/super_video_player.dart';
-import 'package:abotube/services/navigation/navigators.dart';
 import 'package:abotube/services/protocols/audio_protocols.dart';
 import 'package:abotube/services/protocols/caption_protocols.dart';
 import 'package:abotube/services/protocols/exploder_protocols.dart';
@@ -22,6 +21,7 @@ import 'package:bubbles/bubbles.dart';
 import 'package:filers/filers.dart';
 import 'package:flutter/material.dart';
 import 'package:googleapis/texttospeech/v1.dart';
+import 'package:layouts/layouts.dart';
 import 'package:mapper/mapper.dart';
 import 'package:scale/scale.dart';
 import 'package:stringer/stringer.dart';

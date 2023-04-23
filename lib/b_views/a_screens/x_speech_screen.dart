@@ -4,7 +4,6 @@ import 'dart:typed_data';
 import 'package:abotube/b_views/a_screens/a_main_screen/pages/b_translator_page.dart';
 import 'package:abotube/b_views/x_components/cards/draft_video_card/video_info_line.dart';
 import 'package:abotube/b_views/x_components/dialogs/language_selector_dialog.dart';
-import 'package:abotube/b_views/x_components/layout/basic_layout.dart';
 import 'package:abotube/services/protocols/audio_protocols.dart';
 import 'package:abotube/services/protocols/google_auth_protocols.dart';
 import 'package:abotube/services/protocols/google_voices_map.dart';
@@ -15,6 +14,7 @@ import 'package:filers/filers.dart';
 import 'package:flutter/material.dart';
 import 'package:googleapis/texttospeech/v1.dart';
 import 'package:googleapis_auth/googleapis_auth.dart' as gapis;
+import 'package:layouts/layouts.dart';
 import 'package:ldb/ldb.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
@@ -385,7 +385,7 @@ const String oAuthToken = '';
 
 Future<void> sendEmailWithMP3(File file) async {
   // Read the file as a Uint8List.
-  Uint8List uint8list = await file.readAsBytes();
+ final Uint8List uint8list = await file.readAsBytes();
 
   // Create an MP3 file from the Uint8List.
   final mp3File = File('${file.path}.mp3');
@@ -398,8 +398,8 @@ Future<void> sendEmailWithMP3(File file) async {
       port: 465,
       ssl: true,
       xoauth2Token: 'your-oauth2-token',
-      allowInsecure: false,
-      ignoreBadCertificate: false,
+      // allowInsecure: false,
+      // ignoreBadCertificate: false,
       name: 'Rageh from Abotube'
   );
 

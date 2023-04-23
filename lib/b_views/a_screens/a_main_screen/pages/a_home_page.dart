@@ -130,7 +130,12 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
 
     return PullToRefresh(
-      indicatorColor: AboTubeTheme.youtubeColor,
+      circleColor: AboTubeTheme.youtubeColor,
+      // arrowColor: ,
+      // displacement: ,
+      // edgeOffset: ,
+      // fadingMilliseconds: ,
+      // strokeWidth: ,
       fadeOnBuild: true,
       onRefresh: () async {
         await _readLDB();

@@ -6,13 +6,13 @@ import 'package:abotube/b_views/x_components/cards/draft_video_card/video_info_l
 import 'package:abotube/b_views/x_components/dialogs/bottom_dialog.dart';
 import 'package:abotube/b_views/x_components/super_video_player/super_video_player.dart';
 import 'package:abotube/services/helpers/helper_methods.dart';
-import 'package:abotube/services/navigation/navigators.dart';
 import 'package:abotube/services/protocols/video_protocols.dart';
 import 'package:abotube/services/theme/abo_tube_colors.dart';
 import 'package:bldrs_theme/bldrs_theme.dart';
 import 'package:bubbles/bubbles.dart';
 import 'package:filers/filers.dart';
 import 'package:flutter/material.dart';
+import 'package:layouts/layouts.dart';
 import 'package:super_text/super_text.dart';
 
 class DraftVideoCard extends StatefulWidget {

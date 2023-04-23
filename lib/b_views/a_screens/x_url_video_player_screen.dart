@@ -1,6 +1,4 @@
 import 'dart:io';
-
-import 'package:abotube/b_views/x_components/layout/basic_layout.dart';
 import 'package:abotube/b_views/x_components/super_video_player/super_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:layouts/layouts.dart';
